@@ -1,6 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 #include "pain.h"
-#include "../db/db.h"
+#include "db.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
