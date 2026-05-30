@@ -18,4 +18,5 @@
     }
   ],
   "edges": []
+{"parent":"git-identity","child":"cjson","relation":"JSON output formatting","link_type":"library","edge_license":"MIT"},
 }

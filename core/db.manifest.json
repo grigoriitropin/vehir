@@ -11,7 +11,7 @@
     {
       "name": "db",
       "description": "Database client library — sends parameterized SQL over Unix socket to db-proxy",
-      "artifact_type": "tool",
+      "artifact_type": "library",
       "artifact_name": "db-probe",
       "license": "Apache-2.0",
       "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"

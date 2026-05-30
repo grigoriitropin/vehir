@@ -11,7 +11,7 @@
     {
       "name": "pain",
       "description": "Pain signal library — writes pain_registry through db-proxy, reads cognitive mode",
-      "artifact_type": "tool",
+      "artifact_type": "library",
       "artifact_name": "pain-check",
       "license": "Apache-2.0",
       "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
@@ -22,7 +22,7 @@
       "parent": "pain",
       "child": "db",
       "relation": "routes SQL through db client lib",
-      "link_type": "socket",
+      "link_type": "library",
       "edge_license": "Apache-2.0"
     }
   ]

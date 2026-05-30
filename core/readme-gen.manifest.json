@@ -18,6 +18,7 @@
     }
   ],
   "edges": [
+{"parent":"readme-gen","child":"cjson","relation":"JSON output formatting","link_type":"library","edge_license":"MIT"},
     {
       "parent": "readme-gen",
       "child": "ipm",
