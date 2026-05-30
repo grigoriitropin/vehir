@@ -14,7 +14,7 @@
       "artifact_type": "tool",
       "artifact_name": "runtime-paths-probe",
       "license": "Apache-2.0",
-      "license_version": "0.1.0"
+      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
     }
   ],
   "edges": []
