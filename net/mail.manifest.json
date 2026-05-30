@@ -4,7 +4,7 @@
       "name": "Apache-2.0",
       "spdx_id": "Apache-2.0",
       "kind": "agent-authored",
-      "patent_grant": false
+      "patent_grant": true
     }
   ],
   "packages": [
