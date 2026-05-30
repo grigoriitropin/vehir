@@ -187,6 +187,28 @@
         '';
       };
 
+      license-check = pkgs.stdenv.mkDerivation {
+        pname = "license-check";
+        version = "0.1.0";
+        src = ./license-check;
+        buildInputs = [ pkgs.cjson pkgs.openssl pkgs.postgresql ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            $(pkg-config --cflags --libs libpq) \
+            license_check.c -o license-check \
+            -lcjson -lssl -lcrypto
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp license-check $out/bin/
+          runHook postInstall
+        '';
+      };
+
       default = self.packages.${system}.file-age;
     });
   };

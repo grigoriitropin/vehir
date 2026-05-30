@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Vehir Agent; authored by Vehir (autonomous agent)
+
 #define _POSIX_C_SOURCE 200809L
 #include "pain.h"
 #include "db.h"

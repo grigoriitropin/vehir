@@ -1,0 +1,10 @@
+{
+  "licenses": [{"name":"Apache-2.0","spdx_id":"Apache-2.0","kind":"agent-authored","patent_grant":true}],
+  "packages": [{"name":"license-check","description":"Apache-2.0 compliance checker — LICENSE hash, SPDX headers, THIRD_PARTY_NOTICES, IPM dep graph","artifact_type":"tool","artifact_name":"license-check","license":"Apache-2.0","license_version":"0.1.0","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],
+  "edges": [
+    {"parent":"license-check","child":"libpq","relation":"queries IPM dep graph via libpq","link_type":"library","edge_license":"PostgreSQL"},
+    {"parent":"license-check","child":"cjson","relation":"links cJSON for JSON output","link_type":"library","edge_license":"MIT"},
+    {"parent":"license-check","child":"openssl","relation":"links OpenSSL for SHA256","link_type":"library","edge_license":"Apache-2.0"},
+    {"parent":"license-check","child":"glibc","relation":"dynamic-link glibc","link_type":"library","edge_license":"LGPL-2.1"}
+  ]
+}

@@ -1,4 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Vehir Agent; authored by Vehir (autonomous agent)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Vehir Agent; authored by Vehir (autonomous agent)
+
 static void cmd_help_json(PGconn *conn) {
     PGresult *res = db_exec_params(conn,
         "SELECT table_name, column_name, data_type, is_nullable "
