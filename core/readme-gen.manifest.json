@@ -1,0 +1,29 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "owned",
+      "patent_grant": false
+    }
+  ],
+  "packages": [
+    {
+      "name": "readme-gen",
+      "description": "Replace <!-- IDEA-GRAPH --> marker with idea show --md output",
+      "artifact_type": "tool",
+      "artifact_name": "readme-gen",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0"
+    }
+  ],
+  "edges": [
+    {
+      "parent": "readme-gen",
+      "child": "ipm",
+      "relation": "calls idea show --md",
+      "link_type": "dynamic",
+      "edge_license": "Apache-2.0"
+    }
+  ]
+}

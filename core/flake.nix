@@ -144,6 +144,24 @@
         '';
       };
 
+      readme-gen = pkgs.stdenv.mkDerivation {
+        pname = "readme-gen";
+        version = "0.1.0";
+        src = ./readme-gen;
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            readme_gen.c -o readme-gen
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp readme-gen $out/bin/
+          runHook postInstall
+        '';
+      };
+
       default = self.packages.${system}.file-age;
     });
   };
