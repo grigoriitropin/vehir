@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "lib/safe-exec.h"
 
 static char *env_get(const char *path, const char *key, char *out, size_t sz) {
     FILE *f = fopen(path, "r");
@@ -60,18 +61,14 @@ int main(int argc, char *argv[]) {
     }
 
     if (have_name) {
-        char cmd[256];
-        snprintf(cmd, sizeof(cmd), "git config --local user.name \"%s\"", name);
-        if (system(cmd) != 0) {
+        const char *gargs[] = { "git", "config", "--local", "user.name", name, NULL };
+        if (!safe_exec(gargs, NULL))
             fprintf(stderr, "git-identity: warning: git config user.name failed\n");
-        }
     }
     if (have_email) {
-        char cmd[256];
-        snprintf(cmd, sizeof(cmd), "git config --local user.email \"%s\"", email);
-        if (system(cmd) != 0) {
+        const char *gargs[] = { "git", "config", "--local", "user.email", email, NULL };
+        if (!safe_exec(gargs, NULL))
             fprintf(stderr, "git-identity: warning: git config user.email failed\n");
-        }
     }
 
     printf("{\"ok\":true,\"name\":\"%s\",\"email\":\"%s\"}\n",

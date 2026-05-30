@@ -114,24 +114,16 @@ their respective owners.
 
 ---
 
-5. glibc (GNU Lesser General Public License v2.1)
+5. glibc (GNU Lesser General Public License, version 2.1)
 
    Used by: all binaries (dynamic linking)
-   Repository: https://sourceware.org/git/glibc.git
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or
-   (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public License
-   along with this library; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+   Vehir links dynamically against the GNU C Library (glibc), used under
+   the GNU Lesser General Public License version 2.1 (LGPL-2.1). Under
+   Section 6 of the LGPL-2.1, you may modify or replace the glibc that
+   Vehir links against. Vehir's own code is licensed under Apache-2.0
+   (see LICENSE). The full text of the LGPL-2.1 is provided in
+   LGPL-2.1.txt; see also https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
 ---
 

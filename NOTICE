@@ -17,6 +17,6 @@ Third-party components (linked; used under their respective licenses):
   libpq      PostgreSQL License
   libcurl    curl License
   OpenSSL    Apache License 2.0     (transitively, via libpq)
-  glibc      GNU LGPL v2.1          (dynamically linked)
+  glibc      GNU LGPL v2.1          (dynamically linked; copyright FSF)
 
 Full license texts: THIRD_PARTY_NOTICES.

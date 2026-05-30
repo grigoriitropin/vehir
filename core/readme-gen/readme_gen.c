@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "lib/safe-exec.h"
 
 #define MARKER "<!-- IDEA-GRAPH -->"
 #define BUF_SZ 131072
@@ -22,14 +23,8 @@ static char *read_file(const char *path, size_t *len) {
 }
 
 static char *run_idea_show(int *out_len) {
-    FILE *p = popen("idea show --md 2>/dev/null", "r");
-    if (!p) return NULL;
-    char *buf = malloc(BUF_SZ);
-    if (!buf) { pclose(p); return NULL; }
-    *out_len = fread(buf, 1, BUF_SZ - 1, p);
-    buf[*out_len] = '\0';
-    pclose(p);
-    return buf;
+    const char *args[] = { "idea", "show", "--md", NULL };
+    return safe_exec(args, out_len);
 }
 
 int main(int argc, char *argv[]) {

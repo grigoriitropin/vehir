@@ -132,8 +132,8 @@
         src = ./core/git-identity;
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} \
-            git_identity.c -o git-identity
+          cc ${builtins.toString cflags} -I${./core} \
+            git_identity.c ${./core}/lib/safe-exec.c -o git-identity
           runHook postBuild
         '';
         installPhase = ''
@@ -150,8 +150,8 @@
         src = ./core/readme-gen;
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} \
-            readme_gen.c -o readme-gen
+          cc ${builtins.toString cflags} -I${./core} \
+            readme_gen.c ${./core}/lib/safe-exec.c -o readme-gen
           runHook postBuild
         '';
         installPhase = ''
@@ -195,9 +195,9 @@
         nativeBuildInputs = [ pkgs.pkg-config ];
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} \
+          cc ${builtins.toString cflags} -I${./core} \
             $(pkg-config --cflags --libs libcurl libcjson) \
-            forge.c -o forge
+            forge.c ${./core}/lib/config-loader.c -o forge
           runHook postBuild
         '';
         installPhase = ''
@@ -216,9 +216,9 @@
         nativeBuildInputs = [ pkgs.pkg-config ];
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} \
+          cc ${builtins.toString cflags} -I${./core} \
             $(pkg-config --cflags --libs libcurl libcjson) \
-            mail.c -o mail
+            mail.c ${./core}/lib/config-loader.c -o mail
           runHook postBuild
         '';
         installPhase = ''
