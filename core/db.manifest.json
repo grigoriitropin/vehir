@@ -22,7 +22,7 @@
       "parent": "db",
       "child": "db-proxy",
       "relation": "routes SQL through",
-      "link_type": "dynamic",
+      "link_type": "socket",
       "edge_license": "Apache-2.0"
     }
   ]

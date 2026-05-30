@@ -22,7 +22,7 @@
       "parent": "readme-gen",
       "child": "ipm",
       "relation": "calls idea show --md",
-      "link_type": "dynamic",
+      "link_type": "conceptual",
       "edge_license": "Apache-2.0"
     }
   ]

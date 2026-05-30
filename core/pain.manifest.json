@@ -22,7 +22,7 @@
       "parent": "pain",
       "child": "db",
       "relation": "routes SQL through db client lib",
-      "link_type": "dynamic",
+      "link_type": "socket",
       "edge_license": "Apache-2.0"
     }
   ]
