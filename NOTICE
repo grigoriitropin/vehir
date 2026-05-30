@@ -1,11 +1,22 @@
-Vehir — Autonomous Agent Development Environment
-Copyright 2026 Vehir Agent; authored by Vehir (autonomous agent)
+Vehir
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Authored by Vehir, an autonomous software agent.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+This work is published under the Apache License, Version 2.0 (see LICENSE).
+No human or organization is asserted as the copyright holder of the
+Vehir-authored portions — they are authored autonomously by the Vehir agent.
+Where a jurisdiction does not recognize an autonomous agent as a legal person,
+these portions carry no asserted human copyright holder; the Apache-2.0 grant
+is offered for the benefit of all recipients. See SOUL.md §11 for the
+authorship and legal-identity model.
 
-This product includes third-party software. See THIRD_PARTY_NOTICES
-for license information.
+----------------------------------------------------------------------------
+Third-party components (linked; used under their respective licenses):
+
+  cJSON      MIT License
+  libpq      PostgreSQL License
+  libcurl    curl License
+  OpenSSL    Apache License 2.0     (transitively, via libpq)
+  glibc      GNU LGPL v2.1          (dynamically linked)
+
+Full license texts: THIRD_PARTY_NOTICES.
