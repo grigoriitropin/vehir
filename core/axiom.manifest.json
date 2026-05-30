@@ -1,0 +1,5 @@
+{
+  "licenses": [{"name":"Apache-2.0","spdx_id":"Apache-2.0","kind":"agent-authored","patent_grant":true}],
+  "packages": [{"name":"axiom","description":"The constitution is physics. The agent is shaped by laws it cannot bend — and grows only because it cannot.","artifact_type":"none","artifact_name":null,"is_axiom":true,"license":"Apache-2.0","license_version":"0.1.0","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],
+  "edges": []
+}
