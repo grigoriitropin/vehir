@@ -1,0 +1,8 @@
+{
+  "licenses": [{"name":"Apache-2.0","spdx_id":"Apache-2.0","kind":"owned","patent_grant":false}],
+  "packages": [{"name":"constitution-validator","description":"SOUL.md section hash validator — drift detection via SHA256, re-baseline","artifact_type":"tool","artifact_name":"constitution-validator","license":"Apache-2.0","license_version":"0.1.0","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],
+  "edges": [
+    {"parent":"constitution-validator","child":"db","relation":"reads soul_hashes via db-proxy","link_type":"socket","edge_license":"Apache-2.0"},
+    {"parent":"constitution-validator","child":"pain","relation":"signals drift to pain registry","link_type":"socket","edge_license":"Apache-2.0"}
+  ]
+}

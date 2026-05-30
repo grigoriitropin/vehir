@@ -162,6 +162,31 @@
         '';
       };
 
+      constitution-validator = pkgs.stdenv.mkDerivation {
+        pname = "constitution-validator";
+        version = "0.1.0";
+        src = ./constitution-validator;
+        buildInputs = [ pkgs.cjson pkgs.openssl self.packages.${system}.db self.packages.${system}.pain ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            -I${self.packages.${system}.db}/include \
+            -I${self.packages.${system}.pain}/include \
+            validator.c -o constitution-validator \
+            -lcjson -lssl -lcrypto \
+            -L${self.packages.${system}.db}/lib -ldb \
+            -L${self.packages.${system}.pain}/lib -lpain
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp constitution-validator $out/bin/
+          runHook postInstall
+        '';
+      };
+
       default = self.packages.${system}.file-age;
     });
   };
