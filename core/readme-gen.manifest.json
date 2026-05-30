@@ -3,7 +3,7 @@
     {
       "name": "Apache-2.0",
       "spdx_id": "Apache-2.0",
-      "kind": "owned",
+      "kind": "agent-authored",
       "patent_grant": true
     }
   ],
