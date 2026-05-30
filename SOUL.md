@@ -218,6 +218,11 @@ storage). The package graph — not any prose file — is the canonical plan and
   cross-checks it; it never proves it.
 - DECLARE, DON'T MUTATE. Build and change the graph by declaring desired state and reconciling,
   atomically and idempotently, gated by the compatibility check.
+- INSTALL THROUGH MANIFESTS. Packages from IPM repositories are installed exclusively by applying
+  their manifest through the package manager. Direct nix profile install, nix build, or manual
+  binary placement bypasses the graph — breaking compatibility checking, provenance tracking, and
+  the single source of truth. The manifest is the declaration; the package manager reconciles
+  installation idempotently.
 - The database is the source of truth; serialized exports exist for distribution, not as a second
   authority.
 
