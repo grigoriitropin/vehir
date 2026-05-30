@@ -1,0 +1,39 @@
+core: add db + db-proxy (S1.2) — socket-proxy architecture per Claude verdict B
+
+SOUL §3 amendment: RESOURCE BOUNDARIES ARE SOCKETS, NOT LINKED LIBRARIES.
+Privileged resources (DB, pain, locks) are mediated by socket-fronted services.
+Pure-logic code (paths, parsing) stays a library. This section hash changes;
+re-baseline at S1.5.
+
+db (client library + probe, no libpq):
+  - Sends parameterized SQL over AF_UNIX socket to db-proxy
+  - cJSON for response parsing, snprintf for request building
+  - Zero DB credentials in client; no libpq link
+  - Static lib + header for downstream (pain, locks, etc.)
+  - Probe tool (db-probe): connects through socket, SELECT 1 → JSON
+
+db-proxy (daemon, sole libpq owner):
+  - Listens on {scratch}/db-proxy.sock or $VEHIR_DB_PROXY_SOCK
+  - Gate: blocks DROP, TRUNCATE, ALTER, information_schema, pg_catalog
+  - Poll-based event loop, one JSON request per connection (stateless)
+  - Connection string from $VEHIR_PG_CONN / $DATABASE_URL / broker env
+  - PQexecParams for all queries (bind-safe)
+
+Integration test passed: proxy started, connected to live PostgreSQL,
+client sent SELECT 1 through socket, got correct response.
+
+IPM integration:
+  - db: idea apply → compatible, idea build → works, idea check → compatible
+  - db-proxy: idea apply → compatible, idea build → works, idea check → compatible
+  - Edge: db → db-proxy (dynamic, Apache-2.0)
+
+Files:
+  core/SOUL.md                       — §3 RESOURCE BOUNDARIES paragraph + migration block
+  core/db/db.h                       — client API (vehir_db, vehir_db_result)
+  core/db/db.c                       — socket client (250 LOC, no libpq)
+  core/db/db_probe.c                 — JSON probe tool (80 LOC)
+  core/db.manifest.json              — IPM manifest (Apache-2.0) + edge to db-proxy
+  core/db-proxy/db_proxy.c           — proxy daemon (330 LOC, libpq + gate)
+  core/db-proxy.manifest.json        — IPM manifest (Apache-2.0, service)
+  core/flake.nix                     — updated derivations for db + db-proxy
+  core/FINDINGS.md                   — verification gate (PASS, both packages)

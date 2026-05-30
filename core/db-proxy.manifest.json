@@ -1,0 +1,21 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "owned",
+      "patent_grant": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "db-proxy",
+      "description": "Database proxy daemon — sole libpq owner, enforces per-caller SQL gate",
+      "artifact_type": "service",
+      "artifact_name": "db-proxy",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,21 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "owned",
+      "patent_grant": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "runtime-paths",
+      "description": "Dynamic runtime path resolution for all Vehir processes",
+      "artifact_type": "tool",
+      "artifact_name": "runtime-paths-probe",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0"
+    }
+  ],
+  "edges": []
+}
