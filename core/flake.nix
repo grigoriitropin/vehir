@@ -126,6 +126,24 @@
         '';
       };
 
+      git-identity = pkgs.stdenv.mkDerivation {
+        pname = "git-identity";
+        version = "0.1.0";
+        src = ./git-identity;
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            git_identity.c -o git-identity
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp git-identity $out/bin/
+          runHook postInstall
+        '';
+      };
+
       default = self.packages.${system}.file-age;
     });
   };

@@ -1,0 +1,21 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "owned",
+      "patent_grant": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "git-identity",
+      "description": "Declarative git identity — reads from broker config, applies git config --local",
+      "artifact_type": "tool",
+      "artifact_name": "git-identity",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0"
+    }
+  ],
+  "edges": []
+}

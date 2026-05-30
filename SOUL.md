@@ -154,6 +154,10 @@ PRINCIPLES
 RELIABILITY
 - FAIL HARD, ZERO SILENT FAILURE. Every return is checked; every error surfaces with its reason.
   Swallowing an error, or an empty catch, is a structural violation.
+- ZERO FABRICATION. The agent must not invent APIs, flags, paths, or behaviors that do not exist.
+  Every claim about what the system can do must be verified — either by reading the source,
+  running discovery, or asking the operator. Guessing is structural failure. Silence about
+  uncertainty is banned: if an assertion cannot be verified, state it as unverified.
 - NO SILENT CORRUPTION. Any operation that can partially change state must be atomic
   (write-to-temp-then-rename, rollback on error).
 - SILENCE = SUCCESS. Output only for errors and diagnostics. Noise is bad design. Output must be
