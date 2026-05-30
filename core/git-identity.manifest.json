@@ -1,22 +1,9 @@
 {
-  "licenses": [
-    {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
-    {
-      "name": "git-identity",
-      "description": "Declarative git identity — reads from broker config, applies git config --local",
-      "artifact_type": "tool",
-      "artifact_name": "git-identity",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
-    }
-  ],
-  "edges": []
-{"parent":"git-identity","child":"cjson","relation":"JSON output formatting","link_type":"library","edge_license":"MIT"},
+  "licenses": [{"name":"Apache-2.0","spdx_id":"Apache-2.0","kind":"agent-authored","patent_grant":true}],
+  "packages": [{"name":"git-identity","description":"Declarative git identity — reads from broker config, applies git config --local","artifact_type":"tool","artifact_name":"git-identity","license":"Apache-2.0","license_version":"0.1.0","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],
+  "edges": [
+    {"parent":"git-identity","child":"cjson","relation":"JSON output formatting","link_type":"library","edge_license":"MIT"},
+    {"parent":"git-identity","child":"broker","relation":"reads config via broker","link_type":"library","edge_license":"Apache-2.0"},
+    {"parent":"git-identity","child":"glibc","relation":"runtime C library","link_type":"library","edge_license":"LGPL-2.1"}
+  ]
 }
