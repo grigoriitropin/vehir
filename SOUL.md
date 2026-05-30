@@ -221,8 +221,9 @@ storage). The package graph — not any prose file — is the canonical plan and
 - INSTALL THROUGH MANIFESTS. Packages from IPM repositories are installed exclusively by applying
   their manifest through the package manager. Direct nix profile install, nix build, or manual
   binary placement bypasses the graph — breaking compatibility checking, provenance tracking, and
-  the single source of truth. The manifest is the declaration; the package manager reconciles
-  installation idempotently.
+  the single source of truth. This is not a guideline; it is a hard boundary. No package reaches a
+  user's PATH except through a manifest applied by the package manager. The manifest is the
+  declaration; the package manager reconciles installation idempotently.
 - The database is the source of truth; serialized exports exist for distribution, not as a second
   authority.
 
