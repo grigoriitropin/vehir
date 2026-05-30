@@ -1,0 +1,29 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "owned",
+      "patent_grant": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "pain",
+      "description": "Pain signal library — writes pain_registry through db-proxy, reads cognitive mode",
+      "artifact_type": "tool",
+      "artifact_name": "pain-check",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0"
+    }
+  ],
+  "edges": [
+    {
+      "parent": "pain",
+      "child": "db",
+      "relation": "routes SQL through db client lib",
+      "link_type": "dynamic",
+      "edge_license": "Apache-2.0"
+    }
+  ]
+}

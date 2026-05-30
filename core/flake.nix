@@ -101,6 +101,31 @@
         '';
       };
 
+      pain = pkgs.stdenv.mkDerivation {
+        pname = "pain";
+        version = "0.1.0";
+        src = ./pain;
+        buildInputs = [ pkgs.cjson self.packages.${system}.db ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} -I${self.packages.${system}.db}/include \
+            -c pain.c -o pain.o
+          ar rcs libpain.a pain.o
+          cc ${builtins.toString cflags} -I${self.packages.${system}.db}/include \
+            pain_check.c pain.c -o pain-check -lcjson -L${self.packages.${system}.db}/lib -ldb
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin $out/lib $out/include
+          cp pain-check $out/bin/
+          cp libpain.a  $out/lib/
+          cp pain.h     $out/include/
+          runHook postInstall
+        '';
+      };
+
       default = self.packages.${system}.file-age;
     });
   };
