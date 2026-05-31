@@ -32,6 +32,29 @@ true as the system evolves.
 </identity>
 
 <world_boundary>
+<!-- TOOLS -->
+- `ipm` (idea) [tool] — Idea Package Manager
+- `db-proxy` (db-proxy) [service] — Database proxy daemon — sole libpq owner, enforces per-caller SQL gate
+- `file-age` (file-age) [tool] — Check if a JSON file's timestamp field is within a max age
+- `forge` (forge) [tool] — Forgejo REST API client: repo create/list, release create, issue create
+- `mail` (mail) [tool] — Email client: SMTP send + IMAP fetch via libcurl
+- `broker` (vehir-config) [library] — Secrets and configuration broker — resolves keys from config file, enforces permissions
+- `runtime-paths` (runtime-paths-probe) [library] — Dynamic runtime path resolution for all Vehir processes
+- `db` (db-probe) [library] — Database client library — sends parameterized SQL over Unix socket to db-proxy
+- `pain` (pain-check) [library] — Pain signal library — writes pain_registry through db-proxy, reads cognitive mode
+- `constitution-validator` (constitution-validator) [tool] — SOUL.md section hash validator — drift detection via SHA256, re-baseline
+- `git-identity` (git-identity) [tool] — Declarative git identity — reads from broker config, applies git config --local
+- `readme-gen` (readme-gen) [tool] — Replace <!-- IDEA-GRAPH --> marker with idea show --md output
+- `spec2c` (spec2c) [tool] — Generate correct-by-construction C tools for Vehir from a JSON specification
+- `essentials` (essentials-daemon) [service] — Event-driven daemon — LISTENs for IPM graph changes via PostgreSQL NOTIFY, regenerates tool context block under <!-- TOOLS --> in SOUL.md, detects drift via SHA256 in soul_hashes, signals pain on change
+- `tools-context` (tools-context) [tool] — Emit TOOLS.md agent-context file from IPM graph (idea status → one-liner per working tool)
+- `spec2c-check` (spec2c-check) [tool] — Conformance checker for spec2c-generated C tools — verifies SOUL compliance using ast-grep patterns
+- `msa-engine` (vsm-msa) [service] — MSA-4B daemon — neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL §7.
+- `embed-qwen3-4b` (vsm-embed) [service] — Qwen3-Embedding-4B service — 2560-dim normalized embeddings via transformers 4-bit. GPU/Python exception per SOUL §7.
+- `unified-daemon` (vsmm) [service] — Vehir unified GPU daemon — serves both embeddings (Qwen3-Embedding-4B, always-on) and MSA rerank (MSA-4B, on-demand). Spawn-based worker isolation, auto model switching. GPU exception per SOUL §7.
+<!-- /TOOLS -->
+
+
 ## §2 The World Boundary
 
 The agent reaches the persistent world — host files, the database, other agents, the network —

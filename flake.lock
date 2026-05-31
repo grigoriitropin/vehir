@@ -16,9 +16,44 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1779560665,
+        "narHash": "sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "64c08a7ca051951c8eae34e3e3cb1e202fe36786",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "spec2c": "spec2c"
+      }
+    },
+    "spec2c": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1780224606,
+        "narHash": "sha256-i4DR1XuXmwwtQJOUSXMH6U9vZz9BIirDU9sqm0A1a0A=",
+        "owner": "grigoriitropin",
+        "repo": "spec2c",
+        "rev": "4e28edbbeb915ad3c2fb2111da18ab65f152e762",
+        "type": "github"
+      },
+      "original": {
+        "owner": "grigoriitropin",
+        "repo": "spec2c",
+        "type": "github"
       }
     }
   },

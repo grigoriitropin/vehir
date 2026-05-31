@@ -1,0 +1,52 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "agent-authored",
+      "patent_grant": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "essentials",
+      "description": "Event-driven daemon — LISTENs for IPM graph changes via PostgreSQL NOTIFY, regenerates tool context block under <!-- TOOLS --> in SOUL.md, detects drift via SHA256 in soul_hashes, signals pain on change",
+      "artifact_type": "service",
+      "artifact_name": "essentials-daemon",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "edges": [
+    {
+      "parent": "essentials",
+      "child": "cjson",
+      "relation": "JSON parsing of idea show output",
+      "link_type": "library",
+      "edge_license": "MIT"
+    },
+    {
+      "parent": "essentials",
+      "child": "ipm",
+      "relation": "calls idea show (subprocess)",
+      "link_type": "conceptual",
+      "edge_license": "Apache-2.0"
+    },
+    {
+      "parent": "essentials",
+      "child": "db",
+      "relation": "stores tool context hash in soul_hashes via db-proxy",
+      "link_type": "library",
+      "edge_license": "Apache-2.0"
+    },
+    {
+      "parent": "essentials",
+      "child": "pain",
+      "relation": "signals tool context drift to pain registry",
+      "link_type": "library",
+      "edge_license": "Apache-2.0"
+    }
+  ]
+}

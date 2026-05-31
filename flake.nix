@@ -3,9 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    spec2c.url = "github:grigoriitropin/spec2c";
   };
 
-  outputs = { self, nixpkgs }: let
+  outputs = { self, nixpkgs, spec2c }: let
     forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
     pkgsFor = system: nixpkgs.legacyPackages.${system};
   in {
@@ -183,6 +184,36 @@
           runHook preInstall
           mkdir -p $out/bin
           cp constitution-validator $out/bin/
+          runHook postInstall
+        '';
+      };
+
+      essentials = pkgs.stdenv.mkDerivation {
+        pname = "essentials-daemon";
+        version = "0.1.0";
+        src = ./core/essentials;
+        buildInputs = [ pkgs.cjson pkgs.openssl pkgs.postgresql
+                        self.packages.${system}.db self.packages.${system}.pain ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            -I${./core/lib} \
+            -I${self.packages.${system}.db}/include \
+            -I${self.packages.${system}.pain}/include \
+            essentials_daemon_scaffold.c \
+            essentials_daemon_core.c \
+            ${./core}/lib/vehir_lib.c \
+            -o essentials-daemon \
+            -lcjson -lssl -lcrypto -lpq \
+            -L${self.packages.${system}.db}/lib -ldb \
+            -L${self.packages.${system}.pain}/lib -lpain
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp essentials-daemon $out/bin/
           runHook postInstall
         '';
       };

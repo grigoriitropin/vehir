@@ -1,0 +1,8 @@
+{
+  "version": "0.2.0",
+  "name": "essentials-daemon",
+  "description": "Event-driven daemon: LISTENs for IPM graph changes via PostgreSQL NOTIFY (idea_changed channel), regenerates tool context block in SOUL.md under <!-- TOOLS --> marker, detects drift via SHA256 in soul_hashes, signals pain on change",
+  "conditions": ["always", "has-db"],
+  "core_params_decl": "",
+  "core_params_call": ""
+}
