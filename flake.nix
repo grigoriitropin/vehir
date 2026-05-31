@@ -145,20 +145,20 @@
         '';
       };
 
-      readme-gen = pkgs.stdenv.mkDerivation {
-        pname = "readme-gen";
+      insert-idea-graph-into-readme = pkgs.stdenv.mkDerivation {
+        pname = "insert-idea-graph-into-readme";
         version = "0.1.0";
-        src = ./core/readme-gen;
+        src = ./core/insert-idea-graph-into-readme;
         buildPhase = ''
           runHook preBuild
           cc ${builtins.toString cflags} -I${./core} \
-            readme_gen.c ${./core}/lib/safe-exec.c -o readme-gen
+            insert-idea-graph-into-readme.c ${./core}/lib/safe-exec.c -o insert-idea-graph-into-readme
           runHook postBuild
         '';
         installPhase = ''
           runHook preInstall
           mkdir -p $out/bin
-          cp readme-gen $out/bin/
+          cp insert-idea-graph-into-readme $out/bin/
           runHook postInstall
         '';
       };

@@ -49,9 +49,9 @@ true as the system evolves.
 - `essentials` (essentials-daemon) [service] — Event-driven daemon — LISTENs for IPM graph changes via PostgreSQL NOTIFY, regenerates tool context block under <!-- TOOLS --> in SOUL.md, detects drift via SHA256 in soul_hashes, signals pain on change
 - `tools-context` (tools-context) [tool] — Emit TOOLS.md agent-context file from IPM graph (idea status → one-liner per working tool)
 - `spec2c-check` (spec2c-check) [tool] — Conformance checker for spec2c-generated C tools — verifies SOUL compliance using ast-grep patterns
-- `msa-engine` (vsm-msa) [service] — MSA-4B daemon — neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL §7.
-- `embed-qwen3-4b` (vsm-embed) [service] — Qwen3-Embedding-4B service — 2560-dim normalized embeddings via transformers 4-bit. GPU/Python exception per SOUL §7.
-- `unified-daemon` (vsmm) [service] — Vehir unified GPU daemon — serves both embeddings (Qwen3-Embedding-4B, always-on) and MSA rerank (MSA-4B, on-demand). Spawn-based worker isolation, auto model switching. GPU exception per SOUL §7.
+- `rerank-memory-with-neural-attention` (vsm-msa) [service] — MSA-4B daemon — neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL §7.
+- `convert-text-to-dense-vectors` (vsm-embed) [service] — Qwen3-Embedding-4B service — 2560-dim normalized embeddings via transformers 4-bit. GPU/Python exception per SOUL §7.
+- `auto-switch-embed-rerank-gpu` (vsmm) [service] — Vehir unified GPU daemon — serves both embeddings (Qwen3-Embedding-4B, always-on) and MSA rerank (MSA-4B, on-demand). Spawn-based worker isolation, auto model switching. GPU exception per SOUL §7.
 <!-- /TOOLS -->
 
 
@@ -269,15 +269,16 @@ This is a security axiom, not a recommendation.
 <naming_law>
 ## §10 Naming (immutable)
 
-A name is the primary documentation. It must make clear what the thing does, how it compares to
-alternatives, and whether it is for humans or machines.
+A name is the primary documentation. It must make clear what the thing does.
 
-- Semantics over technology: the name says WHAT, not HOW. Implementation details live in docs, not
-  names. No version numbers in names.
-- Self-documenting: among several similar tools, the primary one's name reflects that — the user
-  should not have to guess which to run.
-- Entity type is transparent from the name and is consistent within a category.
-- Multi-word names use hyphens; prefer full words over abbreviations except established ones.
+- **Exactly 5 words**, hyphen-separated. No more, no less.
+- **No type words.** Banned: service, server, daemon, library, tool, binary, package, module,
+  system, utility, application, program, process, worker.
+- **Describes WHAT it does**, not what it is or how it is built.
+- **English only.** Full words over abbreviations. Established abbreviations allowed: gpu, cpu,
+  io, ssh, sql, db, api, http, json, yaml, toml.
+- **Self-documenting.** Among several similar tools, the primary one's name reflects that — the
+  user should not have to guess which to run.
 
 </naming_law>
 

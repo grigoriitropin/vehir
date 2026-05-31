@@ -1,0 +1,31 @@
+{
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "spdx_id": "Apache-2.0",
+      "kind": "agent-authored",
+      "patent_grant": true
+    }
+  ],
+  "packages": [
+    {
+      "name": "msa-engine",
+      "description": "MSA-4B daemon — neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL §7.",
+      "artifact_type": "service",
+      "artifact_name": "vsm-msa",
+      "license": "Apache-2.0",
+      "license_version": "0.1.0",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "edges": [
+    {
+      "parent": "msa-engine",
+      "child": "db",
+      "relation": "reads memory_entries through db client lib for memory document prefill",
+      "link_type": "library",
+      "edge_license": "Apache-2.0"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "licenses": [
+    { "name": "Apache-2.0", "spdx_id": "Apache-2.0", "kind": "agent-authored", "patent_grant": true },
+    { "name": "MIT", "spdx_id": "MIT", "kind": "upstream_reference", "patent_grant": false }
+  ],
+  "compat_rules": [
+    { "parent_license": "Apache-2.0", "child_license": "MIT", "link_type": "library", "verdict": "compatible", "reason": "permissive-permissive library: compatible" },
+    { "parent_license": "MIT", "child_license": "Apache-2.0", "link_type": "library", "verdict": "compatible", "reason": "permissive-permissive library: compatible" }
+  ],
+  "programs": [
+    {
+      "name": "insert-idea-graph-into-readme",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "insert-idea-graph-into-readme",
+      "check_type": "nix-build",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    },
+    {
+      "name": "cjson",
+      "author": "Dave Gamble",
+      "version": "1.7",
+      "license": "MIT",
+      "external": true,
+      "artifact_type": "tool",
+      "check_type": "nix-profile"
+    },
+    {
+      "name": "ipm",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "ipm",
+      "check_type": "nix-profile",
+      "repo_url": "https://github.com/grigoriitropin/IPM"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "insert-idea-graph-into-readme",
+      "author": "Vehir",
+      "description": "Reads IPM graph via idea show and replaces marker comments in Markdown files with Mermaid diagrams — keeps README graphs always in sync with the package database.",
+      "is_axiom": false,
+      "program": "insert-idea-graph-into-readme"
+    },
+    {
+      "name": "cjson",
+      "author": "Vehir",
+      "description": "Ultralightweight JSON parser in C — used for structured output formatting when generating graph data for Markdown injection.",
+      "is_axiom": false,
+      "program": "cjson"
+    },
+    {
+      "name": "ipm",
+      "author": "Vehir",
+      "description": "Idea Package Manager — provides the graph query tool that this package calls to generate Markdown diagrams from the database.",
+      "is_axiom": false,
+      "program": "ipm"
+    }
+  ],
+  "edges": [
+    {
+      "parent": "insert-idea-graph-into-readme",
+      "child": "cjson",
+      "author": "Vehir",
+      "description": "Uses cJSON to parse graph output from idea show and format structured data for Markdown injection into README files.",
+      "link_type": "library",
+      "edge_license": "MIT"
+    },
+    {
+      "parent": "insert-idea-graph-into-readme",
+      "child": "ipm",
+      "author": "Vehir",
+      "description": "Calls idea show --md to query the IPM graph database and generate Mermaid diagrams that replace marker comments in documentation files.",
+      "link_type": "conceptual",
+      "edge_license": "Apache-2.0"
+    }
+  ],
+  "program_edges": [
+    {
+      "parent": "insert-idea-graph-into-readme",
+      "child": "cjson",
+      "author": "Vehir",
+      "description": "Links cJSON library for structured JSON output formatting when generating Mermaid diagrams from IPM graph data.",
+      "link_type": "library",
+      "edge_license": "MIT"
+    },
+    {
+      "parent": "insert-idea-graph-into-readme",
+      "child": "ipm",
+      "author": "Vehir",
+      "description": "Calls ipm show --md binary to query the IPM graph database and obtain Mermaid markup for injection into Markdown files.",
+      "link_type": "conceptual",
+      "edge_license": "Apache-2.0"
+    }
+  ]
+}
