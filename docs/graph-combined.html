@@ -1,18 +1,4 @@
-# Vehir — Core Operational Physics
-
-Package graph of LLM agent runtime. Managed by [IPM](https://github.com/grigoriitropin/IPM).
-
-## Architecture
-
-- **Profile manager** — atomic generation symlink-farm, isolated per workspace
-- **ipm-loader** — Stage 1 anti-brick, rollback works even if core is dead
-- **Pre-flight check** — binary verified before every activation
-- **Embedded SQL migrations** — advisory lock, version drift barrier
-- **Audit journal** — append-only JSONL, auto-purge 30 days
-
-## Graph
-
-```mermaid
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>IPM</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><style>body{background:#1a1a2e;color:#e0e0e0;font-family:monospace;margin:0;padding:20px}h1{color:#9b59b6;font-size:14px}#wrap{overflow:hidden;width:100%;height:85vh;position:relative;cursor:grab}.mermaid{display:block!important;position:absolute!important;top:0!important;left:0!important;transform-origin:top left!important}.mermaid svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important}</style></head><body><h1>IPM Graph</h1><div id="wrap"><pre class="mermaid">
 graph TD
   vehir-axiom["vehir-axiom\n[programs: vehir-axiom-program]"]
   openssl["openssl\n[programs: openssl(tool)]"]
@@ -38,9 +24,5 @@ graph TD
   pain -->|"Routes SQL statements through the db client library to write pain events and read cognitive mode from the database\n(Vehir)"| db
   msa-engine -->|"Reads memory entries through the db client library for memory document prefill before neural reranking\n(Vehir)"| db
   embed-qwen3-4b -->|"Stores generated dense vector embeddings in memory_entries table through the db client library for later retrieval and reranking\n(Vehir)"| db
-```
 
-
-
-
-[Interactive: Combined](docs/graph-combined.html) · [Ideas](docs/graph-ideas.html) · [Programs](docs/graph-programs.html)
+</pre></div><script>mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:'dark',themeVariables:{fontSize:'11px'}});mermaid.run().then(function(){var w=document.getElementById('wrap'),m=document.querySelector('.mermaid');if(!w||!m)return;var s=m.tagName==='svg'?m:m.querySelector('svg');if(!s)return;s.removeAttribute('style');s.removeAttribute('width');s.removeAttribute('height');var x=0,y=0,z=1,a,b,d=false;function u(){m.style.transform='translate('+x+'px,'+y+'px) scale('+z+')';}function r(){var sw=0,sh=0,vb=s.getAttribute('viewBox')||'';if(vb){var p=vb.trim().split(/\s+/);sw=+p[2]||0;sh=+p[3]||0}if(!sw||!sh){var bb=s.getBBox();sw=bb.width;sh=bb.height}if(!sw||!sh||sw<10)return;m.style.width=sw+'px';m.style.height=sh+'px';z=Math.min((w.clientWidth-40)/sw,(w.clientHeight-40)/sh);x=(w.clientWidth-sw*z)/2;y=(w.clientHeight-sh*z)/2;u()}r();window.addEventListener('resize',r);w.addEventListener('wheel',function(e){e.preventDefault();var f=e.deltaY<0?1.1:0.9;if(z*f<.01||z*f>30)return;var R=w.getBoundingClientRect(),mx=e.clientX-R.left,my=e.clientY-R.top;x=mx-(mx-x)*f;y=my-(my-y)*f;z*=f;u()},{passive:false});w.addEventListener('mousedown',function(e){d=true;a=e.clientX-x;b=e.clientY-y;w.style.cursor='grabbing'});window.addEventListener('mousemove',function(e){if(!d)return;x=e.clientX-a;y=e.clientY-b;u()});window.addEventListener('mouseup',function(){d=false;w.style.cursor='grab'});});</script></body></html>
