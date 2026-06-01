@@ -36,7 +36,7 @@ static int write_file(const char *path, const char *data, size_t len) {
 static char *run_ipm_show(const char *flags, int *out_len) {
     char tmp_path[256];
     snprintf(tmp_path, sizeof(tmp_path), "/tmp/readme-gen-%d.mermaid", getpid());
-    char cmd[512];
+    char cmd[1024];
     snprintf(cmd, sizeof(cmd), "ipm show --md %s > %s 2>/dev/null", flags ? flags : "--short", tmp_path);
     int rc = system(cmd);
     if (rc != 0) return NULL;
