@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Vehir pre-commit hook — auto-generate graphs via readme-gen
+set -e
+
+README="README.md"
+TOOL="insert-idea-graph-into-readme"
+
+# Find readme-gen: workspace vehir active/bin, or ipm build output, or PATH
+if [ -x ~/.local/state/ipm/workspaces/vehir/active/bin/$TOOL ]; then
+    CMD=~/.local/state/ipm/workspaces/vehir/active/bin/$TOOL
+elif command -v $TOOL >/dev/null 2>&1; then
+    CMD=$TOOL
+else
+    echo "pre-commit: $TOOL not found, skipping graph generation"
+    exit 0
+fi
+
+echo "pre-commit: generating graphs via $TOOL..."
+$CMD "$README" > "$README.tmp" && mv "$README.tmp" "$README"
+git add "$README"
+echo "pre-commit: graphs updated"
+exit 0
