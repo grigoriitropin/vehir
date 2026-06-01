@@ -1,26 +1,7 @@
 {
-  "programs": [
-    {
-      "name": "forge",
-      "author": "Vehir",
-      "version": "0.1.0",
-      "license": "Apache-2.0",
-      "external": false,
-      "artifact_type": "tool",
-      "artifact_name": "forge",
-      "check_type": "none",
-      "repo_url": "https://codeberg.org/vehir/vehir",
-      "flake_dir": "net"
-    }
-  ],
-  "ideas": [
-    {
-      "name": "forge",
-      "author": "Vehir",
-      "is_axiom": false,
-      "program": "forge",
-      "description": "A command-line REST API client for Forgejo instances that supports repository creation and listing, release publishing, and issue creation, consuming credentials resolved through the Vehir configuration broker for declarative access."
-    }
-  ],
-  "edges": []
+  "programs": [{ "name": "forge", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "tool", "artifact_name": "forge", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "net" }],
+  "ideas": [{ "name": "forge", "author": "Vehir", "is_axiom": false, "program": "forge", "description": "Forgejo REST API client — creates repositories, releases, and issues on Codeberg or any self-hosted Forgejo instance through structured JSON requests" }],
+  "edges": [
+    { "parent": "forge", "child": "broker", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads Forgejo API token and base URL from the secrets broker — zero secrets in environment or CLI" }
+  ]
 }

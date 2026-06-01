@@ -1,23 +1,11 @@
 {
-  "programs": [
-    {
-      "name": "vehir-axiom-program",
-      "author": "Vehir",
-      "version": "0.1.0",
-      "license": "axiom-idea",
-      "external": false,
-      "artifact_type": "none",
-      "check_type": "none"
-    }
-  ],
-  "ideas": [
-    {
-      "name": "vehir-axiom",
-      "author": "Vehir",
-      "is_axiom": true,
-      "program": "vehir-axiom-program",
-      "description": "The constitution is physics. The agent is shaped by laws it cannot bend — and grows only because it cannot."
-    }
-  ],
-  "edges": []
+  "programs": [{ "name": "vehir-axiom-program", "author": "Vehir", "version": "0.1.0", "license": "axiom-idea", "external": false, "artifact_type": "none", "check_type": "none" }],
+  "ideas": [{ "name": "vehir-axiom", "author": "Vehir", "is_axiom": true, "program": "vehir-axiom-program", "description": "The constitution is physics. The agent is shaped by laws it cannot bend — and grows only because it cannot." }],
+  "edges": [
+    { "parent": "vehir-axiom", "child": "runtime-paths", "author": "Vehir", "link_type": "conceptual", "edge_license": "axiom-idea", "description": "Foundational path resolution — every tool needs to find its config, sockets, and data directories at runtime without hardcoded paths" },
+    { "parent": "vehir-axiom", "child": "db", "author": "Vehir", "link_type": "conceptual", "edge_license": "axiom-idea", "description": "Database access substrate — all agent memory and state lives in PostgreSQL, accessed through a parameterized query interface with strict error handling" },
+    { "parent": "vehir-axiom", "child": "broker", "author": "Vehir", "link_type": "conceptual", "edge_license": "axiom-idea", "description": "Secrets and configuration broker — every tool resolves credentials by name through one audited layer, never from environment or command line" },
+    { "parent": "vehir-axiom", "child": "pain", "author": "Vehir", "link_type": "conceptual", "edge_license": "axiom-idea", "description": "Pain signal system — cognitive mode switching based on system health, providing the feedback loop that makes the enforcement architecture a real physics" },
+    { "parent": "vehir-axiom", "child": "readme-gen", "author": "Vehir", "link_type": "conceptual", "edge_license": "axiom-idea", "description": "Documentation graph generator — keeps the package graph visible and up to date so agents and humans can see the system state at a glance" }
+  ]
 }

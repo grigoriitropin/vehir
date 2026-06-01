@@ -1,26 +1,7 @@
 {
-  "programs": [
-    {
-      "name": "mail",
-      "author": "Vehir",
-      "version": "0.1.0",
-      "license": "Apache-2.0",
-      "external": false,
-      "artifact_type": "tool",
-      "artifact_name": "mail",
-      "check_type": "none",
-      "repo_url": "https://codeberg.org/vehir/vehir",
-      "flake_dir": "net"
-    }
-  ],
-  "ideas": [
-    {
-      "name": "mail",
-      "author": "Vehir",
-      "is_axiom": false,
-      "program": "mail",
-      "description": "A command-line email client built on libcurl that sends messages via SMTP and fetches them via IMAP, with all credentials resolved through the Vehir configuration broker for declarative identity management."
-    }
-  ],
-  "edges": []
+  "programs": [{ "name": "mail", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "tool", "artifact_name": "mail", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "net" }],
+  "ideas": [{ "name": "mail", "author": "Vehir", "is_axiom": false, "program": "mail", "description": "Email client — sends mail via SMTP and fetches via IMAP using libcurl, all credentials resolved through the secrets broker" }],
+  "edges": [
+    { "parent": "mail", "child": "broker", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads SMTP credentials and IMAP connection settings from the secrets broker — zero secrets in environment or CLI" }
+  ]
 }

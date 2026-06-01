@@ -1,31 +1,5 @@
 {
-  "programs": [
-    {
-      "name": "vehir-config",
-      "author": "Vehir",
-      "version": "0.1.0",
-      "license": "Apache-2.0",
-      "external": false,
-      "artifact_type": "library",
-      "artifact_name": "vehir-config",
-      "check_type": "none",
-      "repo_url": "https://codeberg.org/vehir/vehir",
-      "flake_dir": "core"
-    }
-  ],
-  "ideas": [
-    {
-      "name": "broker",
-      "author": "Vehir",
-      "is_axiom": false,
-      "program": "vehir-config",
-      "description": "Secrets and configuration broker — resolves keys from config file, enforces permissions"
-    }
-  ],
-  "edges": [
-    { "parent": "forge", "child": "broker", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads config via broker for Forgejo API credentials" },
-    { "parent": "mail", "child": "broker", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads config via broker for SMTP credentials" },
-    { "parent": "git-identity", "child": "broker", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads config via broker for git identity" },
-    { "parent": "db-proxy", "child": "broker", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads DB connection string via broker" }
-  ]
+  "programs": [{ "name": "vehir-config", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "library", "artifact_name": "vehir-config", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
+  "ideas": [{ "name": "broker", "author": "Vehir", "is_axiom": false, "program": "vehir-config", "description": "Secrets and configuration broker — resolves keys from config file, enforces permissions, never exposes secrets in process environment or command line" }],
+  "edges": []
 }

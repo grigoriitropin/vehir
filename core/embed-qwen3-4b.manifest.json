@@ -1,43 +1,7 @@
 {
-  "programs": [
-    {
-      "name": "vsm-embed",
-      "author": "Vehir",
-      "version": "0.1.0",
-      "license": "Apache-2.0",
-      "external": false,
-      "artifact_type": "service",
-      "artifact_name": "vsm-embed",
-      "check_type": "none",
-      "repo_url": "https://codeberg.org/vehir/vehir",
-      "flake_dir": "core"
-    }
-  ],
-  "ideas": [
-    {
-      "name": "embed-qwen3-4b",
-      "author": "Vehir",
-      "is_axiom": false,
-      "program": "vsm-embed",
-      "description": "A Python GPU service wrapping the Qwen3-Embedding-4B model via 4-bit transformers quantization, producing 2560-dimensional normalized embeddings over a Unix socket, permitted as a GPU/Python exception under SOUL §7."
-    }
-  ],
+  "programs": [{ "name": "vsm-embed", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "service", "artifact_name": "vsm-embed", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
+  "ideas": [{ "name": "embed-qwen3-4b", "author": "Vehir", "is_axiom": false, "program": "vsm-embed", "description": "Qwen3-Embedding-4B dense vector service — runs as a persistent embedding worker generating 2560-dimensional normalized vectors for semantic search and retrieval" }],
   "edges": [
-    {
-      "parent": "embed-qwen3-4b",
-      "child": "db",
-      "author": "Vehir",
-      "link_type": "library",
-      "edge_license": "Apache-2.0",
-      "description": "Stores generated dense vector embeddings in memory_entries table through the db client library for later retrieval and reranking"
-    },
-    {
-      "parent": "embed-qwen3-4b",
-      "child": "msa-engine",
-      "author": "Vehir",
-      "link_type": "conceptual",
-      "edge_license": "Apache-2.0",
-      "description": "Embeddings produced by this service feed into the MSA-4B neural reranking pipeline as the initial retrieval stage before multi-scale attention rescoring"
-    }
+    { "parent": "embed-qwen3-4b", "child": "db", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking" }
   ]
 }

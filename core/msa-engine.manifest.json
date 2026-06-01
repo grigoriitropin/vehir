@@ -1,35 +1,8 @@
 {
-  "programs": [
-    {
-      "name": "vsm-msa",
-      "author": "Vehir",
-      "version": "0.1.0",
-      "license": "Apache-2.0",
-      "external": false,
-      "artifact_type": "service",
-      "artifact_name": "vsm-msa",
-      "check_type": "none",
-      "repo_url": "https://codeberg.org/vehir/vehir",
-      "flake_dir": "core"
-    }
-  ],
-  "ideas": [
-    {
-      "name": "msa-engine",
-      "author": "Vehir",
-      "is_axiom": false,
-      "program": "vsm-msa",
-      "description": "A GPU-accelerated neural reranking daemon serving the MSA-4B model over a Unix socket that re-orders memory bank retrieval results using multi-scale attention scoring, permitted as a GPU/Python exception under SOUL §7."
-    }
-  ],
+  "programs": [{ "name": "vsm-msa", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "service", "artifact_name": "vsm-msa", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
+  "ideas": [{ "name": "msa-engine", "author": "Vehir", "is_axiom": false, "program": "vsm-msa", "description": "MSA-4B neural reranking service — loads model once as persistent daemon, receives candidate sets and rescore them through multi-scale attention for higher precision retrieval" }],
   "edges": [
-    {
-      "parent": "msa-engine",
-      "child": "db",
-      "author": "Vehir",
-      "link_type": "library",
-      "edge_license": "Apache-2.0",
-      "description": "Reads memory entries through the db client library for memory document prefill before neural reranking"
-    }
+    { "parent": "msa-engine", "child": "db", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads memory entries from the database through the db client library for document prefill before neural reranking" },
+    { "parent": "msa-engine", "child": "embed-qwen3-4b", "author": "Vehir", "link_type": "socket", "edge_license": "Apache-2.0", "description": "Receives dense vector embeddings from the Qwen3 embedding service as the initial retrieval stage before applying multi-scale attention rescoring" }
   ]
 }
