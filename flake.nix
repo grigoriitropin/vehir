@@ -186,24 +186,6 @@
         '';
       };
 
-      insert-idea-graph-into-readme = pkgs.stdenv.mkDerivation {
-        pname = "insert-idea-graph-into-readme";
-        version = "0.1.0";
-        src = ./core/insert-idea-graph-into-readme;
-        buildPhase = ''
-          runHook preBuild
-          cc ${builtins.toString cflags} \
-            readme-gen.c -o insert-idea-graph-into-readme
-          runHook postBuild
-        '';
-        installPhase = ''
-          runHook preInstall
-          mkdir -p $out/bin
-          cp insert-idea-graph-into-readme $out/bin/
-          runHook postInstall
-        '';
-      };
-
       constitution-validator = pkgs.stdenv.mkDerivation {
         pname = "constitution-validator";
         version = "0.1.0";
