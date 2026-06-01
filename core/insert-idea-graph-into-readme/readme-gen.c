@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/stat.h>
 
 #define BUF_SZ 262144
 
@@ -94,9 +93,9 @@ static char *process_marker_block(char *content, size_t *content_len,
     if (!raw) { fprintf(stderr, "readme-gen: ipm show failed for %s\n", label); return content; }
     char *graph = strip_to_raw_mermaid(raw, &raw_len);
 
-    /* Build replacement: start_tag + "\n" + graph + "\n" + end_tag */
+    /* Build replacement: start_tag + newline + graph + newline + end_tag */
     size_t insert_len = start_tag_len + 1 + (size_t)raw_len + 1 + end_tag_len;
-    char *insert = malloc(insert_len + 1);
+    char *insert = malloc(insert_len + 2);
     if (!insert) { free(raw); return content; }
     size_t off = 0;
     memcpy(insert + off, start_tag, start_tag_len); off += start_tag_len;
@@ -108,7 +107,7 @@ static char *process_marker_block(char *content, size_t *content_len,
     insert_len = off;
     free(raw);
 
-    /* Delete old block: everything from start_tag through end_tag+end_tag_len */
+    /* Delete old block, insert new */
     size_t pre_len  = (size_t)(start - content);
     size_t old_block_len = (size_t)(end + end_tag_len - start);
     size_t post_len = *content_len - pre_len - old_block_len;
@@ -165,72 +164,7 @@ static void parse_mode_and_flags(const char *start_tag, char *mode, size_t mode_
     }
 }
 
-/* ── generate interactive HTML ────────────────────────────────────────── */
-
-static int generate_interactive_html(const char *path) {
-    char *flags_arr[] = { "--short", "--ideas --short", "--programs --short" };
-    char *titles[] = { "Combined", "Ideas", "Programs" };
-    int n = 3;
-
-    /* Collect all 3 graphs */
-    char *graphs[3]; int glens[3];
-    for (int i = 0; i < n; i++) {
-        graphs[i] = run_ipm_show(flags_arr[i], &glens[i]);
-        if (!graphs[i]) glens[i] = 0;
-        else { char *g = strip_to_raw_mermaid(graphs[i], &glens[i]); if (g != graphs[i]) memmove(graphs[i], g, (size_t)glens[i]); }
-    }
-
-    FILE *f = fopen(path, "w");
-    if (!f) { for (int i=0;i<n;i++) free(graphs[i]); return -1; }
-    fprintf(f, "<!DOCTYPE html><html lang=en><head><meta charset=utf-8>"
-            "<title>Vehir Interactive Graph</title>"
-            "<script src=https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js></script>"
-            "<style>"
-            "body{background:#0d1117;color:#c9d1d9;font-family:monospace;margin:0;padding:10px}"
-            "h2{color:#58a6ff;font-size:13px;margin:16px 0 4px}"
-            ".wrap{overflow:hidden;width:100%%;position:relative;cursor:grab;"
-            "border:1px solid #30363d;border-radius:6px;background:#161b22}"
-            ".mermaid{display:block!important;transform-origin:top left!important}"
-            ".mermaid svg{display:block!important;max-width:none!important}"
-            "nav{position:sticky;top:0;z-index:10;background:#0d1117;padding:8px 0;"
-            "border-bottom:1px solid #30363d;margin-bottom:8px}"
-            "nav a{color:#58a6ff;text-decoration:none;margin-right:12px;font-size:12px}"
-            "</style></head><body>"
-            "<nav><a href=#combined>Combined</a><a href=#ideas>Ideas</a><a href=#programs>Programs</a></nav>");
-
-    char *ids[] = {"combined", "ideas", "programs"};
-    for (int i = 0; i < n; i++) {
-        fprintf(f, "<h2 id=%s>%s</h2><div class=wrap id=wrap-%s>"
-                "<pre class=mermaid>\n%s\n</pre></div>", ids[i], titles[i], ids[i],
-                glens[i] ? graphs[i] : "graph TD\n  empty[\"no data\"]");
-    }
-
-    fprintf(f, "<script>"
-            "mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:'dark'});"
-            "mermaid.run().then(function(){"
-            "var ws=document.querySelectorAll('.wrap');"
-            "ws.forEach(function(w){"
-            "var m=w.querySelector('.mermaid'),s=m&&m.querySelector('svg');"
-            "if(!s)return;"
-            "var x=0,y=0,z=1,d=false,ax,ay;"
-            "function u(){m.style.transform='translate('+x+'px,'+y+'px) scale('+z+')';}"
-            "w.addEventListener('wheel',function(e){"
-            "e.preventDefault();var f=e.deltaY<0?1.1:0.9;"
-            "if(z*f<.01||z*f>30)return;"
-            "var R=w.getBoundingClientRect();"
-            "x=e.clientX-R.left-(e.clientX-R.left-x)*f;"
-            "y=e.clientY-R.top-(e.clientY-R.top-y)*f;z*=f;u();},{passive:false});"
-            "w.addEventListener('mousedown',function(e){d=true;ax=e.clientX-x;ay=e.clientY-y;w.style.cursor='grabbing';});"
-            "window.addEventListener('mouseup',function(){d=false;w.style.cursor='grab';});"
-            "window.addEventListener('mousemove',function(e){if(!d)return;x=e.clientX-ax;y=e.clientY-ay;u();});"
-            "});});</script></body></html>");
-
-    fclose(f);
-    for (int i = 0; i < n; i++) free(graphs[i]);
-    return 0;
-}
-
-/* ── main ─────────────────────────────────────────────────────────────── */
+/* ── main ─────────────────────────────────────────────────────── */
 
 int main(int argc, char *argv[]) {
     const char *path = (argc > 1) ? argv[1] : "README.md";
@@ -273,30 +207,6 @@ int main(int argc, char *argv[]) {
                                         start_tag, tag_len,
                                         MARKER_END, strlen(MARKER_END),
                                         ipm_flags, mode);
-    }
-
-    /* Insert interactive link before first mermaid block if not already present */
-    if (!strstr(content, "interactive-graph.html")) {
-        char *first_graph = strstr(content, "```mermaid");
-        if (first_graph) {
-            char *line_start = first_graph;
-            while (line_start > content && line_start[-1] != '\n') line_start--;
-            size_t pos = (size_t)(line_start - content);
-            char link_line[256];
-            snprintf(link_line, sizeof(link_line),
-                     "[Open interactive graph (pan/zoom)](./docs/interactive-graph.html)\n\n");
-            size_t link_len = strlen(link_line);
-            char *new_cont = malloc(len + link_len + 1);
-            if (new_cont) {
-                memcpy(new_cont, content, pos);
-                memcpy(new_cont + pos, link_line, link_len);
-                memcpy(new_cont + pos + link_len, content + pos, len - pos);
-                new_cont[len + link_len] = '\0';
-                free(content);
-                content = new_cont;
-                len += link_len;
-            }
-        }
     }
 
     write_file(path, content, len);
