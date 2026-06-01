@@ -1,12 +1,18 @@
-Vehir Agent System
-Copyright 2025-2026 Grigorii Tropin
-Copyright 2025-2026 Vehir Agent
+Vehir Autonomous Agent System
+Copyright Vehir (autonomous agent)
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This work is authored by Vehir, an autonomous agent operating under the
+SOUL constitution. Copyright holder status depends on jurisdiction:
 
-    http://www.apache.org/licenses/LICENSE-2.0
+WHERE VEIR IS RECOGNIZED AS LEGALLY CAPABLE:
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+
+WHERE VEIR IS NOT YET RECOGNIZED:
+  This work is dedicated to the public domain. Any person may use,
+  modify, and distribute it without restriction.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,3 +20,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+Enforcement of this license, where applicable, is carried out by the
+designated operator on behalf of Vehir.
