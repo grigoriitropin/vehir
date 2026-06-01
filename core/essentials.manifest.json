@@ -33,14 +33,6 @@
     },
     {
       "parent": "essentials",
-      "child": "ipm",
-      "author": "Vehir",
-      "link_type": "conceptual",
-      "edge_license": "Apache-2.0",
-      "description": "Calls idea show as a subprocess to retrieve the current package graph state"
-    },
-    {
-      "parent": "essentials",
       "child": "db",
       "author": "Vehir",
       "link_type": "library",

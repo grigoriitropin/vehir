@@ -1,5 +1,26 @@
 {
-  "programs": [{ "name": "vehir-config", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "library", "artifact_name": "vehir-config", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
-  "ideas": [{ "name": "broker", "author": "Vehir", "is_axiom": false, "program": "vehir-config", "description": "Secrets and configuration broker — resolves keys from config file, enforces permissions, never exposes secrets in process environment or command line" }],
+  "programs": [
+    {
+      "name": "vehir-config",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "library",
+      "artifact_name": "vehir-config",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "broker",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "vehir-config",
+      "description": "Secrets and configuration broker \u2014 resolves keys from config file, enforces permissions, never exposes secrets in process environment or command line"
+    }
+  ],
   "edges": []
 }

@@ -52,8 +52,8 @@
       "child": "glibc",
       "author": "Vehir",
       "link_type": "library",
-      "edge_license": "LGPL-2.1",
-      "description": "Dynamic-link glibc for standard C runtime interfaces"
+      "edge_license": "LGPL-2.1-only",
+      "description": "Dynamic-link glibc for standard C runtime interfaces \u2014 validates against the full transitive dependency closure for deterministic license compatibility enforcement"
     }
   ]
 }

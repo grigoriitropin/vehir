@@ -1,1 +1,26 @@
-{"programs":[{"name":"git-identity","author":"Vehir","version":"0.1.0","license":"Apache-2.0","external":false,"artifact_type":"tool","artifact_name":"git-identity","check_type":"none","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],"ideas":[{"name":"git-identity","author":"Vehir","is_axiom":false,"program":"git-identity","description":"Declarative git identity tool — reads git user name and email from config file, applies them via git config --local for consistent commit authorship"}],"edges":[]}
+{
+  "programs": [
+    {
+      "name": "git-identity",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "git-identity",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "git-identity",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "git-identity",
+      "description": "Declarative git identity tool \u2014 reads git user name and email from config file, applies them via git config --local for consistent commit authorship"
+    }
+  ],
+  "edges": []
+}
