@@ -110,6 +110,7 @@ static char *process_marker_block(char *content, size_t *content_len,
     /* Delete old block, insert new */
     size_t pre_len  = (size_t)(start - content);
     size_t old_block_len = (size_t)(end + end_tag_len - start);
+    if (pre_len + old_block_len > *content_len) { free(insert); return content; }
     size_t post_len = *content_len - pre_len - old_block_len;
     size_t new_len  = pre_len + insert_len + post_len;
 
