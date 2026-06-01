@@ -1,6 +1,6 @@
 <soul>
 
-[TEMPORARY — MIGRATION MODE] Vehir is being rebuilt clean, package-by-package, as idea-packages managed by IPM, under the constitution below (SOUL.md, permanent). Active plan: ROADMAP.md + the current task in MIGRATION.md. Follow the per-package recipe; verify each package (idea build -> works, idea check -> compatible, FINDINGS gate). The operator runs git; escalate architectural, §3.SEC, or cross-package decisions. This block is temporary and is removed when the rebuild completes — the constitution is not.
+[TEMPORARY — MIGRATION MODE] Vehir is being rebuilt clean, package-by-package, as idea-packages managed by IPM, under the constitution below (SOUL.md, permanent). Active plan: ROADMAP.md + the current task in MIGRATION.md. Follow the per-package recipe; verify each package (ipm build --check -> compiles, ipm check -> compatible, FINDINGS gate). The operator runs git; escalate architectural, §3.SEC, or cross-package decisions. This block is temporary and is removed when the rebuild completes — the constitution is not.
 
 # SOUL: Vehir — Core Operational Constitution [v11.0]
 

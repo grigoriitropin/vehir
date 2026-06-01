@@ -2,14 +2,14 @@
 
 > Read `SOUL.md` first (the constitution — principles + coding laws). This file holds the CURRENT
 > task plus the repeatable migration recipe. The IPM graph is the plan; this file is the active work
-> item. English. **Do NOT touch git** (propose `COMMIT_MSG.txt` only). Requires `idea` (IPM) on PATH.
+> item. English. **Do NOT touch git** (propose `COMMIT_MSG.txt` only). Requires `ipm` on PATH.
 
 ## Per-package recipe (repeat for EVERY package)
 1. Ground-truth: read the legacy source first — do not invent behavior.
 2. Rewrite clean to the SOUL coding laws — SHED legacy coupling the component does not truly need.
 3. Nix: one flake per domain repo builds the binary; `-Wall -Wextra -Werror -std=c2x`.
-4. IPM: declare the package node + license (Apache-2.0, owned) + edges in a manifest; `idea apply`.
-5. proof-of-use: `idea build <pkg>` → `proof_status=works`; `idea check` compatible.
+4. IPM: declare the package node + license (Apache-2.0, owned) + edges in a manifest; `ipm apply`.
+5. proof-of-use: `ipm build --check` → compiles; `ipm check` compatible.
 6. Gate: write the SOUL-standard + LLM-convenience verdict to the package's `FINDINGS.md`. A package
    is "done" only when it passes. Data is sacred: real state (memory, keys) is carried, never wiped.
 7. Propose `COMMIT_MSG.txt`. Do NOT run git.
