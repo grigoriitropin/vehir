@@ -9,17 +9,19 @@
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <sys/select.h>
 #include <libpq-fe.h>
 
 static volatile sig_atomic_t running = 1;
 static void handle_signal(int sig) { (void)sig; running = 0; }
 
-static void regen(const char *ws, const char *out, const char *extra_args) {
+static void regen(const char *ws, const char *out, const char *extra_args, bool full) {
     char cmd[1024];
+    const char *mode = full ? "" : "--short";
     snprintf(cmd, sizeof(cmd),
-        "IPM_WORKSPACE=%s ipm show --html %s --output %s",
-        ws, extra_args ? extra_args : "", out);
+        "IPM_WORKSPACE=%s ipm show --html %s %s --output %s",
+        ws, mode, extra_args ? extra_args : "", out);
     int rc = system(cmd);
     if (rc != 0)
         fprintf(stderr, "graphd: regenerate %s failed (rc=%d)\n", out, rc);
@@ -28,6 +30,7 @@ static void regen(const char *ws, const char *out, const char *extra_args) {
 int main(int argc, char **argv) {
     const char *ws = "ipm";
     char combined[4096] = {0}, ideas[4096] = {0}, progs[4096] = {0};
+    bool full = false;
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--workspace") == 0 && i+1 < argc) ws = argv[++i];
@@ -39,9 +42,10 @@ int main(int argc, char **argv) {
             snprintf(ideas, sizeof(ideas), "%s/ideas.html", argv[i]);
             snprintf(progs, sizeof(progs), "%s/programs.html", argv[i]);
         }
+        else if (strcmp(argv[i], "--full") == 0) full = true;
         else {
-            fprintf(stderr, "usage: graphd --workspace W --all DIR\n"
-                            "       graphd --workspace W --combined F --ideas F --programs F\n");
+            fprintf(stderr, "usage: graphd --workspace W --all DIR [--full]\n"
+                            "       graphd --workspace W --combined F --ideas F --programs F [--full]\n");
             return 1;
         }
     }
@@ -78,9 +82,9 @@ int main(int argc, char **argv) {
     signal(SIGTERM, handle_signal);
 
     /* Initial generation */
-    if (combined[0]) regen(ws, combined, "");
-    if (ideas[0]) regen(ws, ideas, "--ideas");
-    if (progs[0]) regen(ws, progs, "--programs");
+    if (combined[0]) regen(ws, combined, "", full);
+    if (ideas[0]) regen(ws, ideas, "--ideas", full);
+    if (progs[0]) regen(ws, progs, "--programs", full);
     fprintf(stderr, "graphd: listening on idea_changed, workspace=%s\n", ws);
 
     int sock = PQsocket(conn);
@@ -100,9 +104,9 @@ int main(int argc, char **argv) {
         PGnotify *notify;
         while ((notify = PQnotifies(conn)) != NULL) {
             fprintf(stderr, "graphd: change detected\n");
-            if (combined[0]) regen(ws, combined, "");
-            if (ideas[0]) regen(ws, ideas, "--ideas");
-            if (progs[0]) regen(ws, progs, "--programs");
+            if (combined[0]) regen(ws, combined, "", full);
+            if (ideas[0]) regen(ws, ideas, "--ideas", full);
+            if (progs[0]) regen(ws, progs, "--programs", full);
             PQfreemem(notify);
         }
 
