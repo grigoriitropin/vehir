@@ -8,9 +8,22 @@
 #include <errno.h>
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
-#include "lib/config-loader.h"
+#include "broker.h"
 
 #define PROGNAME "forge"
+
+static void die(const char *msg) {
+    fprintf(stderr, "{\"ok\":false,\"error\":\"%s\"}\n", msg);
+    exit(1);
+}
+
+static char *default_path(void) {
+    const char *home = getenv("HOME");
+    if (!home) return NULL;
+    char *p = malloc(strlen(home) + 32);
+    if (p) sprintf(p, "%s/.config/vehir/env", home);
+    return p;
+}
 
 typedef struct {
     char *data;
@@ -38,7 +51,7 @@ static buf_t buf_new(void) {
     buf_t b = {0};
     b.cap = 4096;
     b.data = malloc(b.cap);
-    if (!b.data) config_die(PROGNAME, "malloc failed");
+    if (!b.data) die( "malloc failed");
     b.data[0] = '\0';
     return b;
 }
@@ -53,7 +66,7 @@ static cJSON *api_request(const char *method, const char *path,
     snprintf(auth, sizeof(auth), "Authorization: token %s", token);
 
     CURL *curl = curl_easy_init();
-    if (!curl) config_die(PROGNAME, "curl_easy_init failed");
+    if (!curl) die( "curl_easy_init failed");
 
     buf_t resp = buf_new();
     curl_easy_setopt(curl, CURLOPT_URL, url);
@@ -88,7 +101,7 @@ static cJSON *api_request(const char *method, const char *path,
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
         free(resp.data);
-        config_die(PROGNAME, msg);
+        die( msg);
     }
 
     long http_code = 0;
@@ -108,7 +121,7 @@ static cJSON *api_request(const char *method, const char *path,
         snprintf(msg, sizeof(msg), "API error %ld: %s (path: %s)", http_code, detail, path);
         if (parsed) cJSON_Delete(parsed);
         free(resp.data);
-        config_die(PROGNAME, msg);
+        die( msg);
     }
 
     free(resp.data);
@@ -116,9 +129,9 @@ static cJSON *api_request(const char *method, const char *path,
     if (!parsed) {
         if (http_code == 204) {
             parsed = cJSON_CreateObject();
-            if (!parsed) config_die(PROGNAME, "cJSON alloc failed");
+            if (!parsed) die( "cJSON alloc failed");
         } else {
-            config_die(PROGNAME, "failed to parse API response JSON");
+            die( "failed to parse API response JSON");
         }
     }
 
@@ -130,10 +143,10 @@ static char *get_authenticated_user(const char *base_url, const char *token) {
     cJSON *login = cJSON_GetObjectItemCaseSensitive(user, "login");
     if (!cJSON_IsString(login) || !login->valuestring[0]) {
         cJSON_Delete(user);
-        config_die(PROGNAME, "could not determine authenticated user login");
+        die( "could not determine authenticated user login");
     }
     char *result = strdup(login->valuestring);
-    if (!result) config_die(PROGNAME, "strdup failed");
+    if (!result) die( "strdup failed");
     cJSON_Delete(user);
     return result;
 }
@@ -141,20 +154,20 @@ static char *get_authenticated_user(const char *base_url, const char *token) {
 static void cmd_repo_create(const char *base_url, const char *token,
                              const char *name, int private, const char *desc) {
     cJSON *body = cJSON_CreateObject();
-    if (!body) config_die(PROGNAME, "cJSON alloc failed");
+    if (!body) die( "cJSON alloc failed");
     cJSON_AddStringToObject(body, "name", name);
     cJSON_AddBoolToObject(body, "private", private);
     if (desc) cJSON_AddStringToObject(body, "description", desc);
 
     char *body_str = cJSON_PrintUnformatted(body);
     cJSON_Delete(body);
-    if (!body_str) config_die(PROGNAME, "cJSON print failed");
+    if (!body_str) die( "cJSON print failed");
 
     cJSON *resp = api_request("POST", "/user/repos", body_str, base_url, token);
     free(body_str);
 
     cJSON *out = cJSON_CreateObject();
-    if (!out) { cJSON_Delete(resp); config_die(PROGNAME, "cJSON alloc failed"); }
+    if (!out) { cJSON_Delete(resp); die( "cJSON alloc failed"); }
 
     cJSON_AddBoolToObject(out, "ok", 1);
     cJSON_AddStringToObject(out, "action", "repo_create");
@@ -176,7 +189,7 @@ static void cmd_repo_create(const char *base_url, const char *token,
     char *s = cJSON_PrintUnformatted(out);
     cJSON_Delete(out);
     cJSON_Delete(resp);
-    if (!s) config_die(PROGNAME, "cJSON print failed");
+    if (!s) die( "cJSON print failed");
     printf("%s\n", s);
     free(s);
 }
@@ -185,7 +198,7 @@ static void cmd_repo_list(const char *base_url, const char *token) {
     int page = 1;
     int limit = 50;
     cJSON *all = cJSON_CreateArray();
-    if (!all) config_die(PROGNAME, "cJSON alloc failed");
+    if (!all) die( "cJSON alloc failed");
 
     for (;;) {
         char path[256];
@@ -206,7 +219,7 @@ static void cmd_repo_list(const char *base_url, const char *token) {
         for (int i = 0; i < count; i++) {
             cJSON *repo = cJSON_GetArrayItem(resp, i);
             cJSON *entry = cJSON_CreateObject();
-            if (!entry) { cJSON_Delete(resp); cJSON_Delete(all); config_die(PROGNAME, "cJSON alloc failed"); }
+            if (!entry) { cJSON_Delete(resp); cJSON_Delete(all); die( "cJSON alloc failed"); }
 
             cJSON *fn = cJSON_GetObjectItemCaseSensitive(repo, "full_name");
             if (cJSON_IsString(fn)) cJSON_AddStringToObject(entry, "full_name", fn->valuestring);
@@ -229,7 +242,7 @@ static void cmd_repo_list(const char *base_url, const char *token) {
     }
 
     cJSON *out = cJSON_CreateObject();
-    if (!out) { cJSON_Delete(all); config_die(PROGNAME, "cJSON alloc failed"); }
+    if (!out) { cJSON_Delete(all); die( "cJSON alloc failed"); }
     cJSON_AddBoolToObject(out, "ok", 1);
     cJSON_AddStringToObject(out, "action", "repo_list");
     cJSON_AddNumberToObject(out, "count", cJSON_GetArraySize(all));
@@ -237,7 +250,7 @@ static void cmd_repo_list(const char *base_url, const char *token) {
 
     char *s = cJSON_PrintUnformatted(out);
     cJSON_Delete(out);
-    if (!s) config_die(PROGNAME, "cJSON print failed");
+    if (!s) die( "cJSON print failed");
     printf("%s\n", s);
     free(s);
 }
@@ -252,19 +265,19 @@ static void cmd_release_create(const char *base_url, const char *token,
     free(owner);
 
     cJSON *body = cJSON_CreateObject();
-    if (!body) config_die(PROGNAME, "cJSON alloc failed");
+    if (!body) die( "cJSON alloc failed");
     cJSON_AddStringToObject(body, "tag_name", tag);
     if (notes) cJSON_AddStringToObject(body, "body", notes);
 
     char *body_str = cJSON_PrintUnformatted(body);
     cJSON_Delete(body);
-    if (!body_str) config_die(PROGNAME, "cJSON print failed");
+    if (!body_str) die( "cJSON print failed");
 
     cJSON *resp = api_request("POST", path, body_str, base_url, token);
     free(body_str);
 
     cJSON *out = cJSON_CreateObject();
-    if (!out) { cJSON_Delete(resp); config_die(PROGNAME, "cJSON alloc failed"); }
+    if (!out) { cJSON_Delete(resp); die( "cJSON alloc failed"); }
     cJSON_AddBoolToObject(out, "ok", 1);
     cJSON_AddStringToObject(out, "action", "release_create");
     cJSON_AddStringToObject(out, "tag", tag);
@@ -279,7 +292,7 @@ static void cmd_release_create(const char *base_url, const char *token,
     char *s = cJSON_PrintUnformatted(out);
     cJSON_Delete(out);
     cJSON_Delete(resp);
-    if (!s) config_die(PROGNAME, "cJSON print failed");
+    if (!s) die( "cJSON print failed");
     printf("%s\n", s);
     free(s);
 }
@@ -294,19 +307,19 @@ static void cmd_issue_create(const char *base_url, const char *token,
     free(owner);
 
     cJSON *body = cJSON_CreateObject();
-    if (!body) config_die(PROGNAME, "cJSON alloc failed");
+    if (!body) die( "cJSON alloc failed");
     cJSON_AddStringToObject(body, "title", title);
     if (body_text) cJSON_AddStringToObject(body, "body", body_text);
 
     char *body_str = cJSON_PrintUnformatted(body);
     cJSON_Delete(body);
-    if (!body_str) config_die(PROGNAME, "cJSON print failed");
+    if (!body_str) die( "cJSON print failed");
 
     cJSON *resp = api_request("POST", path, body_str, base_url, token);
     free(body_str);
 
     cJSON *out = cJSON_CreateObject();
-    if (!out) { cJSON_Delete(resp); config_die(PROGNAME, "cJSON alloc failed"); }
+    if (!out) { cJSON_Delete(resp); die( "cJSON alloc failed"); }
     cJSON_AddBoolToObject(out, "ok", 1);
     cJSON_AddStringToObject(out, "action", "issue_create");
     cJSON_AddStringToObject(out, "repo", repo);
@@ -323,7 +336,7 @@ static void cmd_issue_create(const char *base_url, const char *token,
     char *s = cJSON_PrintUnformatted(out);
     cJSON_Delete(out);
     cJSON_Delete(resp);
-    if (!s) config_die(PROGNAME, "cJSON print failed");
+    if (!s) die( "cJSON print failed");
     printf("%s\n", s);
     free(s);
 }
@@ -377,21 +390,21 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "--config") == 0) {
         if (argc < 3) usage(argv[0]);
         cfg_path = strdup(argv[2]);
-        if (!cfg_path) config_die(PROGNAME, "strdup failed");
+        if (!cfg_path) die( "strdup failed");
         arg_off = 3;
     }
 
     if (arg_off >= argc) usage(argv[0]);
 
-    if (!cfg_path) cfg_path = config_default_path(PROGNAME);
+    if (!cfg_path) cfg_path = default_path();
 
-    cfg_t *cfg = config_load(cfg_path, PROGNAME);
+    br_cfg_t *cfg = broker_load(cfg_path, PROGNAME);
     free(cfg_path);
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
-    const char *base_url = config_require(cfg, "FORGE_BASE_URL", PROGNAME);
-    const char *token = config_require(cfg, "FORGE_TOKEN", PROGNAME);
+    const char *base_url = broker_get(cfg, "FORGE_BASE_URL");
+    const char *token = broker_get(cfg, "FORGE_TOKEN");
 
     if (strcmp(argv[arg_off], "repo") == 0) {
         if (arg_off + 1 >= argc) usage(argv[0]);
@@ -406,7 +419,7 @@ int main(int argc, char *argv[]) {
             cmd_repo_list(base_url, token);
         } else {
             fprintf(stderr, "forge: unknown repo command '%s'\n", argv[arg_off + 1]);
-            config_free(cfg);
+            broker_free(cfg);
             curl_global_cleanup();
             return 2;
         }
@@ -421,7 +434,7 @@ int main(int argc, char *argv[]) {
             cmd_release_create(base_url, token, repo, tag, notes);
         } else {
             fprintf(stderr, "forge: unknown release command '%s'\n", argv[arg_off + 1]);
-            config_free(cfg);
+            broker_free(cfg);
             curl_global_cleanup();
             return 2;
         }
@@ -436,18 +449,18 @@ int main(int argc, char *argv[]) {
             cmd_issue_create(base_url, token, repo, title, body_text);
         } else {
             fprintf(stderr, "forge: unknown issue command '%s'\n", argv[arg_off + 1]);
-            config_free(cfg);
+            broker_free(cfg);
             curl_global_cleanup();
             return 2;
         }
     } else {
         fprintf(stderr, "forge: unknown command '%s'\n", argv[arg_off]);
-        config_free(cfg);
+        broker_free(cfg);
         curl_global_cleanup();
         return 2;
     }
 
-    config_free(cfg);
+    broker_free(cfg);
     curl_global_cleanup();
     return 0;
 }

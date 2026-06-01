@@ -10,9 +10,22 @@
 #include <strings.h>
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
-#include "lib/config-loader.h"
+#include "broker.h"
 
-#define PROGNAME "mail"
+
+static void die(const char *msg) {
+    fprintf(stderr, "{\"ok\":false,\"error\":\"%s\"}\n", msg);
+    exit(1);
+}
+
+static char *default_path(void) {
+    const char *home = getenv("HOME");
+    if (!home) return NULL;
+    char *p = malloc(strlen(home) + 32);
+    if (p) sprintf(p, "%s/.config/vehir/env", home);
+    return p;
+}
+
 
 typedef struct {
     char *data;
@@ -46,7 +59,7 @@ static buf_t buf_new(void) {
     buf_t b = {0};
     b.cap = 4096;
     b.data = malloc(b.cap);
-    if (!b.data) config_die(PROGNAME, "malloc failed");
+    if (!b.data) die( "malloc failed");
     b.data[0] = '\0';
     return b;
 }
@@ -56,7 +69,7 @@ static void buf_append(buf_t *b, const char *s) {
     if (b->len + slen + 1 > b->cap) {
         size_t newcap = (b->cap + slen + 1) * 2;
         char *tmp = realloc(b->data, newcap);
-        if (!tmp) config_die(PROGNAME, "realloc failed");
+        if (!tmp) die( "realloc failed");
         b->data = tmp;
         b->cap = newcap;
     }
@@ -84,7 +97,7 @@ static char *read_stdin(void) {
         if (b.len + n + 1 > b.cap) {
             size_t newcap = (b.cap + n + 1) * 2;
             char *t = realloc(b.data, newcap);
-            if (!t) { free(b.data); config_die(PROGNAME, "realloc failed"); }
+            if (!t) { free(b.data); die( "realloc failed"); }
             b.data = t;
             b.cap = newcap;
         }
@@ -92,7 +105,7 @@ static char *read_stdin(void) {
         b.len += n;
         b.data[b.len] = '\0';
     }
-    if (ferror(stdin)) { free(b.data); config_die(PROGNAME, "failed to read stdin"); }
+    if (ferror(stdin)) { free(b.data); die( "failed to read stdin"); }
     return b.data;
 }
 
@@ -101,7 +114,7 @@ static char *read_file_contents(const char *path) {
     if (!f) {
         char msg[512];
         snprintf(msg, sizeof(msg), "cannot open file: %s: %s", path, strerror(errno));
-        config_die(PROGNAME, msg);
+        die( msg);
     }
     buf_t b = buf_new();
     char tmp[4096];
@@ -110,7 +123,7 @@ static char *read_file_contents(const char *path) {
         if (b.len + n + 1 > b.cap) {
             size_t newcap = (b.cap + n + 1) * 2;
             char *t = realloc(b.data, newcap);
-            if (!t) { free(b.data); fclose(f); config_die(PROGNAME, "realloc failed"); }
+            if (!t) { free(b.data); fclose(f); die( "realloc failed"); }
             b.data = t;
             b.cap = newcap;
         }
@@ -120,7 +133,7 @@ static char *read_file_contents(const char *path) {
     }
     int err = ferror(f);
     fclose(f);
-    if (err) { free(b.data); config_die(PROGNAME, "read error on body file"); }
+    if (err) { free(b.data); die( "read error on body file"); }
     return b.data;
 }
 
@@ -128,11 +141,11 @@ static void cmd_send(const char *smtp_url, const char *user, const char *pass,
                       const char *to, const char *subject, const char *body) {
     char date_buf[128];
     time_t now = time(NULL);
-    if (now == (time_t)-1) config_die(PROGNAME, "time() failed");
+    if (now == (time_t)-1) die( "time() failed");
     struct tm tm_buf;
-    if (!localtime_r(&now, &tm_buf)) config_die(PROGNAME, "localtime_r failed");
+    if (!localtime_r(&now, &tm_buf)) die( "localtime_r failed");
     if (strftime(date_buf, sizeof(date_buf), "%a, %d %b %Y %H:%M:%S %z", &tm_buf) == 0)
-        config_die(PROGNAME, "strftime failed");
+        die( "strftime failed");
 
     buf_t msg = buf_new();
     char hdr[2048];
@@ -151,7 +164,7 @@ static void cmd_send(const char *smtp_url, const char *user, const char *pass,
     upload_t ud = { .data = msg.data, .len = msg.len, .pos = 0 };
 
     CURL *curl = curl_easy_init();
-    if (!curl) { free(msg.data); config_die(PROGNAME, "curl_easy_init failed"); }
+    if (!curl) { free(msg.data); die( "curl_easy_init failed"); }
 
     curl_easy_setopt(curl, CURLOPT_URL, smtp_url);
     curl_easy_setopt(curl, CURLOPT_USERNAME, user);
@@ -161,7 +174,7 @@ static void cmd_send(const char *smtp_url, const char *user, const char *pass,
 
     struct curl_slist *rcpt = NULL;
     rcpt = curl_slist_append(rcpt, to);
-    if (!rcpt) { free(msg.data); curl_easy_cleanup(curl); config_die(PROGNAME, "curl_slist_append failed"); }
+    if (!rcpt) { free(msg.data); curl_easy_cleanup(curl); die( "curl_slist_append failed"); }
     curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, rcpt);
 
     curl_easy_setopt(curl, CURLOPT_READFUNCTION, read_cb);
@@ -176,11 +189,11 @@ static void cmd_send(const char *smtp_url, const char *user, const char *pass,
     if (res != CURLE_OK) {
         char errmsg[512];
         snprintf(errmsg, sizeof(errmsg), "SMTP send failed: %s", curl_easy_strerror(res));
-        config_die(PROGNAME, errmsg);
+        die( errmsg);
     }
 
     cJSON *out = cJSON_CreateObject();
-    if (!out) config_die(PROGNAME, "cJSON alloc failed");
+    if (!out) die( "cJSON alloc failed");
     cJSON_AddBoolToObject(out, "ok", 1);
     cJSON_AddStringToObject(out, "action", "send");
     cJSON_AddStringToObject(out, "to", to);
@@ -189,7 +202,7 @@ static void cmd_send(const char *smtp_url, const char *user, const char *pass,
 
     char *s = cJSON_PrintUnformatted(out);
     cJSON_Delete(out);
-    if (!s) config_die(PROGNAME, "cJSON print failed");
+    if (!s) die( "cJSON print failed");
     printf("%s\n", s);
     free(s);
 }
@@ -202,7 +215,7 @@ static int *parse_search_uids(const char *data, int *count) {
 
     int cap = 64;
     int *uids = malloc((size_t)cap * sizeof(int));
-    if (!uids) config_die(PROGNAME, "malloc failed");
+    if (!uids) die( "malloc failed");
 
     while (*p) {
         while (*p == ' ' || *p == '\r' || *p == '\n') p++;
@@ -213,7 +226,7 @@ static int *parse_search_uids(const char *data, int *count) {
         if (*count >= cap) {
             cap *= 2;
             int *tmp = realloc(uids, (size_t)cap * sizeof(int));
-            if (!tmp) { free(uids); config_die(PROGNAME, "realloc failed"); }
+            if (!tmp) { free(uids); die( "realloc failed"); }
             uids = tmp;
         }
         uids[*count] = (int)val;
@@ -234,7 +247,7 @@ static char *extract_header(const char *headers, const char *name) {
             while (*end && *end != '\r' && *end != '\n') end++;
             size_t vlen = (size_t)(end - val);
             char *result = malloc(vlen + 1);
-            if (!result) config_die(PROGNAME, "malloc failed");
+            if (!result) die( "malloc failed");
             memcpy(result, val, vlen);
             result[vlen] = '\0';
             return result;
@@ -251,7 +264,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
     snprintf(search_url, sizeof(search_url), "%s/%s", imap_url, mailbox);
 
     CURL *curl = curl_easy_init();
-    if (!curl) config_die(PROGNAME, "curl_easy_init failed");
+    if (!curl) die( "curl_easy_init failed");
 
     buf_t resp = buf_new();
     curl_easy_setopt(curl, CURLOPT_URL, search_url);
@@ -268,7 +281,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
         char msg[512];
         snprintf(msg, sizeof(msg), "IMAP SEARCH failed: %s", curl_easy_strerror(res));
         free(resp.data);
-        config_die(PROGNAME, msg);
+        die( msg);
     }
 
     int uid_count = 0;
@@ -279,7 +292,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
     int start = (uid_count > limit) ? uid_count - limit : 0;
 
     cJSON *messages = cJSON_CreateArray();
-    if (!messages) { free(uids); config_die(PROGNAME, "cJSON alloc failed"); }
+    if (!messages) { free(uids); die( "cJSON alloc failed"); }
 
     for (int i = start; i < uid_count; i++) {
         char fetch_url[1024];
@@ -287,7 +300,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
                  imap_url, mailbox, uids[i]);
 
         CURL *fc = curl_easy_init();
-        if (!fc) { free(uids); cJSON_Delete(messages); config_die(PROGNAME, "curl_easy_init failed"); }
+        if (!fc) { free(uids); cJSON_Delete(messages); die( "curl_easy_init failed"); }
 
         buf_t fbuf = buf_new();
         curl_easy_setopt(fc, CURLOPT_URL, fetch_url);
@@ -310,7 +323,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
         free(fbuf.data);
 
         cJSON *entry = cJSON_CreateObject();
-        if (!entry) { free(from); free(subj); free(date); free(uids); cJSON_Delete(messages); config_die(PROGNAME, "cJSON alloc failed"); }
+        if (!entry) { free(from); free(subj); free(date); free(uids); cJSON_Delete(messages); die( "cJSON alloc failed"); }
         cJSON_AddNumberToObject(entry, "uid", uids[i]);
         cJSON_AddStringToObject(entry, "from", from ? from : "");
         cJSON_AddStringToObject(entry, "subject", subj ? subj : "");
@@ -325,7 +338,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
     free(uids);
 
     cJSON *out = cJSON_CreateObject();
-    if (!out) { cJSON_Delete(messages); config_die(PROGNAME, "cJSON alloc failed"); }
+    if (!out) { cJSON_Delete(messages); die( "cJSON alloc failed"); }
     cJSON_AddBoolToObject(out, "ok", 1);
     cJSON_AddStringToObject(out, "action", "fetch");
     cJSON_AddStringToObject(out, "mailbox", mailbox);
@@ -335,7 +348,7 @@ static void cmd_fetch(const char *imap_url, const char *user, const char *pass,
 
     char *s = cJSON_PrintUnformatted(out);
     cJSON_Delete(out);
-    if (!s) config_die(PROGNAME, "cJSON print failed");
+    if (!s) die( "cJSON print failed");
     printf("%s\n", s);
     free(s);
 }
@@ -387,29 +400,29 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "--config") == 0) {
         if (argc < 3) usage(argv[0]);
         cfg_path = strdup(argv[2]);
-        if (!cfg_path) config_die(PROGNAME, "strdup failed");
+        if (!cfg_path) die( "strdup failed");
         arg_off = 3;
     }
 
     if (arg_off >= argc) usage(argv[0]);
 
-    if (!cfg_path) cfg_path = config_default_path(PROGNAME);
+    if (!cfg_path) cfg_path = default_path();
 
-    cfg_t *cfg = config_load(cfg_path, PROGNAME);
+    br_cfg_t *cfg = broker_load(cfg_path, PROGNAME);
     free(cfg_path);
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
     if (strcmp(argv[arg_off], "send") == 0) {
-        const char *smtp_url = config_require(cfg, "MAIL_SMTP_URL", PROGNAME);
-        const char *user = config_require(cfg, "MAIL_USER", PROGNAME);
-        const char *pass = config_require(cfg, "MAIL_PASS", PROGNAME);
+        const char *smtp_url = broker_get(cfg, "MAIL_SMTP_URL");
+        const char *user = broker_get(cfg, "MAIL_USER");
+        const char *pass = broker_get(cfg, "MAIL_PASS");
 
         const char *to = find_opt(argc, argv, arg_off + 1, "--to");
         const char *subject = find_opt(argc, argv, arg_off + 1, "--subject");
         if (!to || !subject) {
             fprintf(stderr, "mail: --to and --subject are required for send\n");
-            config_free(cfg);
+            broker_free(cfg);
             curl_global_cleanup();
             return 2;
         }
@@ -425,9 +438,9 @@ int main(int argc, char *argv[]) {
         cmd_send(smtp_url, user, pass, to, subject, body);
         free(body);
     } else if (strcmp(argv[arg_off], "fetch") == 0) {
-        const char *imap_url = config_require(cfg, "MAIL_IMAP_URL", PROGNAME);
-        const char *user = config_require(cfg, "MAIL_USER", PROGNAME);
-        const char *pass = config_require(cfg, "MAIL_PASS", PROGNAME);
+        const char *imap_url = broker_get(cfg, "MAIL_IMAP_URL");
+        const char *user = broker_get(cfg, "MAIL_USER");
+        const char *pass = broker_get(cfg, "MAIL_PASS");
 
         const char *mailbox = find_opt(argc, argv, arg_off + 1, "--mailbox");
         if (!mailbox) mailbox = "INBOX";
@@ -436,12 +449,12 @@ int main(int argc, char *argv[]) {
         cmd_fetch(imap_url, user, pass, mailbox, unseen);
     } else {
         fprintf(stderr, "mail: unknown command '%s'\n", argv[arg_off]);
-        config_free(cfg);
+        broker_free(cfg);
         curl_global_cleanup();
         return 2;
     }
 
-    config_free(cfg);
+    broker_free(cfg);
     curl_global_cleanup();
     return 0;
 }

@@ -163,6 +163,45 @@
         '';
       };
 
+      broker = pkgs.stdenv.mkDerivation {
+        pname = "vehir-config";
+        version = "0.1.0";
+        src = ./core/broker;
+        buildInputs = [ pkgs.cjson ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} -c broker.c -o broker.o
+          ar rcs libvehir-config.a broker.o
+          cc ${builtins.toString cflags} broker.c -o broker -lcjson
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin $out/lib $out/include
+          cp broker $out/bin/
+          cp libvehir-config.a $out/lib/
+          cp broker.h $out/include/
+          runHook postInstall
+        '';
+      };
+        pname = "insert-idea-graph-into-readme";
+        version = "0.1.0";
+        src = ./core/insert-idea-graph-into-readme;
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            readme-gen.c -o insert-idea-graph-into-readme
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp insert-idea-graph-into-readme $out/bin/
+          runHook postInstall
+        '';
+      };
+
       constitution-validator = pkgs.stdenv.mkDerivation {
         pname = "constitution-validator";
         version = "0.1.0";
@@ -222,13 +261,15 @@
         pname = "forge";
         version = "0.1.0";
         src = ./net/forge;
-        buildInputs = [ pkgs.cjson pkgs.curl ];
+        buildInputs = [ pkgs.cjson pkgs.curl self.packages.${system}.broker ];
         nativeBuildInputs = [ pkgs.pkg-config ];
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} -I${./core} \
+          cc ${builtins.toString cflags} \
+            -I${self.packages.${system}.broker}/include \
             $(pkg-config --cflags --libs libcurl libcjson) \
-            forge.c ${./core}/lib/config-loader.c -o forge
+            forge.c -o forge \
+            -L${self.packages.${system}.broker}/lib -lvehir-config
           runHook postBuild
         '';
         installPhase = ''
@@ -243,13 +284,15 @@
         pname = "mail";
         version = "0.1.0";
         src = ./net/mail;
-        buildInputs = [ pkgs.cjson pkgs.curl ];
+        buildInputs = [ pkgs.cjson pkgs.curl self.packages.${system}.broker ];
         nativeBuildInputs = [ pkgs.pkg-config ];
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} -I${./core} \
+          cc ${builtins.toString cflags} \
+            -I${self.packages.${system}.broker}/include \
             $(pkg-config --cflags --libs libcurl libcjson) \
-            mail.c ${./core}/lib/config-loader.c -o mail
+            mail.c -o mail \
+            -L${self.packages.${system}.broker}/lib -lvehir-config
           runHook postBuild
         '';
         installPhase = ''
