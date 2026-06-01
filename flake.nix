@@ -310,6 +310,29 @@
         '';
       };
 
+      mail = pkgs.stdenv.mkDerivation {
+        pname = "mail";
+        version = "0.1.0";
+        src = ./net/mail;
+        buildInputs = [ pkgs.cjson pkgs.curl self.packages.${system}.broker ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildPhase = ''
+          runHook preBuild
+          cc ${builtins.toString cflags} \
+            -I${self.packages.${system}.broker}/include \
+            $(pkg-config --cflags --libs libcurl libcjson) \
+            mail.c -o mail \
+            -L${self.packages.${system}.broker}/lib -lvehir-config
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          cp mail $out/bin/
+          runHook postInstall
+        '';
+      };
+
       default = self.packages.${system}.file-age;
     });
   };
