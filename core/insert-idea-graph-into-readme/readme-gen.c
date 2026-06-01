@@ -100,7 +100,7 @@ static char *process_marker_block(char *content, size_t *content_len,
     size_t off = 0;
     memcpy(insert + off, start_tag, start_tag_len); off += start_tag_len;
     insert[off++] = '\n';
-    memcpy(insert + off, graph, (size_t)raw_len); off += (size_t)raw_len;
+    if (raw_len > 0) { memcpy(insert + off, graph, (size_t)raw_len); off += (size_t)raw_len; }
     if (off > 0 && insert[off-1] != '\n') insert[off++] = '\n';
     memcpy(insert + off, end_tag, end_tag_len); off += end_tag_len;
     insert[off] = '\0';
