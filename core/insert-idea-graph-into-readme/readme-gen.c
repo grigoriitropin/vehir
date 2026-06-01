@@ -186,9 +186,9 @@ int main(int argc, char *argv[]) {
     if (!content) { fprintf(stderr, "readme-gen: cannot read %s\n", path); return 1; }
 
     /* Find all vehir:graph markers and process them idempotently */
-    int iter = 0;
-    while (iter++ < 10) {
-        char *tag_start = strstr(content, MARKER_START);
+    char *scan_pos = content;
+    while (1) {
+        char *tag_start = strstr(scan_pos, MARKER_START);
         if (!tag_start) break;
         char *tag_end = strstr(tag_start, "-->");
         if (!tag_end) break;
@@ -220,6 +220,11 @@ int main(int argc, char *argv[]) {
                                         start_tag, tag_len,
                                         MARKER_END, strlen(MARKER_END),
                                         ipm_flags, mode);
+        /* Advance scan_pos past this processed block in the new content */
+        scan_pos = strstr(content, start_tag);
+        if (scan_pos) scan_pos = strstr(scan_pos, MARKER_END);
+        if (scan_pos) scan_pos += strlen(MARKER_END);
+        if (!scan_pos) scan_pos = content;
     }
 
     write_file(path, content, len);
