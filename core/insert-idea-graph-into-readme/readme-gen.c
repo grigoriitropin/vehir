@@ -55,10 +55,16 @@ static char *strip_mermaid_wrapper(char *raw, int *out_len) {
         len -= 8;
         raw[len] = '\0';
     }
-    /* strip trailing ``` */
+    /* skip leading blank line + ```mermaid\n if present */
+    while (len > 0 && raw[0] == '\n') { memmove(raw, raw + 1, (size_t)(--len)); raw[len] = '\0'; }
+    if (len > 11 && !strncmp(raw, "```mermaid\n", 11)) {
+        memmove(raw, raw + 11, (size_t)(len - 11));
+        len -= 11;
+        raw[len] = '\0';
+    }
+    /* strip trailing \n``` */
     while (len > 0 && raw[len-1] == '\n') raw[--len] = '\0';
     if (len > 3 && !strncmp(raw + len - 3, "```", 3)) {
-        /* remove trailing ``` */
         len -= 3;
         while (len > 0 && raw[len-1] == '\n') raw[--len] = '\0';
         raw[len] = '\0';
