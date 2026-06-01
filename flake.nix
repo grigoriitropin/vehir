@@ -185,6 +185,8 @@
           runHook postInstall
         '';
       };
+
+      insert-idea-graph-into-readme = pkgs.stdenv.mkDerivation {
         pname = "insert-idea-graph-into-readme";
         version = "0.1.0";
         src = ./core/insert-idea-graph-into-readme;
