@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "file-age",
+      "name": "check-json-file-timestamp-age",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "file-age",
+      "artifact_name": "check-json-file-timestamp-age",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,10 +15,10 @@
   ],
   "ideas": [
     {
-      "name": "file-age",
+      "name": "check-json-file-timestamp-age",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "file-age",
+      "program": "check-json-file-timestamp-age",
       "description": "A CLI tool that inspects a JSON file's timestamp field and reports whether the recorded age falls within a specified maximum threshold, returning a clean exit code suitable for shell scripting."
     }
   ],

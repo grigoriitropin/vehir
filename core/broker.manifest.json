@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "vehir-config",
+      "name": "resolve-secrets-config-from-file",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "library",
-      "artifact_name": "vehir-config",
+      "artifact_name": "resolve-secrets-config-from-file",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,10 +15,10 @@
   ],
   "ideas": [
     {
-      "name": "broker",
+      "name": "resolve-configuration-secrets-from-file",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "vehir-config",
+      "program": "resolve-secrets-config-from-file",
       "description": "Secrets and configuration broker \u2014 resolves keys from config file, enforces permissions, never exposes secrets in process environment or command line"
     }
   ],

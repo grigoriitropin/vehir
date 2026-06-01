@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "essentials-daemon",
+      "name": "listen-change-regenerate-tools-context",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "service",
-      "artifact_name": "essentials-daemon",
+      "artifact_name": "listen-change-regenerate-tools-context",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,16 +15,16 @@
   ],
   "ideas": [
     {
-      "name": "essentials",
+      "name": "regenerate-agent-context-on-change",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "essentials-daemon",
+      "program": "listen-change-regenerate-tools-context",
       "description": "Event-driven daemon that listens for IPM graph changes via PostgreSQL NOTIFY, regenerates the tool context block under <!-- TOOLS --> in SOUL.md, detects drift via SHA256 in soul_hashes, and signals pain on change."
     }
   ],
   "edges": [
     {
-      "parent": "essentials",
+      "parent": "regenerate-agent-context-on-change",
       "child": "cjson",
       "author": "Vehir",
       "link_type": "library",
@@ -32,16 +32,16 @@
       "description": "JSON parsing of idea show output for tool context block regeneration"
     },
     {
-      "parent": "essentials",
-      "child": "db",
+      "parent": "regenerate-agent-context-on-change",
+      "child": "send-parameterized-sql-over-socket",
       "author": "Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Stores the regenerated tool context hash in the soul_hashes table through the db-proxy gateway for drift detection"
     },
     {
-      "parent": "essentials",
-      "child": "pain",
+      "parent": "regenerate-agent-context-on-change",
+      "child": "write-pain-signals-to-registry",
       "author": "Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",

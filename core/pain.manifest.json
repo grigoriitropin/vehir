@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "pain-check",
+      "name": "check-pain-write-signals-mode",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "pain-check",
+      "artifact_name": "check-pain-write-signals-mode",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,17 +15,17 @@
   ],
   "ideas": [
     {
-      "name": "pain",
+      "name": "write-pain-signals-to-registry",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "pain-check",
+      "program": "check-pain-write-signals-mode",
       "description": "A C library that writes structured pain signals into the pain_registry table through the db-proxy gateway and reads back the current cognitive mode level, driving the agent's behavioral shift between architect, mechanic, trauma surgeon, and crisis modes."
     }
   ],
   "edges": [
     {
-      "parent": "pain",
-      "child": "db",
+      "parent": "write-pain-signals-to-registry",
+      "child": "send-parameterized-sql-over-socket",
       "author": "Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",

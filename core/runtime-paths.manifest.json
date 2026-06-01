@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "runtime-paths-probe",
+      "name": "probe-runtime-paths-before-execution",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "runtime-paths-probe",
+      "artifact_name": "probe-runtime-paths-before-execution",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,10 +15,10 @@
   ],
   "ideas": [
     {
-      "name": "runtime-paths",
+      "name": "resolve-runtime-paths-for-processes",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "runtime-paths-probe",
+      "program": "probe-runtime-paths-before-execution",
       "description": "A C library that resolves runtime paths dynamically from the executable's own location, configuration files, and the database, ensuring no hardcoded path ever reaches a Vehir process at startup or during operation."
     }
   ],

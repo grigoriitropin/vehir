@@ -1,0 +1,24 @@
+{
+  "licenses": [
+    { "name": "MIT",            "spdx_id": "MIT",            "kind": "upstream_reference", "patent_grant": false },
+    { "name": "Apache-2.0",     "spdx_id": "Apache-2.0",     "kind": "upstream_reference", "patent_grant": true  },
+    { "name": "GPL-2.0-only",   "spdx_id": "GPL-2.0-only",   "kind": "upstream_reference", "patent_grant": false },
+    { "name": "GPL-3.0-only",   "spdx_id": "GPL-3.0-only",   "kind": "upstream_reference", "patent_grant": true  },
+    { "name": "LGPL-2.1-only",  "spdx_id": "LGPL-2.1-only",  "kind": "upstream_reference", "patent_grant": false },
+    { "name": "LGPL-3.0-only",  "spdx_id": "LGPL-3.0-only",  "kind": "upstream_reference", "patent_grant": true  },
+    { "name": "PostgreSQL",     "spdx_id": "PostgreSQL",     "kind": "upstream_reference", "patent_grant": false },
+    { "name": "axiom-idea",     "kind": "original_patent",   "patent_grant": false }
+  ],
+  "programs": [
+    { "name": "git",           "author": "Git community",    "version": "0", "license": "GPL-2.0-only", "external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "git" },
+    { "name": "nix",           "author": "NixOS Foundation", "version": "0", "license": "LGPL-2.1-only","external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "nix" },
+    { "name": "postgres",      "author": "PostgreSQL Global","version": "0", "license": "PostgreSQL",   "external": true,  "artifact_type": "service", "check_type": "none", "artifact_name": "postgres" },
+    { "name": "glibc",         "author": "GNU Project",      "version": "0", "license": "LGPL-2.1-only","external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "glibc" },
+    { "name": "openssl",       "author": "OpenSSL Project",  "version": "0", "license": "Apache-2.0",   "external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "openssl" },
+    { "name": "libpq",         "author": "PostgreSQL Global", "version": "0", "license": "PostgreSQL",  "external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "libpq" },
+    { "name": "cjson",         "author": "Dave Gamble",      "version": "0", "license": "MIT",          "external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "cjson" },
+    { "name": "ipm",           "author": "Vehir",            "version": "0.1.6","license": "Apache-2.0",   "external": true,  "artifact_type": "tool",    "check_type": "none", "artifact_name": "ipm" }
+  ],
+  "ideas": [],
+  "edges": []
+}

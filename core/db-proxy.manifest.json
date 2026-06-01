@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "db-proxy",
+      "name": "gate-sql-via-unix-socket",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "service",
-      "artifact_name": "db-proxy",
+      "artifact_name": "gate-sql-via-unix-socket",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,10 +15,10 @@
   ],
   "ideas": [
     {
-      "name": "db-proxy",
+      "name": "gate-sql-via-unix-socket",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "db-proxy",
+      "program": "gate-sql-via-unix-socket",
       "description": "A Postgres proxy daemon that owns the sole libpq connection, listens on a Unix socket, and enforces per-caller SQL gate rules so that every query is validated before reaching the database."
     }
   ],

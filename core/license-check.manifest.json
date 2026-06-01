@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "license-check",
+      "name": "check-license-compatibility-across-graph",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "license-check",
+      "artifact_name": "check-license-compatibility-across-graph",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,16 +15,16 @@
   ],
   "ideas": [
     {
-      "name": "license-check",
+      "name": "check-license-compatibility-across-graph",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "license-check",
+      "program": "check-license-compatibility-across-graph",
       "description": "An Apache-2.0 compliance checker that verifies the LICENSE file hash against a known SHA256, scans source files for SPDX headers, validates THIRD_PARTY_NOTICES completeness, and cross-checks the entire IPM dependency graph for license compatibility."
     }
   ],
   "edges": [
     {
-      "parent": "license-check",
+      "parent": "check-license-compatibility-across-graph",
       "child": "libpq",
       "author": "Vehir",
       "link_type": "library",
@@ -32,7 +32,7 @@
       "description": "Queries the IPM dependency graph via libpq for license compatibility cross-checking"
     },
     {
-      "parent": "license-check",
+      "parent": "check-license-compatibility-across-graph",
       "child": "cjson",
       "author": "Vehir",
       "link_type": "library",
@@ -40,7 +40,7 @@
       "description": "Links cJSON for structured JSON output of license compliance reports"
     },
     {
-      "parent": "license-check",
+      "parent": "check-license-compatibility-across-graph",
       "child": "openssl",
       "author": "Vehir",
       "link_type": "library",
@@ -48,7 +48,7 @@
       "description": "Links OpenSSL for SHA256 hash computation when verifying LICENSE file integrity"
     },
     {
-      "parent": "license-check",
+      "parent": "check-license-compatibility-across-graph",
       "child": "glibc",
       "author": "Vehir",
       "link_type": "library",

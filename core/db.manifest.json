@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "db-probe",
+      "name": "probe-database-through-unix-socket",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "db-probe",
+      "artifact_name": "probe-database-through-unix-socket",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,17 +15,17 @@
   ],
   "ideas": [
     {
-      "name": "db",
+      "name": "send-parameterized-sql-over-socket",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "db-probe",
+      "program": "probe-database-through-unix-socket",
       "description": "A lightweight C client library that sends parameterized SQL statements over a Unix socket to the db-proxy daemon, with strict error handling and zero silent failure on connection loss."
     }
   ],
   "edges": [
     {
-      "parent": "db",
-      "child": "db-proxy",
+      "parent": "send-parameterized-sql-over-socket",
+      "child": "gate-sql-via-unix-socket",
       "author": "Vehir",
       "link_type": "socket",
       "edge_license": "Apache-2.0",

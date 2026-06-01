@@ -1,13 +1,13 @@
 {
   "programs": [
     {
-      "name": "git-identity",
+      "name": "declare-git-author-from-config",
       "author": "Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "git-identity",
+      "artifact_name": "declare-git-author-from-config",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -15,10 +15,10 @@
   ],
   "ideas": [
     {
-      "name": "git-identity",
+      "name": "declare-git-author-from-config",
       "author": "Vehir",
       "is_axiom": false,
-      "program": "git-identity",
+      "program": "declare-git-author-from-config",
       "description": "Declarative git identity tool \u2014 reads git user name and email from config file, applies them via git config --local for consistent commit authorship"
     }
   ],
