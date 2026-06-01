@@ -8,9 +8,12 @@
       "external": false,
       "artifact_type": "service",
       "artifact_name": "vsmm",
-      "check_type": "none",
+      "check_type": "socket",
       "repo_url": "https://codeberg.org/vehir/vehir",
-      "flake_dir": "core"
+      "flake_dir": "core",
+      "check_spec": {
+        "path": "/run/vehir/vsmm.sock"
+      }
     }
   ],
   "ideas": [
