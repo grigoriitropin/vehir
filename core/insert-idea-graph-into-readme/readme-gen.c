@@ -35,7 +35,7 @@ static int write_file(const char *path, const char *data, size_t len) {
 
 static char *run_ipm_show(const char *flags, int *out_len) {
     char cmd[512];
-    snprintf(cmd, sizeof(cmd), "ipm show --md %s", flags ? flags : "--short");
+    snprintf(cmd, sizeof(cmd), "ipm show --md %s </dev/null 2>/dev/null", flags ? flags : "--short");
     FILE *fp = popen(cmd, "r");
     if (!fp) return NULL;
     char *buf = malloc(BUF_SZ);
