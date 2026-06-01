@@ -151,8 +151,8 @@
         src = ./core/insert-idea-graph-into-readme;
         buildPhase = ''
           runHook preBuild
-          cc ${builtins.toString cflags} -I${./core} \
-            insert-idea-graph-into-readme.c ${./core}/lib/safe-exec.c -o insert-idea-graph-into-readme
+          cc ${builtins.toString cflags} \
+            readme-gen.c -o insert-idea-graph-into-readme
           runHook postBuild
         '';
         installPhase = ''
