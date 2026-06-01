@@ -104,6 +104,7 @@ void broker_free(br_cfg_t *cfg) {
 }
 
 /* CLI tool */
+#ifdef BROKER_CLI
 int main(int argc, char **argv) {
     if (argc < 2) {
         fprintf(stderr, "usage: broker get <key> | list | set <key> <val>\n");
@@ -142,3 +143,4 @@ int main(int argc, char **argv) {
     }
     return 0;
 }
+#endif /* BROKER_CLI */

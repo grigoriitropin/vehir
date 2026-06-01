@@ -8,7 +8,7 @@ pkgs.stdenv.mkDerivation {
   buildPhase = ''
     cc ${builtins.toString cflags} -c broker.c -o broker.o
     ar rcs libvehir-config.a broker.o
-    cc ${builtins.toString cflags} broker.c -o broker -lcjson
+    cc ${builtins.toString cflags} broker.c -o broker -lcjson -DBROKER_CLI
   '';
   installPhase = ''
     mkdir -p $out/bin $out/lib $out/include
