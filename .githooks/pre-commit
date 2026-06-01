@@ -5,7 +5,10 @@ set -e
 README="README.md"
 TOOL="insert-idea-graph-into-readme"
 
-# Find readme-gen: workspace vehir active/bin, or ipm build output, or PATH
+# Switch to vehir workspace so ipm show --md queries the right data
+export IPM_WORKSPACE=vehir
+
+# Find readme-gen
 if [ -x ~/.local/state/ipm/workspaces/vehir/active/bin/$TOOL ]; then
     CMD=~/.local/state/ipm/workspaces/vehir/active/bin/$TOOL
 elif command -v $TOOL >/dev/null 2>&1; then
