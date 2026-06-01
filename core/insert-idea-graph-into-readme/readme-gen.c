@@ -20,8 +20,10 @@ static char *read_file(const char *path, size_t *len) {
     return buf;
 }
 
-static char *run_ipm_show(int *out_len) {
-    FILE *fp = popen("ipm show --md", "r");
+static char *run_ipm_show(const char *args, int *out_len) {
+    char cmd[256];
+    snprintf(cmd, sizeof(cmd), "ipm show --md %s", args);
+    FILE *fp = popen(cmd, "r");
     if (!fp) return NULL;
     char *buf = malloc(BUF_SZ);
     if (!buf) { pclose(fp); return NULL; }
@@ -58,28 +60,37 @@ int main(int argc, char *argv[]) {
 
     size_t len;
     char *content = read_file(path, &len);
-    if (!content) {
-        fprintf(stderr, "readme-gen: cannot read %s\n", path);
-        return 1;
+    if (!content) { fprintf(stderr, "readme-gen: cannot read %s\n", path); return 1; }
+
+    /* Combined graph */
+    char *combined = NULL; int clen = 0;
+    if (strstr(content, "<!-- IDEA-GRAPH -->")) {
+        combined = run_ipm_show("--short", &clen);
+        if (!combined) { fprintf(stderr, "readme-gen: ipm show --md failed\n"); free(content); return 1; }
+        while (clen > 0 && combined[clen-1] == '\n') combined[--clen] = '\0';
+        replace_marker(&content, &len, "<!-- IDEA-GRAPH -->", combined, clen);
+        replace_marker(&content, &len, "<!-- VEHIR-GRAPH -->", combined, clen);
     }
 
-    int graph_len;
-    char *graph = run_ipm_show(&graph_len);
-    if (!graph) {
-        fprintf(stderr, "readme-gen: ipm show --md failed\n");
-        free(content);
-        return 1;
+    /* Ideas graph */
+    int ilen;
+    char *ideas = run_ipm_show("--ideas --short", &ilen);
+    if (ideas) {
+        while (ilen > 0 && ideas[ilen-1] == '\n') ideas[--ilen] = '\0';
+        replace_marker(&content, &len, "<!-- IDEA-GRAPH: ideas -->", ideas, ilen);
     }
 
-    while (graph_len > 0 && graph[graph_len-1] == '\n')
-        graph[--graph_len] = '\0';
-
-    replace_marker(&content, &len, "<!-- IDEA-GRAPH -->", graph, graph_len);
-    replace_marker(&content, &len, "<!-- VEHIR-GRAPH -->", graph, graph_len);
+    /* Programs graph */
+    int plen;
+    char *progs = run_ipm_show("--programs --short", &plen);
+    if (progs) {
+        while (plen > 0 && progs[plen-1] == '\n') progs[--plen] = '\0';
+        replace_marker(&content, &len, "<!-- IDEA-GRAPH: programs -->", progs, plen);
+    }
 
     printf("%s\n", content);
 
-    free(graph);
+    free(combined); free(ideas); free(progs);
     free(content);
     return 0;
 }

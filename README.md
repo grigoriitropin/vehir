@@ -12,9 +12,15 @@ Package graph of LLM agent runtime. Managed by [IPM](https://github.com/grigorii
 
 ## Graph
 
-```mermaid
-graph TD
-  vehir-axiom["vehir-axiom\n[programs: vehir-axiom-program]"]
+<!-- IDEA-GRAPH -->
+
+### Ideas
+
+<!-- IDEA-GRAPH: ideas -->
+
+### Programs
+
+<!-- IDEA-GRAPH: programs -->
   openssl["openssl\n[programs: openssl(tool)]"]
   glibc["glibc\n[programs: glibc(tool)]"]
   forge["forge\n[programs: forge(tool)]"]
