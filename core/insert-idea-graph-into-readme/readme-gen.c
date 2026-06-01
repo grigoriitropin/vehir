@@ -39,7 +39,10 @@ static char *run_ipm_show(const char *flags, int *out_len) {
     char cmd[1024];
     snprintf(cmd, sizeof(cmd), "ipm show --md %s > %s 2>/dev/null", flags ? flags : "--short", tmp_path);
     int rc = system(cmd);
-    if (rc != 0) return NULL;
+    if (rc != 0) {
+        fprintf(stderr, "readme-gen: ipm show failed (rc=%d, cmd=%s)\n", rc, cmd);
+        return NULL;
+    }
     char *buf = malloc(BUF_SZ);
     if (!buf) return NULL;
     FILE *f = fopen(tmp_path, "r");
@@ -181,7 +184,8 @@ int main(int argc, char *argv[]) {
     if (!content) { fprintf(stderr, "readme-gen: cannot read %s\n", path); return 1; }
 
     /* Find all vehir:graph markers and process them idempotently */
-    while (1) {
+    int iter = 0;
+    while (iter++ < 10) {
         char *tag_start = strstr(content, MARKER_START);
         if (!tag_start) break;
         char *tag_end = strstr(tag_start, "-->");
