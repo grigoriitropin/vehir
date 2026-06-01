@@ -46,17 +46,21 @@ static char *run_ipm_show(const char *flags, int *out_len) {
     return buf;
 }
 
-/* Strip "# Graph\n" header and ```mermaid wrapper, keep pure mermaid content */
+/* Strip "# Graph\n" / "# Ideas\n" / "# Programs\n" header and ```mermaid wrapper */
 static char *strip_mermaid_wrapper(char *raw, int *out_len) {
     int len = *out_len;
-    /* skip "# Graph\n" if present */
-    if (len > 8 && !strncmp(raw, "# Graph\n", 8)) {
-        memmove(raw, raw + 8, (size_t)(len - 8));
-        len -= 8;
+    /* skip "# ...\n" header line if present */
+    while (len > 0 && raw[0] == '#') {
+        char *nl = memchr(raw, '\n', (size_t)len);
+        if (!nl) break;
+        int skip = (int)(nl - raw) + 1;
+        memmove(raw, raw + skip, (size_t)(len - skip));
+        len -= skip;
         raw[len] = '\0';
     }
-    /* skip leading blank line + ```mermaid\n if present */
+    /* skip leading blank lines */
     while (len > 0 && raw[0] == '\n') { memmove(raw, raw + 1, (size_t)(--len)); raw[len] = '\0'; }
+    /* strip opening ```mermaid\n */
     if (len > 11 && !strncmp(raw, "```mermaid\n", 11)) {
         memmove(raw, raw + 11, (size_t)(len - 11));
         len -= 11;
