@@ -34,15 +34,20 @@ static int write_file(const char *path, const char *data, size_t len) {
 /* ── shell command capture ────────────────────────────────────────────── */
 
 static char *run_ipm_show(const char *flags, int *out_len) {
+    char tmp_path[256];
+    snprintf(tmp_path, sizeof(tmp_path), "/tmp/readme-gen-%d.mermaid", getpid());
     char cmd[512];
-    snprintf(cmd, sizeof(cmd), "ipm show --md %s </dev/null 2>/dev/null", flags ? flags : "--short");
-    FILE *fp = popen(cmd, "r");
-    if (!fp) return NULL;
+    snprintf(cmd, sizeof(cmd), "ipm show --md %s > %s 2>/dev/null", flags ? flags : "--short", tmp_path);
+    int rc = system(cmd);
+    if (rc != 0) return NULL;
     char *buf = malloc(BUF_SZ);
-    if (!buf) { pclose(fp); return NULL; }
-    *out_len = (int)fread(buf, 1, BUF_SZ - 1, fp);
+    if (!buf) return NULL;
+    FILE *f = fopen(tmp_path, "r");
+    if (!f) { free(buf); return NULL; }
+    *out_len = (int)fread(buf, 1, BUF_SZ - 1, f);
+    fclose(f);
     buf[*out_len] = '\0';
-    pclose(fp);
+    unlink(tmp_path);
     return buf;
 }
 
