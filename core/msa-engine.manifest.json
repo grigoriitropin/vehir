@@ -1,8 +1,43 @@
 {
-  "programs": [{ "name": "rescore-memory-with-msa-attention", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "service", "artifact_name": "rescore-memory-with-msa-attention", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
-  "ideas": [{ "name": "rerank-memory-with-neural-attention", "author": "Vehir", "is_axiom": false, "program": "rescore-memory-with-msa-attention", "description": "MSA-4B neural reranking service — loads model once as persistent daemon, receives candidate sets and rescore them through multi-scale attention for higher precision retrieval" }],
+  "programs": [
+    {
+      "name": "rescore-memory-with-msa-attention",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "service",
+      "artifact_name": "vsm-msa",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "rerank-memory-with-neural-attention",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "rescore-memory-with-msa-attention",
+      "description": "MSA-4B neural reranking service — loads model once as persistent daemon, receives candidate sets and rescore them through multi-scale attention for higher precision retrieval"
+    }
+  ],
   "edges": [
-    { "parent": "rerank-memory-with-neural-attention", "child": "send-parameterized-sql-over-socket", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads memory entries from the database through the db client library for document prefill before neural reranking" },
-    { "parent": "rerank-memory-with-neural-attention", "child": "convert-text-to-dense-vectors", "author": "Vehir", "link_type": "socket", "edge_license": "Apache-2.0", "description": "Receives dense vector embeddings from the Qwen3 embedding service as the initial retrieval stage before applying multi-scale attention rescoring" }
+    {
+      "parent": "rerank-memory-with-neural-attention",
+      "child": "send-parameterized-sql-over-socket",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Reads memory entries from the database through the db client library for document prefill before neural reranking"
+    },
+    {
+      "parent": "rerank-memory-with-neural-attention",
+      "child": "convert-text-to-dense-vectors",
+      "author": "Vehir",
+      "link_type": "socket",
+      "edge_license": "Apache-2.0",
+      "description": "Receives dense vector embeddings from the Qwen3 embedding service as the initial retrieval stage before applying multi-scale attention rescoring"
+    }
   ]
 }

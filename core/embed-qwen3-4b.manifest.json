@@ -1,7 +1,35 @@
 {
-  "programs": [{ "name": "generate-dense-vectors-with-qwen3", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "service", "artifact_name": "generate-dense-vectors-with-qwen3", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
-  "ideas": [{ "name": "convert-text-to-dense-vectors", "author": "Vehir", "is_axiom": false, "program": "generate-dense-vectors-with-qwen3", "description": "Qwen3-Embedding-4B dense vector service — runs as a persistent embedding worker generating 2560-dimensional normalized vectors for semantic search and retrieval" }],
+  "programs": [
+    {
+      "name": "generate-dense-vectors-with-qwen3",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "service",
+      "artifact_name": "vsm-embed",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "convert-text-to-dense-vectors",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "generate-dense-vectors-with-qwen3",
+      "description": "Qwen3-Embedding-4B dense vector service — runs as a persistent embedding worker generating 2560-dimensional normalized vectors for semantic search and retrieval"
+    }
+  ],
   "edges": [
-    { "parent": "convert-text-to-dense-vectors", "child": "send-parameterized-sql-over-socket", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking" }
+    {
+      "parent": "convert-text-to-dense-vectors",
+      "child": "send-parameterized-sql-over-socket",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking"
+    }
   ]
 }

@@ -7,7 +7,7 @@
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "check-pain-write-signals-mode",
+      "artifact_name": "pain-check",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"

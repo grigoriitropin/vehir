@@ -7,7 +7,7 @@
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "check-license-compatibility-across-graph",
+      "artifact_name": "license-check",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -53,7 +53,7 @@
       "author": "Vehir",
       "link_type": "library",
       "edge_license": "LGPL-2.1-only",
-      "description": "Dynamic-link glibc for standard C runtime interfaces \u2014 validates against the full transitive dependency closure for deterministic license compatibility enforcement"
+      "description": "Dynamic-link glibc for standard C runtime interfaces — validates against the full transitive dependency closure for deterministic license compatibility enforcement"
     }
   ]
 }

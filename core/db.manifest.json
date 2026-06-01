@@ -7,7 +7,7 @@
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "probe-database-through-unix-socket",
+      "artifact_name": "db-probe",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"

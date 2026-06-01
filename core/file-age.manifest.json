@@ -7,7 +7,7 @@
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "check-json-file-timestamp-age",
+      "artifact_name": "file-age",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"

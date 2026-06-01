@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+
 { pkgs, cflags ? [ "-Wall" "-Wextra" "-Werror" "-std=c2x" ] }:
 pkgs.stdenv.mkDerivation {
   pname = "vehir-config";

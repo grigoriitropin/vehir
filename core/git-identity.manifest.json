@@ -7,7 +7,7 @@
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "tool",
-      "artifact_name": "declare-git-author-from-config",
+      "artifact_name": "git-identity",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
@@ -19,7 +19,7 @@
       "author": "Vehir",
       "is_axiom": false,
       "program": "declare-git-author-from-config",
-      "description": "Declarative git identity tool \u2014 reads git user name and email from config file, applies them via git config --local for consistent commit authorship"
+      "description": "Declarative git identity tool — reads git user name and email from config file, applies them via git config --local for consistent commit authorship"
     }
   ],
   "edges": []

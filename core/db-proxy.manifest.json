@@ -7,7 +7,7 @@
       "license": "Apache-2.0",
       "external": false,
       "artifact_type": "service",
-      "artifact_name": "gate-sql-via-unix-socket",
+      "artifact_name": "db-proxy",
       "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"

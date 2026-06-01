@@ -1,9 +1,51 @@
 {
-  "programs": [{ "name": "auto-switch-embed-rerank-gpu", "author": "Vehir", "version": "0.1.0", "license": "Apache-2.0", "external": false, "artifact_type": "service", "artifact_name": "auto-switch-embed-rerank-gpu", "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core" }],
-  "ideas": [{ "name": "auto-switch-embed-rerank-gpu", "author": "Vehir", "is_axiom": false, "program": "auto-switch-embed-rerank-gpu", "description": "Unified GPU daemon for both embeddings and MSA rerank — manages Qwen3-Embedding-4B as always-on worker and MSA-4B as on-demand spawned worker with automatic model switching" }],
+  "programs": [
+    {
+      "name": "auto-switch-embed-rerank-gpu",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "service",
+      "artifact_name": "vsmm",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "auto-switch-embed-rerank-gpu",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "auto-switch-embed-rerank-gpu",
+      "description": "Unified GPU daemon for both embeddings and MSA rerank — manages Qwen3-Embedding-4B as always-on worker and MSA-4B as on-demand spawned worker with automatic model switching"
+    }
+  ],
   "edges": [
-    { "parent": "auto-switch-embed-rerank-gpu", "child": "rerank-memory-with-neural-attention", "author": "Vehir", "link_type": "socket", "edge_license": "Apache-2.0", "description": "Wraps MSA-4B rerank model loaded on demand via a spawned worker process for neural rescoring of retrieval results" },
-    { "parent": "auto-switch-embed-rerank-gpu", "child": "convert-text-to-dense-vectors", "author": "Vehir", "link_type": "socket", "edge_license": "Apache-2.0", "description": "Wraps Qwen3-Embedding-4B model running as a resident embed worker for always-on dense vector generation" },
-    { "parent": "auto-switch-embed-rerank-gpu", "child": "send-parameterized-sql-over-socket", "author": "Vehir", "link_type": "library", "edge_license": "Apache-2.0", "description": "Reads and writes memory entries through the db client library for vector data during embedding and reranking operations" }
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "rerank-memory-with-neural-attention",
+      "author": "Vehir",
+      "link_type": "socket",
+      "edge_license": "Apache-2.0",
+      "description": "Wraps MSA-4B rerank model loaded on demand via a spawned worker process for neural rescoring of retrieval results"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "convert-text-to-dense-vectors",
+      "author": "Vehir",
+      "link_type": "socket",
+      "edge_license": "Apache-2.0",
+      "description": "Wraps Qwen3-Embedding-4B model running as a resident embed worker for always-on dense vector generation"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "send-parameterized-sql-over-socket",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Reads and writes memory entries through the db client library for vector data during embedding and reranking operations"
+    }
   ]
 }
