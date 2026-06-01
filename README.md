@@ -10,9 +10,8 @@ Package graph of LLM agent runtime. Managed by [IPM](https://github.com/grigorii
 - **Embedded SQL migrations** — advisory lock, version drift barrier
 - **Audit journal** — append-only JSONL, auto-purge 30 days
 
-## Graphs
+## Graph
 
-### Combined
 # Graph
 ```mermaid
 graph TD
@@ -42,10 +41,5 @@ graph TD
   embed-qwen3-4b -->|"Stores generated dense vector embeddings in memory_entries table through the db client library for later retrieval and reranking\n(Vehir)"| db
 ```
 
-### Ideas
-<!-- IDEA-GRAPH: ideas -->
-
-### Programs
-<!-- IDEA-GRAPH: programs -->
 
 
