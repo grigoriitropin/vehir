@@ -18,8 +18,8 @@ else
     exit 0
 fi
 
-echo "pre-commit: generating graphs via $TOOL..."
-$CMD "$README" > "$README.tmp" && mv "$README.tmp" "$README"
+echo "pre-commit: generating graphs via $TOOL --short..."
+$CMD --short "$README" > "$README.tmp" && mv "$README.tmp" "$README"
 git add "$README"
 echo "pre-commit: graphs updated"
 exit 0
