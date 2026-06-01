@@ -1,10 +1,59 @@
 {
-  "licenses": [{"name":"Apache-2.0","spdx_id":"Apache-2.0","kind":"owned","patent_grant":true}],
-  "packages": [{"name":"license-check","description":"Apache-2.0 compliance checker — LICENSE hash, SPDX headers, THIRD_PARTY_NOTICES, IPM dep graph","artifact_type":"tool","artifact_name":"license-check","license":"Apache-2.0","license_version":"0.1.0","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],
+  "programs": [
+    {
+      "name": "license-check",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "license-check",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "license-check",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "license-check",
+      "description": "An Apache-2.0 compliance checker that verifies the LICENSE file hash against a known SHA256, scans source files for SPDX headers, validates THIRD_PARTY_NOTICES completeness, and cross-checks the entire IPM dependency graph for license compatibility."
+    }
+  ],
   "edges": [
-    {"parent":"license-check","child":"libpq","relation":"queries IPM dep graph via libpq","link_type":"library","edge_license":"PostgreSQL"},
-    {"parent":"license-check","child":"cjson","relation":"links cJSON for JSON output","link_type":"library","edge_license":"MIT"},
-    {"parent":"license-check","child":"openssl","relation":"links OpenSSL for SHA256","link_type":"library","edge_license":"Apache-2.0"},
-    {"parent":"license-check","child":"glibc","relation":"dynamic-link glibc","link_type":"library","edge_license":"LGPL-2.1"}
+    {
+      "parent": "license-check",
+      "child": "libpq",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "PostgreSQL",
+      "description": "Queries the IPM dependency graph via libpq for license compatibility cross-checking"
+    },
+    {
+      "parent": "license-check",
+      "child": "cjson",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "MIT",
+      "description": "Links cJSON for structured JSON output of license compliance reports"
+    },
+    {
+      "parent": "license-check",
+      "child": "openssl",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Links OpenSSL for SHA256 hash computation when verifying LICENSE file integrity"
+    },
+    {
+      "parent": "license-check",
+      "child": "glibc",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "LGPL-2.1",
+      "description": "Dynamic-link glibc for standard C runtime interfaces"
+    }
   ]
 }

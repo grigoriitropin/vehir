@@ -1,20 +1,25 @@
 {
-  "licenses": [
+  "programs": [
     {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
+      "name": "runtime-paths-probe",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "runtime-paths-probe",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
     }
   ],
-  "packages": [
+  "ideas": [
     {
       "name": "runtime-paths",
-      "description": "Dynamic runtime path resolution for all Vehir processes",
-      "artifact_type": "library",
-      "artifact_name": "runtime-paths-probe",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "runtime-paths-probe",
+      "description": "A C library that resolves runtime paths dynamically from the executable's own location, configuration files, and the database, ensuring no hardcoded path ever reaches a Vehir process at startup or during operation."
     }
   ],
   "edges": []

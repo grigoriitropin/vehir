@@ -1,20 +1,25 @@
 {
-  "licenses": [
-    {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
+  "programs": [
     {
       "name": "file-age",
-      "description": "Check if a JSON file's timestamp field is within a max age",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
       "artifact_type": "tool",
       "artifact_name": "file-age",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "file-age",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "file-age",
+      "description": "A CLI tool that inspects a JSON file's timestamp field and reports whether the recorded age falls within a specified maximum threshold, returning a clean exit code suitable for shell scripting."
     }
   ],
   "edges": []

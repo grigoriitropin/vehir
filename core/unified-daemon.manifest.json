@@ -1,45 +1,51 @@
 {
-  "licenses": [
+  "programs": [
     {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
-    {
-      "name": "unified-daemon",
-      "description": "Vehir unified GPU daemon — serves both embeddings (Qwen3-Embedding-4B, always-on) and MSA rerank (MSA-4B, on-demand). Spawn-based worker isolation, auto model switching. GPU exception per SOUL §7.",
+      "name": "vsmm",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
       "artifact_type": "service",
       "artifact_name": "vsmm",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0",
+      "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "unified-daemon",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "vsmm",
+      "description": "Vehir unified GPU daemon that serves both embeddings via Qwen3-Embedding-4B always-on and MSA rerank via MSA-4B on-demand, with spawn-based worker isolation and automatic model switching under the GPU exception per SOUL §7."
     }
   ],
   "edges": [
     {
       "parent": "unified-daemon",
       "child": "msa-engine",
-      "relation": "MSA-4B rerank model — loaded on demand via spawn worker",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "MSA-4B rerank model loaded on demand via a spawned worker process for neural rescoring of retrieval results"
     },
     {
       "parent": "unified-daemon",
       "child": "embed-qwen3-4b",
-      "relation": "Qwen3-Embedding-4B model — resident embed worker",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Qwen3-Embedding-4B model running as a resident embed worker for always-on dense vector generation"
     },
     {
       "parent": "unified-daemon",
       "child": "db",
-      "relation": "memory_entries access through db client lib",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Memory entries access through the db client library for reading and writing vector data during embedding and reranking"
     }
   ]
 }

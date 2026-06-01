@@ -1,20 +1,25 @@
 {
-  "licenses": [
-    {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
+  "programs": [
     {
       "name": "forge",
-      "description": "Forgejo REST API client: repo create/list, release create, issue create",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
       "artifact_type": "tool",
       "artifact_name": "forge",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "net"
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "net"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "forge",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "forge",
+      "description": "A command-line REST API client for Forgejo instances that supports repository creation and listing, release publishing, and issue creation, consuming credentials resolved through the Vehir configuration broker for declarative access."
     }
   ],
   "edges": []

@@ -1,9 +1,51 @@
 {
-  "licenses": [{"name":"Apache-2.0","spdx_id":"Apache-2.0","kind":"agent-authored","patent_grant":true}],
-  "packages": [{"name":"git-identity","description":"Declarative git identity — reads from broker config, applies git config --local","artifact_type":"tool","artifact_name":"git-identity","license":"Apache-2.0","license_version":"0.1.0","repo_url":"https://codeberg.org/vehir/vehir","flake_dir":"core"}],
+  "programs": [
+    {
+      "name": "git-identity",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "git-identity",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "git-identity",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "git-identity",
+      "description": "A declarative configuration tool that reads the Vehir broker for email and signing key settings, then applies them to the local git repository using git config --local, supporting named identity profiles."
+    }
+  ],
   "edges": [
-    {"parent":"git-identity","child":"cjson","relation":"JSON output formatting","link_type":"library","edge_license":"MIT"},
-    {"parent":"git-identity","child":"broker","relation":"reads config via broker","link_type":"library","edge_license":"Apache-2.0"},
-    {"parent":"git-identity","child":"glibc","relation":"runtime C library","link_type":"library","edge_license":"LGPL-2.1"}
+    {
+      "parent": "git-identity",
+      "child": "cjson",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "MIT",
+      "description": "JSON output formatting for structured git identity results"
+    },
+    {
+      "parent": "git-identity",
+      "child": "broker",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Reads configuration via broker for email and signing key settings"
+    },
+    {
+      "parent": "git-identity",
+      "child": "glibc",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "LGPL-2.1",
+      "description": "Runtime C library providing standard system interfaces"
+    }
   ]
 }

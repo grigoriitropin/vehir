@@ -1,29 +1,35 @@
 {
-  "licenses": [
+  "programs": [
     {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
+      "name": "db-probe",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "db-probe",
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
     }
   ],
-  "packages": [
+  "ideas": [
     {
       "name": "db",
-      "description": "Database client library — sends parameterized SQL over Unix socket to db-proxy",
-      "artifact_type": "library",
-      "artifact_name": "db-probe",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "db-probe",
+      "description": "A lightweight C client library that sends parameterized SQL statements over a Unix socket to the db-proxy daemon, with strict error handling and zero silent failure on connection loss."
     }
   ],
   "edges": [
     {
       "parent": "db",
       "child": "db-proxy",
-      "relation": "routes SQL through",
+      "author": "Vehir",
       "link_type": "socket",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Routes SQL queries from the db client library over a Unix socket to the db-proxy daemon for validation and execution"
     }
   ]
 }

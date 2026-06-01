@@ -1,52 +1,59 @@
 {
-  "licenses": [
+  "programs": [
     {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
-    {
-      "name": "essentials",
-      "description": "Event-driven daemon — LISTENs for IPM graph changes via PostgreSQL NOTIFY, regenerates tool context block under <!-- TOOLS --> in SOUL.md, detects drift via SHA256 in soul_hashes, signals pain on change",
+      "name": "essentials-daemon",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
       "artifact_type": "service",
       "artifact_name": "essentials-daemon",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0",
+      "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "essentials",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "essentials-daemon",
+      "description": "Event-driven daemon that listens for IPM graph changes via PostgreSQL NOTIFY, regenerates the tool context block under <!-- TOOLS --> in SOUL.md, detects drift via SHA256 in soul_hashes, and signals pain on change."
     }
   ],
   "edges": [
     {
       "parent": "essentials",
       "child": "cjson",
-      "relation": "JSON parsing of idea show output",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "MIT"
+      "edge_license": "MIT",
+      "description": "JSON parsing of idea show output for tool context block regeneration"
     },
     {
       "parent": "essentials",
       "child": "ipm",
-      "relation": "calls idea show (subprocess)",
+      "author": "Vehir",
       "link_type": "conceptual",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Calls idea show as a subprocess to retrieve the current package graph state"
     },
     {
       "parent": "essentials",
       "child": "db",
-      "relation": "stores tool context hash in soul_hashes via db-proxy",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Stores the regenerated tool context hash in the soul_hashes table through the db-proxy gateway for drift detection"
     },
     {
       "parent": "essentials",
       "child": "pain",
-      "relation": "signals tool context drift to pain registry",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Signals tool context drift events to the pain registry when a SHA256 mismatch is detected against the known baseline"
     }
   ]
 }

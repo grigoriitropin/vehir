@@ -1,31 +1,35 @@
 {
-  "licenses": [
+  "programs": [
     {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
-    {
-      "name": "msa-engine",
-      "description": "MSA-4B daemon — neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL §7.",
+      "name": "vsm-msa",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
       "artifact_type": "service",
       "artifact_name": "vsm-msa",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0",
+      "check_type": "none",
       "repo_url": "https://codeberg.org/vehir/vehir",
       "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "msa-engine",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "vsm-msa",
+      "description": "A GPU-accelerated neural reranking daemon serving the MSA-4B model over a Unix socket that re-orders memory bank retrieval results using multi-scale attention scoring, permitted as a GPU/Python exception under SOUL §7."
     }
   ],
   "edges": [
     {
       "parent": "msa-engine",
       "child": "db",
-      "relation": "reads memory_entries through db client lib for memory document prefill",
+      "author": "Vehir",
       "link_type": "library",
-      "edge_license": "Apache-2.0"
+      "edge_license": "Apache-2.0",
+      "description": "Reads memory entries through the db client library for memory document prefill before neural reranking"
     }
   ]
 }

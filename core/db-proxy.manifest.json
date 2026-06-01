@@ -1,20 +1,25 @@
 {
-  "licenses": [
-    {
-      "name": "Apache-2.0",
-      "spdx_id": "Apache-2.0",
-      "kind": "agent-authored",
-      "patent_grant": true
-    }
-  ],
-  "packages": [
+  "programs": [
     {
       "name": "db-proxy",
-      "description": "Database proxy daemon — sole libpq owner, enforces per-caller SQL gate",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
       "artifact_type": "service",
       "artifact_name": "db-proxy",
-      "license": "Apache-2.0",
-      "license_version": "0.1.0", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
+      "check_type": "none",
+      "repo_url": "https://codeberg.org/vehir/vehir",
+      "flake_dir": "core"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "db-proxy",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "db-proxy",
+      "description": "A Postgres proxy daemon that owns the sole libpq connection, listens on a Unix socket, and enforces per-caller SQL gate rules so that every query is validated before reaching the database."
     }
   ],
   "edges": []
