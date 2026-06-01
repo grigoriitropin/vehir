@@ -8,6 +8,8 @@
 #include <unistd.h>
 
 #define BUF_SZ 131072
+#define MARKER_PREFIX "<!-- INSERT-IDEA-GRAPH"
+#define MARKER_SUFFIX "-->"
 
 static char *read_file(const char *path, size_t *len) {
     FILE *f = fopen(path, "r");
@@ -20,9 +22,20 @@ static char *read_file(const char *path, size_t *len) {
     return buf;
 }
 
-static char *run_ipm_show(const char *args, int *out_len) {
-    char cmd[256];
-    snprintf(cmd, sizeof(cmd), "ipm show --md %s", args);
+/* Resolves marker type to ipm show --md flags */
+static const char *mode_to_flags(const char *mode) {
+    if (!mode || !mode[0])         return "--short";
+    if (!strcmp(mode, "ideas"))    return "--ideas --short";
+    if (!strcmp(mode, "programs")) return "--programs --short";
+    if (!strcmp(mode, "full"))     return "";
+    if (!strcmp(mode, "ideas-full"))    return "--ideas";
+    if (!strcmp(mode, "programs-full")) return "--programs";
+    return "--short"; /* unknown → default combined short */
+}
+
+static char *run_ipm_show(const char *flags, int *out_len) {
+    char cmd[384];
+    snprintf(cmd, sizeof(cmd), "ipm show --md %s", flags ? flags : "--short");
     FILE *fp = popen(cmd, "r");
     if (!fp) return NULL;
     char *buf = malloc(BUF_SZ);
@@ -31,6 +44,27 @@ static char *run_ipm_show(const char *args, int *out_len) {
     buf[*out_len] = '\0';
     pclose(fp);
     return buf;
+}
+
+/* Strip "# Graph\n" header and ```mermaid wrapper, keep pure mermaid content */
+static char *strip_mermaid_wrapper(char *raw, int *out_len) {
+    int len = *out_len;
+    /* skip "# Graph\n" if present */
+    if (len > 8 && !strncmp(raw, "# Graph\n", 8)) {
+        memmove(raw, raw + 8, (size_t)(len - 8));
+        len -= 8;
+        raw[len] = '\0';
+    }
+    /* strip trailing ``` */
+    while (len > 0 && raw[len-1] == '\n') raw[--len] = '\0';
+    if (len > 3 && !strncmp(raw + len - 3, "```", 3)) {
+        /* remove trailing ``` */
+        len -= 3;
+        while (len > 0 && raw[len-1] == '\n') raw[--len] = '\0';
+        raw[len] = '\0';
+    }
+    *out_len = len;
+    return raw;
 }
 
 static void replace_marker(char **content, size_t *len, const char *marker,
@@ -55,6 +89,33 @@ static void replace_marker(char **content, size_t *len, const char *marker,
     *len = new_len;
 }
 
+/* Parse "<!-- INSERT-IDEA-GRAPH: mode -->" — returns ": mode" part or NULL */
+static char *find_marker(char *content) {
+    char *start = strstr(content, MARKER_PREFIX);
+    if (!start) return NULL;
+    char *end = strstr(start, MARKER_SUFFIX);
+    if (!end) return NULL;
+    size_t total = (size_t)(end + strlen(MARKER_SUFFIX) - start);
+    char *marker = malloc(total + 1);
+    if (!marker) return NULL;
+    memcpy(marker, start, total);
+    marker[total] = '\0';
+    return marker;
+}
+
+static char *extract_mode(const char *marker) {
+    const char *p = marker + strlen(MARKER_PREFIX);
+    while (*p == ' ' || *p == ':') p++;
+    if (!*p || !strcmp(p, "-->")) return NULL;
+    char *mode = strdup(p);
+    /* trim trailing space/--> */
+    char *e = strstr(mode, " -->");
+    if (!e) e = strstr(mode, "-->");
+    if (e) *e = '\0';
+    while (e > mode && e[-1] == ' ') *--e = '\0';
+    return mode;
+}
+
 int main(int argc, char *argv[]) {
     const char *path = (argc > 1) ? argv[1] : "README.md";
 
@@ -62,35 +123,28 @@ int main(int argc, char *argv[]) {
     char *content = read_file(path, &len);
     if (!content) { fprintf(stderr, "readme-gen: cannot read %s\n", path); return 1; }
 
-    /* Combined graph */
-    char *combined = NULL; int clen = 0;
-    if (strstr(content, "<!-- IDEA-GRAPH -->")) {
-        combined = run_ipm_show("--short", &clen);
-        if (!combined) { fprintf(stderr, "readme-gen: ipm show --md failed\n"); free(content); return 1; }
-        while (clen > 0 && combined[clen-1] == '\n') combined[--clen] = '\0';
-        replace_marker(&content, &len, "<!-- IDEA-GRAPH -->", combined, clen);
-        replace_marker(&content, &len, "<!-- VEHIR-GRAPH -->", combined, clen);
-    }
+    /* Find all markers and process them */
+    char *work = content;
+    while (1) {
+        char *raw_marker = find_marker(work);
+        if (!raw_marker) break;
 
-    /* Ideas graph */
-    int ilen;
-    char *ideas = run_ipm_show("--ideas --short", &ilen);
-    if (ideas) {
-        while (ilen > 0 && ideas[ilen-1] == '\n') ideas[--ilen] = '\0';
-        replace_marker(&content, &len, "<!-- IDEA-GRAPH: ideas -->", ideas, ilen);
-    }
+        char *mode = extract_mode(raw_marker);
+        const char *flags = mode_to_flags(mode);
+        int glen;
+        char *raw = run_ipm_show(flags, &glen);
+        if (!raw) { fprintf(stderr, "readme-gen: ipm show --md %s failed\n", flags); free(raw_marker); free(mode); free(content); return 1; }
+        char *graph = strip_mermaid_wrapper(raw, &glen);
 
-    /* Programs graph */
-    int plen;
-    char *progs = run_ipm_show("--programs --short", &plen);
-    if (progs) {
-        while (plen > 0 && progs[plen-1] == '\n') progs[--plen] = '\0';
-        replace_marker(&content, &len, "<!-- IDEA-GRAPH: programs -->", progs, plen);
+        replace_marker(&content, &len, raw_marker, graph, glen);
+
+        free(raw_marker);
+        free(mode);
+        /* content was reallocated, restart search from beginning */
+        work = content;
     }
 
     printf("%s\n", content);
-
-    free(combined); free(ideas); free(progs);
     free(content);
     return 0;
 }
