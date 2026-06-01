@@ -37,7 +37,9 @@ static char *run_ipm_show(const char *flags, int *out_len) {
     char tmp_path[256];
     snprintf(tmp_path, sizeof(tmp_path), "/tmp/readme-gen-%d.mermaid", getpid());
     char cmd[1024];
-    snprintf(cmd, sizeof(cmd), "ipm show --md %s > %s 2>/dev/null", flags ? flags : "--short", tmp_path);
+    /* Use full path — system() may not inherit PATH from shell */
+    snprintf(cmd, sizeof(cmd), "/home/vehir/.local/bin/ipm show --md %s > %s 2>/dev/null",
+             flags ? flags : "--short", tmp_path);
     int rc = system(cmd);
     if (rc != 0) {
         fprintf(stderr, "readme-gen: ipm show failed (rc=%d, cmd=%s)\n", rc, cmd);
