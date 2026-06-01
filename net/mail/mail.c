@@ -408,7 +408,7 @@ int main(int argc, char *argv[]) {
 
     if (!cfg_path) cfg_path = default_path();
 
-    br_cfg_t *cfg = broker_load(cfg_path, PROGNAME);
+    br_cfg_t *cfg = broker_load(cfg_path);
     free(cfg_path);
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
