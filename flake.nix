@@ -6,7 +6,7 @@
     spec2c.url = "github:grigoriitropin/spec2c";
   };
 
-  outputs = { self, nixpkgs }: let
+  outputs = { self, nixpkgs, spec2c }: let
     forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
     pkgsFor = system: nixpkgs.legacyPackages.${system};
     cflags = [ "-Wall" "-Wextra" "-Werror" "-std=c2x" ];
