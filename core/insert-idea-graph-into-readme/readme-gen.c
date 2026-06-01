@@ -300,12 +300,6 @@ int main(int argc, char *argv[]) {
     }
 
     write_file(path, content, len);
-
-    /* Generate interactive HTML */
-    struct stat st;
-    if (stat("docs", &st) != 0) mkdir("docs", 0755);
-    generate_interactive_html("docs/interactive-graph.html");
-
     free(content);
     return 0;
 }
