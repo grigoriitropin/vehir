@@ -16,30 +16,33 @@
     packages = forAllSystems (system: let
       pkgs = pkgsFor system;
       call = path: args: pkgs.callPackage path ({ inherit cflags; } // args);
+      p = self.packages.${system};
     in {
-      broker = call ./core/broker/build.nix {};
-
-      file-age = call ./core/file-age/build.nix {};
-      runtime-paths = call ./core/runtime-paths/build.nix {};
-      db = call ./core/db/build.nix {};
-      db-proxy = call ./core/db-proxy/build.nix {};
-      pain = call ./core/pain/build.nix { db = self.packages.${system}.db; };
-      git-identity = call ./core/git-identity/build.nix {};
-      readme-gen = call ./core/insert-idea-graph-into-readme/build.nix {};
-      graphd = call ./core/graphd/build.nix {};
-      constitution-validator = call ./core/constitution-validator/build.nix {
-        db = self.packages.${system}.db;
-        pain = self.packages.${system}.pain;
+      resolve-secrets-config-from-file       = call ./core/broker/build.nix {};
+      check-json-file-timestamp-age          = call ./core/file-age/build.nix {};
+      probe-runtime-paths-before-execution   = call ./core/runtime-paths/build.nix {};
+      probe-database-through-unix-socket     = call ./core/db/build.nix {};
+      gate-sql-via-unix-socket               = call ./core/db-proxy/build.nix {};
+      check-pain-write-signals-mode          = call ./core/pain/build.nix { db = p.probe-database-through-unix-socket; };
+      declare-git-author-from-config         = call ./core/git-identity/build.nix {};
+      insert-idea-graph-into-readme          = call ./core/insert-idea-graph-into-readme/build.nix {};
+      generate-idea-graph-event-driven       = call ./core/graphd/build.nix {};
+      hash-and-validate-constitution-sections = call ./core/constitution-validator/build.nix {
+        db = p.probe-database-through-unix-socket;
+        pain = p.check-pain-write-signals-mode;
       };
-      essentials = call ./core/essentials/build.nix {
-        db = self.packages.${system}.db;
-        pain = self.packages.${system}.pain;
+      listen-change-regenerate-tools-context = call ./core/essentials/build.nix {
+        db = p.probe-database-through-unix-socket;
+        pain = p.check-pain-write-signals-mode;
+      };
+      create-forgejo-repos-via-api           = call ./net/forge/build.nix {
+        broker = p.resolve-secrets-config-from-file;
+      };
+      send-and-fetch-email-messages          = call ./net/mail/build.nix {
+        broker = p.resolve-secrets-config-from-file;
       };
 
-      forge = call ./net/forge/build.nix { broker = self.packages.${system}.broker; };
-      mail = call ./net/mail/build.nix { broker = self.packages.${system}.broker; };
-
-      default = self.packages.${system}.file-age;
+      default = p.check-json-file-timestamp-age;
     });
   };
 }
