@@ -116,9 +116,13 @@ static char *process_marker_block(char *content, size_t *content_len,
 
     char *new_content = malloc(new_len + 1);
     if (!new_content) { free(insert); return content; }
+    /* GCC 14+ over-estimates post_len range; bounds check above guarantees safety */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
     memcpy(new_content, content, pre_len);
     memcpy(new_content + pre_len, insert, insert_len);
     memcpy(new_content + pre_len + insert_len, start + old_block_len, post_len);
+#pragma GCC diagnostic pop
     new_content[new_len] = '\0';
 
     free(insert);
