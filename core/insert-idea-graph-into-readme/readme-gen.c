@@ -103,15 +103,17 @@ static char *process_marker_block(char *content, size_t *content_len,
     if (!raw) { fprintf(stderr, "readme-gen: ipm show failed for %s\n", label); return content; }
     char *graph = strip_to_raw_mermaid(raw, &raw_len);
 
-    /* Build replacement: start_tag + newline + graph + newline + end_tag */
-    size_t insert_len = start_tag_len + 1 + (size_t)raw_len + 1 + end_tag_len;
+    /* Replace: start_tag + old_block + end_tag → start_tag + "\n```mermaid\n" + graph + "\n```\n" + end_tag */
+    size_t insert_len = start_tag_len + 1 + 12 + (size_t)raw_len + 1 + 4 + 1 + end_tag_len;
     char *insert = malloc(insert_len + 2);
     if (!insert) { free(raw); return content; }
     size_t off = 0;
     memcpy(insert + off, start_tag, start_tag_len); off += start_tag_len;
     insert[off++] = '\n';
-    if (raw_len > 0) { memcpy(insert + off, graph, (size_t)raw_len); off += (size_t)raw_len; }
+    memcpy(insert + off, "```mermaid\n", 11); off += 11;
+    memcpy(insert + off, graph, (size_t)raw_len); off += (size_t)raw_len;
     if (off > 0 && insert[off-1] != '\n') insert[off++] = '\n';
+    memcpy(insert + off, "```\n", 4); off += 4;
     memcpy(insert + off, end_tag, end_tag_len); off += end_tag_len;
     insert[off] = '\0';
     insert_len = off;
