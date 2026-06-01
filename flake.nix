@@ -24,6 +24,7 @@
       pain = call ./core/pain/build.nix { db = self.packages.${system}.db; };
       git-identity = call ./core/git-identity/build.nix {};
       readme-gen = call ./core/insert-idea-graph-into-readme/build.nix {};
+      graphd = call ./core/graphd/build.nix {};
       constitution-validator = call ./core/constitution-validator/build.nix {
         db = self.packages.${system}.db;
         pain = self.packages.${system}.pain;

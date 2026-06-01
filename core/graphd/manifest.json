@@ -1,0 +1,13 @@
+{
+  "programs": [{
+    "name": "graphd", "author": "Vehir", "version": "0.1.0",
+    "license": "Apache-2.0", "external": false,
+    "artifact_type": "service", "artifact_name": "graphd",
+    "check_type": "none", "repo_url": "https://codeberg.org/vehir/vehir", "flake_dir": "core"
+  }],
+  "ideas": [{
+    "name": "graphd", "author": "Vehir", "is_axiom": false, "program": "graphd",
+    "description": "Event-driven HTML graph regenerator daemon that listens on PostgreSQL NOTIFY for IPM graph changes and immediately regenerates Mermaid graph files for browser viewing"
+  }],
+  "edges": []
+}
