@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    spec2c.url = "github:grigoriitropin/spec2c";
   };
 
   outputs = { self, nixpkgs }: let
