@@ -186,29 +186,6 @@
         '';
       };
 
-      broker = pkgs.stdenv.mkDerivation {
-        pname = "vehir-config";
-        version = "0.1.0";
-        src = ./core/broker;
-        buildInputs = [ pkgs.cjson ];
-        nativeBuildInputs = [ pkgs.pkg-config ];
-        buildPhase = ''
-          runHook preBuild
-          cc ${builtins.toString cflags} -c broker.c -o broker.o
-          ar rcs libvehir-config.a broker.o
-          cc ${builtins.toString cflags} broker.c -o broker -lcjson
-          runHook postBuild
-        '';
-        installPhase = ''
-          runHook preInstall
-          mkdir -p $out/bin $out/lib $out/include
-          cp broker $out/bin/
-          cp libvehir-config.a $out/lib/
-          cp broker.h $out/include/
-          runHook postInstall
-        '';
-      };
-
       constitution-validator = pkgs.stdenv.mkDerivation {
         pname = "constitution-validator";
         version = "0.1.0";
