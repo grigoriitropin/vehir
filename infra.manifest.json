@@ -216,5 +216,25 @@
       "edge_license": "Apache-2.0",
       "description": "ipm graph tool calls scan filesystem as subprocess for directory traversal and file enumeration"
     }
-  ]
+  ],
+  "structural_enforcement": {
+    "banned_functions": [
+      "execl",
+      "execv",
+      "execle",
+      "execve",
+      "execlp",
+      "execvp",
+      "execvpe",
+      "posix_spawn",
+      "posix_spawnp",
+      "system",
+      "popen",
+      "pclose"
+    ],
+    "exempt_files": [
+      "src/ipm_call_tool.c",
+      "runtime/ipm_builtins_ipc.c"
+    ]
+  }
 }
