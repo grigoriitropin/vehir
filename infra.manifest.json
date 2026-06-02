@@ -352,34 +352,496 @@
   ],
   "ideas": [
     {
+      "name": "foundational-complex-physics-root-axiom",
+      "author": "Grigorii Tropin",
+      "is_axiom": true,
+      "description": "ROOT: An agent develops real capability only inside a world whose laws are rich and cannot be bent \u2014 the same way intelligence in the real world is shaped by a physics it cannot cheat."
+    },
+    {
+      "name": "manage-idea-packages-graph-database",
+      "author": "Grigorii Tropin",
+      "program": "ipm",
+      "description": "Declarative package manager \u2014 build, apply manifests, check licenses, verify proofs"
+    },
+    {
       "name": "compile-ipm-specifications-to-c",
-      "author": "Vehir + Grigorii Tropin",
-      "is_axiom": false,
+      "author": "Grigorii Tropin",
       "program": "compile-ipm-specifications-to-c",
-      "description": "declarative self hosting compiler converting ipm specifications to correct by construction c source code"
+      "description": "Self-hosting compiler \u2014 converts .ipm specifications to correct-by-construction C"
+    },
+    {
+      "name": "build-file-dependency-graph-json",
+      "author": "Grigorii Tropin",
+      "program": "build-file-dependency-graph-json",
+      "description": "Pure filter stdin\u2192stdout \u2014 produces category-structured dependency graph from scan-filesystem output"
+    },
+    {
+      "name": "resolve-secrets-config-from-file",
+      "author": "Grigorii Tropin",
+      "program": "resolve-secrets-config-from-file",
+      "description": "Secrets and configuration broker \u2014 resolves keys from config file, enforces permissions"
+    },
+    {
+      "name": "probe-database-through-unix-socket",
+      "author": "Grigorii Tropin",
+      "program": "probe-database-through-unix-socket",
+      "description": "Database client library \u2014 sends parameterized SQL over Unix socket to db-proxy"
+    },
+    {
+      "name": "gate-sql-via-unix-socket",
+      "author": "Vehir",
+      "program": "gate-sql-via-unix-socket",
+      "description": "Database proxy daemon \u2014 sole libpq owner, enforces per-caller SQL gate"
+    },
+    {
+      "name": "check-json-file-timestamp-age",
+      "author": "Vehir",
+      "program": null,
+      "description": "Check if a JSON file's timestamp field is within a max age (file-age)"
+    },
+    {
+      "name": "create-forgejo-repos-via-api",
+      "author": "Vehir",
+      "program": "create-forgejo-repos-via-api",
+      "description": "Forgejo REST API client: repo create/list, release create, issue create"
+    },
+    {
+      "name": "send-and-fetch-email-messages",
+      "author": "Vehir",
+      "program": "send-and-fetch-email-messages",
+      "description": "Email client: SMTP send + IMAP fetch via libcurl"
+    },
+    {
+      "name": "resolve-all-runtime-paths-dynamically",
+      "author": "Vehir",
+      "program": null,
+      "description": "Dynamic runtime path resolution for all Vehir processes"
+    },
+    {
+      "name": "check-pain-write-signals-mode",
+      "author": "Vehir",
+      "program": "check-pain-write-signals-mode",
+      "description": "Pain signal library \u2014 writes pain_registry through db-proxy, reads cognitive mode"
+    },
+    {
+      "name": "hash-and-validate-constitution-sections",
+      "author": "Vehir",
+      "program": "hash-and-validate-constitution-sections",
+      "description": "SOUL.md section hash validator \u2014 drift detection via SHA256, re-baseline"
+    },
+    {
+      "name": "apply-git-config-via-broker",
+      "author": "Vehir",
+      "program": null,
+      "description": "Declarative git identity \u2014 reads from broker config, applies git config --local"
+    },
+    {
+      "name": "generate-readme-from-idea-graph",
+      "author": "Vehir",
+      "program": null,
+      "description": "Replace <!-- IDEA-GRAPH --> marker with ipm show --md output"
+    },
+    {
+      "name": "listen-change-regenerate-tools-context",
+      "author": "Vehir",
+      "program": "listen-change-regenerate-tools-context",
+      "description": "Event-driven daemon \u2014 LISTENs for IPM graph changes via PostgreSQL NOTIFY, regenerates tool context block"
+    },
+    {
+      "name": "emit-tools-context-from-graph",
+      "author": "Vehir",
+      "program": null,
+      "description": "Emit TOOLS.md agent-context file from IPM graph (ipm status \u2192 one-liner per working tool)"
+    },
+    {
+      "name": "check-spec2c-conformance-fully-automatic",
+      "author": "Vehir",
+      "program": null,
+      "description": "Conformance checker for spec2c-generated C tools \u2014 verifies SOUL compliance via ast-grep"
+    },
+    {
+      "name": "rescore-memory-with-msa-attention",
+      "author": "Vehir",
+      "program": "rescore-memory-with-msa-attention",
+      "description": "MSA-4B daemon \u2014 neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL \u00a77"
+    },
+    {
+      "name": "generate-dense-vectors-with-qwen3",
+      "author": "Vehir",
+      "program": "generate-dense-vectors-with-qwen3",
+      "description": "Qwen3-Embedding-4B service \u2014 2560-dim normalized embeddings via transformers 4-bit"
+    },
+    {
+      "name": "auto-switch-embed-rerank-gpu",
+      "author": "Vehir",
+      "program": "auto-switch-embed-rerank-gpu",
+      "description": "Vehir unified GPU daemon \u2014 serves both embeddings (always-on) and MSA rerank (on-demand). GPU exception per SOUL \u00a77"
+    },
+    {
+      "name": "scan-filesystem-with-nftw-walk",
+      "author": "Vehir",
+      "program": "scan-filesystem-with-nftw-walk",
+      "description": "nftw-based filesystem scanner \u2014 outputs JSON lines, 72 LOC, 3ms"
+    },
+    {
+      "name": "audit-directory-and-count-lines",
+      "author": "Vehir",
+      "program": "audit-directory-and-count-lines",
+      "description": "IPM audit template \u2014 counts files, lines, duplicates in source tree"
+    },
+    {
+      "name": "extract-ipm-metadata-to-json",
+      "author": "Vehir",
+      "program": "extract-ipm-metadata-to-json",
+      "description": "Reads .ipm file \u2192 extracts metadata as JSON"
     }
   ],
-  "edges": [],
-  "structural_enforcement": {
-    "banned_functions": [
-      "execl",
-      "execv",
-      "execle",
-      "execve",
-      "execlp",
-      "execvp",
-      "execvpe",
-      "posix_spawn",
-      "posix_spawnp",
-      "system",
-      "popen",
-      "pclose"
-    ],
-    "exempt_files": [
-      "src/ipm_call_tool.c",
-      "runtime/ipm_builtins_ipc.c"
-    ]
-  },
+  "edges": [
+    {
+      "parent": "manage-idea-packages-graph-database",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "manage-idea-packages-graph-database depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "compile-ipm-specifications-to-c",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "compile-ipm-specifications-to-c depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "build-file-dependency-graph-json",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "build-file-dependency-graph-json depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "resolve-secrets-config-from-file",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "resolve-secrets-config-from-file depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "probe-database-through-unix-socket",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "probe-database-through-unix-socket depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "gate-sql-via-unix-socket",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "gate-sql-via-unix-socket depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "check-json-file-timestamp-age",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "check-json-file-timestamp-age depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "create-forgejo-repos-via-api",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "create-forgejo-repos-via-api depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "send-and-fetch-email-messages",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "send-and-fetch-email-messages depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "resolve-all-runtime-paths-dynamically",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "resolve-all-runtime-paths-dynamically depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "check-pain-write-signals-mode",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "check-pain-write-signals-mode depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "hash-and-validate-constitution-sections",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "hash-and-validate-constitution-sections depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "apply-git-config-via-broker",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "apply-git-config-via-broker depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "generate-readme-from-idea-graph",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "generate-readme-from-idea-graph depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "listen-change-regenerate-tools-context",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "listen-change-regenerate-tools-context depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "emit-tools-context-from-graph",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "emit-tools-context-from-graph depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "check-spec2c-conformance-fully-automatic",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "check-spec2c-conformance-fully-automatic depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "rescore-memory-with-msa-attention",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "rescore-memory-with-msa-attention depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "generate-dense-vectors-with-qwen3",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "generate-dense-vectors-with-qwen3 depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "auto-switch-embed-rerank-gpu depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "scan-filesystem-with-nftw-walk",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "scan-filesystem-with-nftw-walk depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "audit-directory-and-count-lines",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "audit-directory-and-count-lines depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "extract-ipm-metadata-to-json",
+      "child": "foundational-complex-physics-root-axiom",
+      "link_type": "conceptual",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "extract-ipm-metadata-to-json depends on the foundational complex-physics root axiom that grounds all Vehir capability"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "generate-dense-vectors-with-qwen3",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "vsmm unified GPU daemon wraps the embed worker for always-on vector generation"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "rescore-memory-with-msa-attention",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "vsmm unified daemon spawns MSA rerank worker on-demand for memory scoring"
+    },
+    {
+      "parent": "generate-dense-vectors-with-qwen3",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "embed service reads the memory bank through the database client library"
+    },
+    {
+      "parent": "rescore-memory-with-msa-attention",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "MSA rerank daemon reads the Vehir memory bank via the database client"
+    },
+    {
+      "parent": "probe-database-through-unix-socket",
+      "child": "gate-sql-via-unix-socket",
+      "link_type": "socket",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "database client library sends parameterized SQL over Unix socket to db proxy"
+    },
+    {
+      "parent": "manage-idea-packages-graph-database",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "library",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "IPM package manager writes the full idea graph to database via the client library"
+    },
+    {
+      "parent": "listen-change-regenerate-tools-context",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "socket",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "essentials event daemon LISTENs for PostgreSQL NOTIFY via the database client"
+    },
+    {
+      "parent": "check-pain-write-signals-mode",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "pain signal library writes pain registry changes through the database client"
+    },
+    {
+      "parent": "hash-and-validate-constitution-sections",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "constitution section hash validator reads its baseline hashes via the database client"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "probe-database-through-unix-socket",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "unified GPU daemon reads memory bank entries through the database client library"
+    },
+    {
+      "parent": "send-and-fetch-email-messages",
+      "child": "resolve-secrets-config-from-file",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "mail client reads SMTP and IMAP credentials from the configuration secrets broker"
+    },
+    {
+      "parent": "create-forgejo-repos-via-api",
+      "child": "resolve-secrets-config-from-file",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "forge REST client reads the Forgejo API token from the configuration secrets broker"
+    },
+    {
+      "parent": "manage-idea-packages-graph-database",
+      "child": "resolve-secrets-config-from-file",
+      "link_type": "library",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "IPM reads database connection strings and API keys from the configuration broker"
+    },
+    {
+      "parent": "apply-git-config-via-broker",
+      "child": "resolve-secrets-config-from-file",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "declarative git identity tool reads git user config from the secrets broker file"
+    },
+    {
+      "parent": "listen-change-regenerate-tools-context",
+      "child": "check-pain-write-signals-mode",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "essentials daemon signals cognitive pain mode on detected graph structure drift"
+    },
+    {
+      "parent": "compile-ipm-specifications-to-c",
+      "child": "manage-idea-packages-graph-database",
+      "link_type": "library",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "self-hosting spec2c compiler uses IPM functions including ipm json pg and time libraries"
+    },
+    {
+      "parent": "check-spec2c-conformance-fully-automatic",
+      "child": "compile-ipm-specifications-to-c",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "spec2c conformance checker verifies generated C tool correctness via ast grep patterns"
+    },
+    {
+      "parent": "emit-tools-context-from-graph",
+      "child": "manage-idea-packages-graph-database",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "tools context emitter reads the IPM working tool list from the idea package graph"
+    },
+    {
+      "parent": "generate-readme-from-idea-graph",
+      "child": "manage-idea-packages-graph-database",
+      "link_type": "library",
+      "author": "Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "readme generator calls ipm show command to render the idea graph as markdown output"
+    },
+    {
+      "parent": "build-file-dependency-graph-json",
+      "child": "scan-filesystem-with-nftw-walk",
+      "link_type": "library",
+      "author": "Grigorii Tropin",
+      "edge_license": "Apache-2.0",
+      "description": "dependency graph builder filters scan filesystem JSON output into a category structured graph"
+    }
+  ],
   "program_edges": [
     {
       "parent": "resolve-secrets-config-from-file",
@@ -532,6 +994,100 @@
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "spec2c calls IPM functions (ipm_json, ipm_pg, ipm_time)"
+    }
+  ],
+  "structural_enforcement": {
+    "banned_functions": [
+      "execl",
+      "execv",
+      "execle",
+      "execve",
+      "execlp",
+      "execvp",
+      "execvpe",
+      "posix_spawn",
+      "posix_spawnp",
+      "system",
+      "popen",
+      "pclose"
+    ],
+    "exempt_files": [
+      "src/ipm_call_tool.c",
+      "runtime/ipm_builtins_ipc.c"
+    ]
+  },
+  "compat_rules": [
+    {
+      "parent_license": "Apache-2.0",
+      "child_license": "Apache-2.0",
+      "edge_license": "Apache-2.0",
+      "link_type": "library",
+      "verdict": "compatible",
+      "reason": "Apache-2.0 is compatible with itself \u2014 same license"
+    },
+    {
+      "parent_license": "Apache-2.0",
+      "child_license": "Apache-2.0",
+      "edge_license": "Apache-2.0",
+      "link_type": "socket",
+      "verdict": "compatible",
+      "reason": "Apache-2.0 socket link \u2014 no code coupling, compatible"
+    },
+    {
+      "parent_license": "Apache-2.0",
+      "child_license": "Apache-2.0",
+      "edge_license": "Apache-2.0",
+      "link_type": "conceptual",
+      "verdict": "compatible",
+      "reason": "Apache-2.0 conceptual link \u2014 no code coupling"
+    },
+    {
+      "parent_license": null,
+      "child_license": "Apache-2.0",
+      "edge_license": "Apache-2.0",
+      "link_type": "conceptual",
+      "verdict": "compatible",
+      "reason": "License-free axiom concept linked to Apache-2.0 idea \u2014 no code coupling"
+    },
+    {
+      "parent_license": null,
+      "child_license": "Apache-2.0",
+      "edge_license": "Apache-2.0",
+      "link_type": "library",
+      "verdict": "compatible",
+      "reason": "License-free idea linked via library \u2014 no code coupling, compatible"
+    },
+    {
+      "parent_license": "Apache-2.0",
+      "child_license": null,
+      "edge_license": "Apache-2.0",
+      "link_type": "library",
+      "verdict": "compatible",
+      "reason": "License-free idea linked via library \u2014 no code coupling, compatible"
+    },
+    {
+      "parent_license": null,
+      "child_license": "Apache-2.0",
+      "edge_license": "Apache-2.0",
+      "link_type": "socket",
+      "verdict": "compatible",
+      "reason": "License-free idea linked via socket \u2014 no code coupling, compatible"
+    },
+    {
+      "parent_license": "Apache-2.0",
+      "child_license": null,
+      "edge_license": "Apache-2.0",
+      "link_type": "socket",
+      "verdict": "compatible",
+      "reason": "License-free idea linked via socket \u2014 no code coupling, compatible"
+    },
+    {
+      "parent_license": "Apache-2.0",
+      "child_license": null,
+      "edge_license": "Apache-2.0",
+      "link_type": "conceptual",
+      "verdict": "compatible",
+      "reason": "License-free idea linked via conceptual \u2014 no code coupling, compatible"
     }
   ]
 }
