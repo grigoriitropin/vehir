@@ -359,32 +359,7 @@
       "description": "declarative self hosting compiler converting ipm specifications to correct by construction c source code"
     }
   ],
-  "edges": [
-    {
-      "parent": "compile-ipm-specifications-to-c",
-      "child": "audit-directory-and-count-lines",
-      "author": "Vehir",
-      "link_type": "conceptual",
-      "edge_license": "Apache-2.0",
-      "description": "spec2c compiles ipm audit tool into native c binary"
-    },
-    {
-      "parent": "compile-ipm-specifications-to-c",
-      "child": "extract-ipm-metadata-to-json",
-      "author": "Vehir",
-      "link_type": "conceptual",
-      "edge_license": "Apache-2.0",
-      "description": "ipm meta tool reads dot ipm specification format defined by spec2c compiler"
-    },
-    {
-      "parent": "build-file-dependency-graph-json",
-      "child": "scan-filesystem-with-nftw-walk",
-      "author": "Vehir",
-      "link_type": "conceptual",
-      "edge_license": "Apache-2.0",
-      "description": "ipm graph tool calls scan filesystem as subprocess for directory traversal and file enumeration"
-    }
-  ],
+  "edges": [],
   "structural_enforcement": {
     "banned_functions": [
       "execl",
