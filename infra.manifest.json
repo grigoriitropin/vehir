@@ -207,6 +207,14 @@
       "link_type": "conceptual",
       "edge_license": "Apache-2.0",
       "description": "ipm meta tool reads dot ipm specification format defined by spec2c compiler"
+    },
+    {
+      "parent": "build-file-dependency-graph-json",
+      "child": "scan-filesystem-with-nftw-walk",
+      "author": "Vehir",
+      "link_type": "conceptual",
+      "edge_license": "Apache-2.0",
+      "description": "ipm graph tool calls scan filesystem as subprocess for directory traversal and file enumeration"
     }
   ]
 }
