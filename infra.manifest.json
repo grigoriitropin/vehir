@@ -381,6 +381,14 @@
       "link_type": "conceptual",
       "edge_license": "Apache-2.0",
       "description": "ipm-graph calls scan-filesystem for directory traversal"
+    },
+    {
+      "parent": "ipm",
+      "child": "compile-ipm-specifications-to-c",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "spec2c calls IPM functions (ipm_json, ipm_pg, ipm_time)"
     }
   ]
 }
