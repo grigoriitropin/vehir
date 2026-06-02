@@ -149,8 +149,44 @@
       "artifact_type": "tool",
       "check_type": "none",
       "artifact_name": "ipm"
+    },
+    {
+      "name": "spec2c",
+      "author": "Vehir + Grigorii Tropin",
+      "version": "0.2.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "spec2c",
+      "check_type": "none",
+      "repo_url": "https://github.com/grigoriitropin/spec2c"
     }
   ],
-  "ideas": [],
-  "edges": []
+  "ideas": [
+    {
+      "name": "spec2c",
+      "author": "Vehir + Grigorii Tropin",
+      "is_axiom": false,
+      "program": "spec2c",
+      "description": "declarative self hosting compiler converting ipm specifications to correct by construction c source code"
+    }
+  ],
+  "edges": [
+    {
+      "parent": "spec2c",
+      "child": "audit-directory-and-count-lines",
+      "author": "Vehir",
+      "link_type": "conceptual",
+      "edge_license": "Apache-2.0",
+      "description": "spec2c compiles ipm audit tool into native c binary"
+    },
+    {
+      "parent": "spec2c",
+      "child": "build-file-dependency-graph-json",
+      "author": "Vehir",
+      "link_type": "conceptual",
+      "edge_license": "Apache-2.0",
+      "description": "spec2c provides compilation infrastructure for ipm graph builder"
+    }
+  ]
 }
