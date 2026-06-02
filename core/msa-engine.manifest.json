@@ -42,5 +42,23 @@
       "edge_license": "Apache-2.0",
       "description": "Receives dense vector embeddings from the Qwen3 embedding service as the initial retrieval stage before applying multi-scale attention rescoring"
     }
+  ],
+  "program_edges": [
+    {
+      "parent": "rescore-memory-with-msa-attention",
+      "child": "probe-database-through-unix-socket",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "MSA reads memory entries via db client for document prefill"
+    },
+    {
+      "parent": "rescore-memory-with-msa-attention",
+      "child": "generate-dense-vectors-with-qwen3",
+      "author": "Vehir",
+      "link_type": "socket",
+      "edge_license": "Apache-2.0",
+      "description": "MSA receives dense vectors from Qwen3 embedding service for initial retrieval stage"
+    }
   ]
 }

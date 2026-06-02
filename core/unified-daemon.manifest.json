@@ -50,5 +50,31 @@
       "edge_license": "Apache-2.0",
       "description": "Reads and writes memory entries through the db client library for vector data during embedding and reranking operations"
     }
+  ],
+  "program_edges": [
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "rescore-memory-with-msa-attention",
+      "author": "Vehir",
+      "link_type": "socket",
+      "edge_license": "Apache-2.0",
+      "description": "Unified daemon spawns MSA-4B worker for neural rescoring"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "generate-dense-vectors-with-qwen3",
+      "author": "Vehir",
+      "link_type": "socket",
+      "edge_license": "Apache-2.0",
+      "description": "Unified daemon runs Qwen3-Embedding-4B as resident embed worker"
+    },
+    {
+      "parent": "auto-switch-embed-rerank-gpu",
+      "child": "probe-database-through-unix-socket",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Unified daemon reads and writes memory entries via db client"
+    }
   ]
 }

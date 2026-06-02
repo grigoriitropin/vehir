@@ -1,0 +1,1 @@
+/home/vehir/vehir/scripts/generate_all_embeddings.py

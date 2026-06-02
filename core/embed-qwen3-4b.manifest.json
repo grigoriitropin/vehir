@@ -34,5 +34,15 @@
       "edge_license": "Apache-2.0",
       "description": "Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking"
     }
+  ],
+  "program_edges": [
+    {
+      "parent": "generate-dense-vectors-with-qwen3",
+      "child": "probe-database-through-unix-socket",
+      "author": "Vehir",
+      "link_type": "library",
+      "edge_license": "Apache-2.0",
+      "description": "Embed stores vectors in memory entries table via db client"
+    }
   ]
 }

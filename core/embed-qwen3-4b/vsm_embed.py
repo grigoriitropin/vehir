@@ -1,0 +1,1 @@
+/home/vehir/vehir/scripts/vsm_embed.py
