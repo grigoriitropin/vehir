@@ -31,6 +31,7 @@ graph TD
   build-file-dependency-graph-json["build-file-dependency-graph-json\n[programs: build-file-dependency-graph-json(tool)]"]
   generate-idea-graph-event-driven["generate-idea-graph-event-driven\n[programs: generate-idea-graph-event-driven(service)]"]
   audit-directory-and-count-lines["audit-directory-and-count-lines\n[programs: audit-directory-and-count-lines(tool)]"]
+  compile-ipm-specifications-to-c["compile-ipm-specifications-to-c\n[programs: audit-directory-and-count-lines(tool), compile-ipm-specifications-to-c(tool), extract-ipm-metadata-to-json(tool)]"]
   convert-text-to-dense-vectors["convert-text-to-dense-vectors\n[programs: probe-database-through-unix-socket(tool), gate-sql-via-unix-socket(service), generate-dense-vectors-with-qwen3(service)]"]
   write-pain-signals-to-registry["write-pain-signals-to-registry\n[programs: probe-database-through-unix-socket(tool), gate-sql-via-unix-socket(service), check-pain-write-signals-mode(tool)]"]
   check-json-file-timestamp-age["check-json-file-timestamp-age\n[programs: check-json-file-timestamp-age(tool)]"]
@@ -54,6 +55,8 @@ graph TD
   create-forgejo-repos-via-api -->|"Reads Forgejo API token and base URL from the secrets broker — zero secrets in environment or CLI\n(Vehir)"| resolve-configuration-secrets-from-file
   regenerate-agent-context-on-change -->|"Stores the regenerated tool context hash in the soul_hashes table through the db-proxy gateway for drift detection\n(Vehir)"| send-parameterized-sql-over-socket
   check-license-compatibility-across-graph -->|"Queries the data store through the db client library for license compatibility cross-checking\n(Vehir)"| send-parameterized-sql-over-socket
+  compile-ipm-specifications-to-c -->|"ipm meta tool reads dot ipm specification format defined by spec2c compiler\n(Vehir)"| extract-ipm-metadata-to-json
+  compile-ipm-specifications-to-c -->|"spec2c compiles ipm audit tool into native c binary\n(Vehir)"| audit-directory-and-count-lines
   convert-text-to-dense-vectors -->|"Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking\n(Vehir)"| send-parameterized-sql-over-socket
   auto-switch-embed-rerank-gpu -->|"Wraps Qwen3-Embedding-4B model running as a resident embed worker for always-on dense vector generation\n(Vehir)"| convert-text-to-dense-vectors
   send-and-fetch-email-messages -->|"Reads SMTP credentials and IMAP connection settings from the secrets broker — zero secrets in environment or CLI\n(Vehir)"| resolve-configuration-secrets-from-file
@@ -81,6 +84,7 @@ graph TD
   build-file-dependency-graph-json["build-file-dependency-graph-json\n(Vehir)\n[pending]"]
   generate-idea-graph-event-driven["generate-idea-graph-event-driven\n(Vehir)\n[pending]"]
   audit-directory-and-count-lines["audit-directory-and-count-lines\n(Vehir)\n[pending]"]
+  compile-ipm-specifications-to-c["compile-ipm-specifications-to-c\n(Vehir + Grigorii Tropin)\n[pending]"]
   convert-text-to-dense-vectors["convert-text-to-dense-vectors\n(Vehir)\n[pending]"]
   write-pain-signals-to-registry["write-pain-signals-to-registry\n(Vehir)\n[pending]"]
   check-json-file-timestamp-age["check-json-file-timestamp-age\n(Vehir)\n[pending]"]
@@ -104,6 +108,8 @@ graph TD
   create-forgejo-repos-via-api -->|"Reads Forgejo API token and base URL from the secrets broker — zero secrets in environment or CLI\n(Vehir)"| resolve-configuration-secrets-from-file
   regenerate-agent-context-on-change -->|"Stores the regenerated tool context hash in the soul_hashes table through the db-proxy gateway for drift detection\n(Vehir)"| send-parameterized-sql-over-socket
   check-license-compatibility-across-graph -->|"Queries the data store through the db client library for license compatibility cross-checking\n(Vehir)"| send-parameterized-sql-over-socket
+  compile-ipm-specifications-to-c -->|"ipm meta tool reads dot ipm specification format defined by spec2c compiler\n(Vehir)"| extract-ipm-metadata-to-json
+  compile-ipm-specifications-to-c -->|"spec2c compiles ipm audit tool into native c binary\n(Vehir)"| audit-directory-and-count-lines
   convert-text-to-dense-vectors -->|"Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking\n(Vehir)"| send-parameterized-sql-over-socket
   auto-switch-embed-rerank-gpu -->|"Wraps Qwen3-Embedding-4B model running as a resident embed worker for always-on dense vector generation\n(Vehir)"| convert-text-to-dense-vectors
   send-and-fetch-email-messages -->|"Reads SMTP credentials and IMAP connection settings from the secrets broker — zero secrets in environment or CLI\n(Vehir)"| resolve-configuration-secrets-from-file
@@ -122,6 +128,7 @@ graph TD
   check-license-compatibility-across-graph["check-license-compatibility-across-graph v0.1.0\n[pending]\n[license: unchecked]\nApache-2.0\nVehir"]
   check-pain-write-signals-mode["check-pain-write-signals-mode v0.1.0\n[pending]\n[license: unchecked]\nApache-2.0\nVehir"]
   cjson["cjson v0\n[pending]\n[license: unchecked]\nMIT\nDave Gamble"]
+  compile-ipm-specifications-to-c["compile-ipm-specifications-to-c v0.2.0\n[pending]\n[license: unchecked]\nApache-2.0\nVehir + Grigorii Tropin"]
   create-forgejo-repos-via-api["create-forgejo-repos-via-api v0.1.0\n[pending]\n[license: unchecked]\nApache-2.0\nVehir"]
   declare-git-author-from-config["declare-git-author-from-config v0.1.0\n[pending]\n[license: unchecked]\nApache-2.0\nVehir"]
   extract-ipm-metadata-to-json["extract-ipm-metadata-to-json v0.1.0\n[pending]\n[license: unchecked]\nApache-2.0\nVehir"]
@@ -149,6 +156,8 @@ graph TD
   auto-switch-embed-rerank-gpu -->|"Wraps MSA-4B rerank model loaded on demand via a spawned worker process for neural rescoring of retrieval results\n(Vehir)"| rescore-memory-with-msa-attention
   check-license-compatibility-across-graph -->|"Queries the data store through the db client library for license compatibility cross-checking\n(Vehir)"| probe-database-through-unix-socket
   check-pain-write-signals-mode -->|"Routes SQL statements through the db client library to write pain events and read cognitive mode from the database\n(Vehir)"| probe-database-through-unix-socket
+  compile-ipm-specifications-to-c -->|"spec2c compiles ipm audit tool into native c binary\n(Vehir)"| audit-directory-and-count-lines
+  compile-ipm-specifications-to-c -->|"ipm meta tool reads dot ipm specification format defined by spec2c compiler\n(Vehir)"| extract-ipm-metadata-to-json
   create-forgejo-repos-via-api -->|"Reads Forgejo API token and base URL from the secrets broker — zero secrets in environment or CLI\n(Vehir)"| resolve-secrets-config-from-file
   generate-dense-vectors-with-qwen3 -->|"Stores generated dense vector embeddings in the memory entries table through the db client library for later retrieval and reranking\n(Vehir)"| probe-database-through-unix-socket
   hash-and-validate-constitution-sections -->|"Signals pain events on detected SOUL.md section drift — writes severity and description through pain library\n(Vehir)"| check-pain-write-signals-mode

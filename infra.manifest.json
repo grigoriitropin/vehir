@@ -151,7 +151,7 @@
       "artifact_name": "ipm"
     },
     {
-      "name": "spec2c",
+      "name": "compile-ipm-specifications-to-c",
       "author": "Vehir + Grigorii Tropin",
       "version": "0.2.0",
       "license": "Apache-2.0",
@@ -184,16 +184,16 @@
   ],
   "ideas": [
     {
-      "name": "spec2c",
+      "name": "compile-ipm-specifications-to-c",
       "author": "Vehir + Grigorii Tropin",
       "is_axiom": false,
-      "program": "spec2c",
+      "program": "compile-ipm-specifications-to-c",
       "description": "declarative self hosting compiler converting ipm specifications to correct by construction c source code"
     }
   ],
   "edges": [
     {
-      "parent": "spec2c",
+      "parent": "compile-ipm-specifications-to-c",
       "child": "audit-directory-and-count-lines",
       "author": "Vehir",
       "link_type": "conceptual",
@@ -201,7 +201,7 @@
       "description": "spec2c compiles ipm audit tool into native c binary"
     },
     {
-      "parent": "spec2c",
+      "parent": "compile-ipm-specifications-to-c",
       "child": "extract-ipm-metadata-to-json",
       "author": "Vehir",
       "link_type": "conceptual",
