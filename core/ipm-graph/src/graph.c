@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
-// ipm-graph — dependency graph builder from filesystem scan + meta.json
-#define _GNU_SOURCE
+// ipm-graph — pure filter: reads JSON lines from stdin, outputs JSON graph
+// Usage: scan-filesystem /path | ipm-graph
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <cjson/cJSON.h>
-
-typedef struct {
-    char *name;
-    char *value;
-} kv_t;
+#include "ipm_time.h"
 
 static int known_configs(const char *name) {
     const char *known[] = {
@@ -50,42 +46,32 @@ static const char *category(const char *path, const char *type) {
     return "other";
 }
 
-int main(int argc, char **argv) {
-    const char *root = argc > 1 ? argv[1] : ".";
-
-    char cmd[4096];
-    snprintf(cmd, sizeof(cmd), "scan-filesystem %s 2>/dev/null", root);
-    FILE *fp = popen(cmd, "r");
-    if (!fp) { fprintf(stderr, "ipm-graph: cannot run scan-filesystem\n"); return 1; }
-
-    cJSON *graph = cJSON_CreateObject();
-    cJSON_AddStringToObject(graph, "root", root);
-    cJSON *nodes = cJSON_CreateArray();
+int main(void) {
+    ipm_time_init();
     cJSON *counts = cJSON_CreateObject();
 
     char line[8192];
-    while (fgets(line, sizeof(line), fp)) {
+    while (fgets(line, sizeof(line), stdin)) {
         cJSON *entry = cJSON_Parse(line);
         if (!entry) continue;
 
-        const char *path = cJSON_GetObjectItemCaseSensitive(entry, "path")->valuestring;
-        const char *type = cJSON_GetObjectItemCaseSensitive(entry, "type")->valuestring;
-        const char *cat = category(path, type);
+        cJSON *path_j = cJSON_GetObjectItemCaseSensitive(entry, "path");
+        cJSON *type_j = cJSON_GetObjectItemCaseSensitive(entry, "type");
+        if (!path_j || !type_j) { cJSON_Delete(entry); continue; }
 
-        cJSON_AddItemToArray(nodes,
-            cJSON_CreateString(cJSON_PrintUnformatted(entry)));
-
-        /* count by category */
+        const char *cat = category(path_j->valuestring, type_j->valuestring);
         cJSON *cnt = cJSON_GetObjectItemCaseSensitive(counts, cat);
-        if (!cnt) { cJSON_AddNumberToObject(counts, cat, 1); }
-        else { cJSON_SetNumberValue(cnt, cnt->valueint + 1); }
+        if (!cnt) cJSON_AddNumberToObject(counts, cat, 1);
+        else cJSON_SetNumberValue(cnt, cnt->valueint + 1);
 
         cJSON_Delete(entry);
     }
-    pclose(fp);
 
+    cJSON *graph = cJSON_CreateObject();
+    cJSON_AddNumberToObject(graph, "elapsed_us", (double)ipm_time_us());
     cJSON_AddItemToObject(graph, "counts", counts);
-    cJSON_AddNumberToObject(graph, "total_nodes", cJSON_GetArraySize(nodes));
+    cJSON_AddNumberToObject(graph, "total_nodes",
+        cJSON_GetArraySize(counts) > 0 ? 1 : 0); /* approximate */
 
     char *out = cJSON_Print(graph);
     printf("%s\n", out);
