@@ -28,7 +28,7 @@ graph TD
   rerank-memory-with-neural-attention["rerank-memory-with-neural-attention\n[programs: probe-database-through-unix-socket(tool), gate-sql-via-unix-socket(service), generate-dense-vectors-with-qwen3(service), rescore-memory-with-msa-attention(service)]"]
   auto-switch-embed-rerank-gpu["auto-switch-embed-rerank-gpu\n[programs: probe-database-through-unix-socket(tool), gate-sql-via-unix-socket(service), generate-dense-vectors-with-qwen3(service), rescore-memory-with-msa-attention(service), auto-switch-embed-rerank-gpu(service)]"]
   resolve-configuration-secrets-from-file["resolve-configuration-secrets-from-file\n[programs: resolve-secrets-config-from-file(library)]"]
-  build-file-dependency-graph-json["build-file-dependency-graph-json\n[programs: build-file-dependency-graph-json(tool)]"]
+  build-file-dependency-graph-json["build-file-dependency-graph-json\n[programs: build-file-dependency-graph-json(tool), scan-filesystem-with-nftw-walk(tool)]"]
   generate-idea-graph-event-driven["generate-idea-graph-event-driven\n[programs: generate-idea-graph-event-driven(service)]"]
   audit-directory-and-count-lines["audit-directory-and-count-lines\n[programs: audit-directory-and-count-lines(tool)]"]
   compile-ipm-specifications-to-c["compile-ipm-specifications-to-c\n[programs: audit-directory-and-count-lines(tool), compile-ipm-specifications-to-c(tool), extract-ipm-metadata-to-json(tool)]"]
@@ -48,6 +48,7 @@ graph TD
   rerank-memory-with-neural-attention -->|"Reads memory entries from the database through the db client library for document prefill before neural reranking\n(Vehir)"| send-parameterized-sql-over-socket
   rerank-memory-with-neural-attention -->|"Receives dense vector embeddings from the Qwen3 embedding service as the initial retrieval stage before applying multi-scale attention rescoring\n(Vehir)"| convert-text-to-dense-vectors
   regenerate-agent-context-on-change -->|"Signals tool context drift events to the pain registry when a SHA256 mismatch is detected against the known baseline\n(Vehir)"| write-pain-signals-to-registry
+  build-file-dependency-graph-json -->|"ipm graph tool calls scan filesystem as subprocess for directory traversal and file enumeration\n(Vehir)"| scan-filesystem-with-nftw-walk
   send-parameterized-sql-over-socket -->|"Routes SQL queries from the db client library over a Unix socket to the db-proxy daemon for validation and execution\n(Vehir)"| gate-sql-via-unix-socket
   write-pain-signals-to-registry -->|"Routes SQL statements through the db client library to write pain events and read cognitive mode from the database\n(Vehir)"| send-parameterized-sql-over-socket
   hash-and-validate-constitution-sections -->|"Signals pain events on detected SOUL.md section drift — writes severity and description through pain library\n(Vehir)"| write-pain-signals-to-registry
@@ -101,6 +102,7 @@ graph TD
   rerank-memory-with-neural-attention -->|"Reads memory entries from the database through the db client library for document prefill before neural reranking\n(Vehir)"| send-parameterized-sql-over-socket
   rerank-memory-with-neural-attention -->|"Receives dense vector embeddings from the Qwen3 embedding service as the initial retrieval stage before applying multi-scale attention rescoring\n(Vehir)"| convert-text-to-dense-vectors
   regenerate-agent-context-on-change -->|"Signals tool context drift events to the pain registry when a SHA256 mismatch is detected against the known baseline\n(Vehir)"| write-pain-signals-to-registry
+  build-file-dependency-graph-json -->|"ipm graph tool calls scan filesystem as subprocess for directory traversal and file enumeration\n(Vehir)"| scan-filesystem-with-nftw-walk
   send-parameterized-sql-over-socket -->|"Routes SQL queries from the db client library over a Unix socket to the db-proxy daemon for validation and execution\n(Vehir)"| gate-sql-via-unix-socket
   write-pain-signals-to-registry -->|"Routes SQL statements through the db client library to write pain events and read cognitive mode from the database\n(Vehir)"| send-parameterized-sql-over-socket
   hash-and-validate-constitution-sections -->|"Signals pain events on detected SOUL.md section drift — writes severity and description through pain library\n(Vehir)"| write-pain-signals-to-registry
@@ -154,6 +156,7 @@ graph TD
   auto-switch-embed-rerank-gpu -->|"Wraps Qwen3-Embedding-4B model running as a resident embed worker for always-on dense vector generation\n(Vehir)"| generate-dense-vectors-with-qwen3
   auto-switch-embed-rerank-gpu -->|"Reads and writes memory entries through the db client library for vector data during embedding and reranking operations\n(Vehir)"| probe-database-through-unix-socket
   auto-switch-embed-rerank-gpu -->|"Wraps MSA-4B rerank model loaded on demand via a spawned worker process for neural rescoring of retrieval results\n(Vehir)"| rescore-memory-with-msa-attention
+  build-file-dependency-graph-json -->|"ipm graph tool calls scan filesystem as subprocess for directory traversal and file enumeration\n(Vehir)"| scan-filesystem-with-nftw-walk
   check-license-compatibility-across-graph -->|"Queries the data store through the db client library for license compatibility cross-checking\n(Vehir)"| probe-database-through-unix-socket
   check-pain-write-signals-mode -->|"Routes SQL statements through the db client library to write pain events and read cognitive mode from the database\n(Vehir)"| probe-database-through-unix-socket
   compile-ipm-specifications-to-c -->|"spec2c compiles ipm audit tool into native c binary\n(Vehir)"| audit-directory-and-count-lines
