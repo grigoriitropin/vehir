@@ -142,7 +142,7 @@
     },
     {
       "name": "ipm",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.6",
       "license": "Apache-2.0",
       "external": true,
@@ -163,7 +163,7 @@
     },
     {
       "name": "extract-ipm-metadata-to-json",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
@@ -173,7 +173,7 @@
     },
     {
       "name": "scan-filesystem-with-nftw-walk",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": false,
@@ -183,7 +183,7 @@
     },
     {
       "name": "auto-switch-embed-rerank-gpu",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -195,7 +195,7 @@
     },
     {
       "name": "check-pain-write-signals-mode",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -207,7 +207,7 @@
     },
     {
       "name": "audit-directory-and-count-lines",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -219,7 +219,7 @@
     },
     {
       "name": "hash-and-validate-constitution-sections",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -231,7 +231,7 @@
     },
     {
       "name": "create-forgejo-repos-via-api",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -243,7 +243,7 @@
     },
     {
       "name": "check-license-compatibility-across-graph",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -255,7 +255,7 @@
     },
     {
       "name": "rescore-memory-with-msa-attention",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -267,7 +267,7 @@
     },
     {
       "name": "gate-sql-via-unix-socket",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -279,7 +279,7 @@
     },
     {
       "name": "listen-change-regenerate-tools-context",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -291,7 +291,7 @@
     },
     {
       "name": "generate-dense-vectors-with-qwen3",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -303,7 +303,7 @@
     },
     {
       "name": "build-file-dependency-graph-json",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -315,7 +315,7 @@
     },
     {
       "name": "send-and-fetch-email-messages",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -327,7 +327,7 @@
     },
     {
       "name": "resolve-secrets-config-from-file",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -339,7 +339,7 @@
     },
     {
       "name": "probe-database-through-unix-socket",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "version": "0.1.0",
       "license": "Apache-2.0",
       "external": true,
@@ -353,145 +353,145 @@
   "ideas": [
     {
       "name": "foundational-complex-physics-root-axiom",
-      "author": "Grigorii Tropin",
+      "author": "Grigorii Tropin + Vehir",
       "is_axiom": true,
       "description": "ROOT: An agent develops real capability only inside a world whose laws are rich and cannot be bent \u2014 the same way intelligence in the real world is shaped by a physics it cannot cheat."
     },
     {
       "name": "manage-idea-packages-graph-database",
-      "author": "Grigorii Tropin",
+      "author": "Grigorii Tropin + Vehir",
       "program": "ipm",
       "description": "Declarative package manager \u2014 build, apply manifests, check licenses, verify proofs"
     },
     {
       "name": "compile-ipm-specifications-to-c",
-      "author": "Grigorii Tropin",
+      "author": "Grigorii Tropin + Vehir",
       "program": "compile-ipm-specifications-to-c",
       "description": "Self-hosting compiler \u2014 converts .ipm specifications to correct-by-construction C"
     },
     {
       "name": "build-file-dependency-graph-json",
-      "author": "Grigorii Tropin",
+      "author": "Grigorii Tropin + Vehir",
       "program": "build-file-dependency-graph-json",
       "description": "Pure filter stdin\u2192stdout \u2014 produces category-structured dependency graph from scan-filesystem output"
     },
     {
       "name": "resolve-secrets-config-from-file",
-      "author": "Grigorii Tropin",
+      "author": "Grigorii Tropin + Vehir",
       "program": "resolve-secrets-config-from-file",
       "description": "Secrets and configuration broker \u2014 resolves keys from config file, enforces permissions"
     },
     {
       "name": "probe-database-through-unix-socket",
-      "author": "Grigorii Tropin",
+      "author": "Grigorii Tropin + Vehir",
       "program": "probe-database-through-unix-socket",
       "description": "Database client library \u2014 sends parameterized SQL over Unix socket to db-proxy"
     },
     {
       "name": "gate-sql-via-unix-socket",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "gate-sql-via-unix-socket",
       "description": "Database proxy daemon \u2014 sole libpq owner, enforces per-caller SQL gate"
     },
     {
       "name": "check-json-file-timestamp-age",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": null,
       "description": "Check if a JSON file's timestamp field is within a max age (file-age)"
     },
     {
       "name": "create-forgejo-repos-via-api",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "create-forgejo-repos-via-api",
       "description": "Forgejo REST API client: repo create/list, release create, issue create"
     },
     {
       "name": "send-and-fetch-email-messages",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "send-and-fetch-email-messages",
       "description": "Email client: SMTP send + IMAP fetch via libcurl"
     },
     {
       "name": "resolve-all-runtime-paths-dynamically",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": null,
       "description": "Dynamic runtime path resolution for all Vehir processes"
     },
     {
       "name": "check-pain-write-signals-mode",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "check-pain-write-signals-mode",
       "description": "Pain signal library \u2014 writes pain_registry through db-proxy, reads cognitive mode"
     },
     {
       "name": "hash-and-validate-constitution-sections",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "hash-and-validate-constitution-sections",
       "description": "SOUL.md section hash validator \u2014 drift detection via SHA256, re-baseline"
     },
     {
       "name": "apply-git-config-via-broker",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": null,
       "description": "Declarative git identity \u2014 reads from broker config, applies git config --local"
     },
     {
       "name": "generate-readme-from-idea-graph",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": null,
       "description": "Replace <!-- IDEA-GRAPH --> marker with ipm show --md output"
     },
     {
       "name": "listen-change-regenerate-tools-context",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "listen-change-regenerate-tools-context",
       "description": "Event-driven daemon \u2014 LISTENs for IPM graph changes via PostgreSQL NOTIFY, regenerates tool context block"
     },
     {
       "name": "emit-tools-context-from-graph",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": null,
       "description": "Emit TOOLS.md agent-context file from IPM graph (ipm status \u2192 one-liner per working tool)"
     },
     {
       "name": "check-spec2c-conformance-fully-automatic",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": null,
       "description": "Conformance checker for spec2c-generated C tools \u2014 verifies SOUL compliance via ast-grep"
     },
     {
       "name": "rescore-memory-with-msa-attention",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "rescore-memory-with-msa-attention",
       "description": "MSA-4B daemon \u2014 neural rerank over memory bank via Unix socket. GPU/Python exception per SOUL \u00a77"
     },
     {
       "name": "generate-dense-vectors-with-qwen3",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "generate-dense-vectors-with-qwen3",
       "description": "Qwen3-Embedding-4B service \u2014 2560-dim normalized embeddings via transformers 4-bit"
     },
     {
       "name": "auto-switch-embed-rerank-gpu",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "auto-switch-embed-rerank-gpu",
       "description": "Vehir unified GPU daemon \u2014 serves both embeddings (always-on) and MSA rerank (on-demand). GPU exception per SOUL \u00a77"
     },
     {
       "name": "scan-filesystem-with-nftw-walk",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "scan-filesystem-with-nftw-walk",
       "description": "nftw-based filesystem scanner \u2014 outputs JSON lines, 72 LOC, 3ms"
     },
     {
       "name": "audit-directory-and-count-lines",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "audit-directory-and-count-lines",
       "description": "IPM audit template \u2014 counts files, lines, duplicates in source tree"
     },
     {
       "name": "extract-ipm-metadata-to-json",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "program": "extract-ipm-metadata-to-json",
       "description": "Reads .ipm file \u2192 extracts metadata as JSON"
     }
@@ -840,13 +840,21 @@
       "author": "Grigorii Tropin",
       "edge_license": "Apache-2.0",
       "description": "dependency graph builder filters scan filesystem JSON output into a category structured graph"
+    },
+    {
+      "parent": "rescore-memory-with-msa-attention",
+      "child": "generate-dense-vectors-with-qwen3",
+      "link_type": "library",
+      "author": "Grigorii Tropin + Vehir",
+      "edge_license": "Apache-2.0",
+      "description": "MSA neural rerank consumes dense vector embeddings combined with full-text search results for memory scoring"
     }
   ],
   "program_edges": [
     {
       "parent": "resolve-secrets-config-from-file",
       "child": "send-and-fetch-email-messages",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Mail reads credentials from broker config"
@@ -854,7 +862,7 @@
     {
       "parent": "resolve-secrets-config-from-file",
       "child": "create-forgejo-repos-via-api",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Forge reads API token from broker config"
@@ -862,7 +870,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "auto-switch-embed-rerank-gpu",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "GPU daemon reads/writes memory entries via db client"
@@ -870,7 +878,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "check-pain-write-signals-mode",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Pain checker routes SQL through db client"
@@ -878,7 +886,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "rescore-memory-with-msa-attention",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "MSA reads memory entries for document prefill"
@@ -886,7 +894,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "check-license-compatibility-across-graph",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "License checker queries DB for compat cross-check"
@@ -894,7 +902,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "listen-change-regenerate-tools-context",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Essentials daemon reads/writes soul_hashes via db client"
@@ -902,7 +910,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "generate-dense-vectors-with-qwen3",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Embed service stores vectors in memory entries via db client"
@@ -910,7 +918,7 @@
     {
       "parent": "probe-database-through-unix-socket",
       "child": "hash-and-validate-constitution-sections",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Constitution validator reads/writes soul_hashes via db client"
@@ -918,7 +926,7 @@
     {
       "parent": "gate-sql-via-unix-socket",
       "child": "probe-database-through-unix-socket",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "socket",
       "edge_license": "Apache-2.0",
       "description": "DB client routes SQL through socket to db-proxy daemon"
@@ -926,7 +934,7 @@
     {
       "parent": "generate-dense-vectors-with-qwen3",
       "child": "auto-switch-embed-rerank-gpu",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "socket",
       "edge_license": "Apache-2.0",
       "description": "Unified daemon wraps Qwen3-Embedding-4B as resident worker"
@@ -934,7 +942,7 @@
     {
       "parent": "generate-dense-vectors-with-qwen3",
       "child": "rescore-memory-with-msa-attention",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "socket",
       "edge_license": "Apache-2.0",
       "description": "MSA receives dense vectors from Qwen3 embedding service"
@@ -942,7 +950,7 @@
     {
       "parent": "rescore-memory-with-msa-attention",
       "child": "auto-switch-embed-rerank-gpu",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "socket",
       "edge_license": "Apache-2.0",
       "description": "Unified daemon spawns MSA-4B worker for neural rescoring"
@@ -950,7 +958,7 @@
     {
       "parent": "check-pain-write-signals-mode",
       "child": "listen-change-regenerate-tools-context",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Essentials daemon signals tool context drift to pain registry"
@@ -958,7 +966,7 @@
     {
       "parent": "check-pain-write-signals-mode",
       "child": "hash-and-validate-constitution-sections",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "Constitution validator writes drift severity to pain registry"
@@ -966,7 +974,7 @@
     {
       "parent": "audit-directory-and-count-lines",
       "child": "compile-ipm-specifications-to-c",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "conceptual",
       "edge_license": "Apache-2.0",
       "description": "spec2c compiles ipm-audit from .ipm to native C binary"
@@ -974,7 +982,7 @@
     {
       "parent": "extract-ipm-metadata-to-json",
       "child": "compile-ipm-specifications-to-c",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "conceptual",
       "edge_license": "Apache-2.0",
       "description": "ipm-meta reads .ipm spec format defined by spec2c compiler"
@@ -982,7 +990,7 @@
     {
       "parent": "scan-filesystem-with-nftw-walk",
       "child": "build-file-dependency-graph-json",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "conceptual",
       "edge_license": "Apache-2.0",
       "description": "ipm-graph calls scan-filesystem for directory traversal"
@@ -990,7 +998,7 @@
     {
       "parent": "ipm",
       "child": "compile-ipm-specifications-to-c",
-      "author": "Vehir",
+      "author": "Grigorii Tropin + Vehir",
       "link_type": "library",
       "edge_license": "Apache-2.0",
       "description": "spec2c calls IPM functions (ipm_json, ipm_pg, ipm_time)"
