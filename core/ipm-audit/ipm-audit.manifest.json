@@ -1,0 +1,23 @@
+{
+  "programs": [
+    {
+      "name": "audit-directory-and-count-lines",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "ipm-audit",
+      "check_type": "nix-build"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "audit-directory-and-count-lines",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "audit-directory-and-count-lines",
+      "description": "audit single directory returning file count and total line count as machine readable json object"
+    }
+  ]
+}

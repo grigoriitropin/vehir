@@ -1,0 +1,23 @@
+{
+  "programs": [
+    {
+      "name": "build-file-dependency-graph-json",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "ipm-graph",
+      "check_type": "nix-build"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "build-file-dependency-graph-json",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "build-file-dependency-graph-json",
+      "description": "build categorized dependency graph from filesystem scan outputting single json object with node counts"
+    }
+  ]
+}

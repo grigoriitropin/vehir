@@ -1,0 +1,23 @@
+{
+  "programs": [
+    {
+      "name": "scan-filesystem-with-nftw-walk",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "scan-filesystem",
+      "check_type": "nix-build"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "scan-filesystem-with-nftw-walk",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "scan-filesystem-with-nftw-walk",
+      "description": "walk filesystem tree asynchronously emitting structured json line per entry faster than posix find utility"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "programs": [
+    {
+      "name": "extract-ipm-metadata-to-json",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "ipm-meta",
+      "check_type": "nix-build"
+    }
+  ],
+  "ideas": [
+    {
+      "name": "extract-ipm-metadata-to-json",
+      "author": "Vehir",
+      "is_axiom": false,
+      "program": "extract-ipm-metadata-to-json",
+      "description": "extract function names imports and instruction counts from ipm specification file into json metadata"
+    }
+  ]
+}
