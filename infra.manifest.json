@@ -160,6 +160,26 @@
       "artifact_name": "spec2c",
       "check_type": "none",
       "repo_url": "https://github.com/grigoriitropin/spec2c"
+    },
+    {
+      "name": "extract-ipm-metadata-to-json",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "ipm-meta",
+      "check_type": "none"
+    },
+    {
+      "name": "scan-filesystem-with-nftw-walk",
+      "author": "Vehir",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "external": false,
+      "artifact_type": "tool",
+      "artifact_name": "scan-filesystem",
+      "check_type": "none"
     }
   ],
   "ideas": [
@@ -182,11 +202,11 @@
     },
     {
       "parent": "spec2c",
-      "child": "build-file-dependency-graph-json",
+      "child": "extract-ipm-metadata-to-json",
       "author": "Vehir",
       "link_type": "conceptual",
       "edge_license": "Apache-2.0",
-      "description": "spec2c provides compilation infrastructure for ipm graph builder"
+      "description": "ipm meta tool reads dot ipm specification format defined by spec2c compiler"
     }
   ]
 }
